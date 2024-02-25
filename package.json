@@ -2,9 +2,9 @@
   "name": "expostack",
   "version": "1.0.0",
   "scripts": {
-    "android": "expo start --android --watch",
+    "android": "expo run:android",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
-    "ios": "expo start --ios",
+    "ios": "expo run:ios",
     "start": "expo start",
     "web": "expo start --web"
   },
@@ -16,6 +16,7 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
     "expo": "~50.0.5",
+    "expo-image-picker": "~14.7.1",
     "expo-notifications": "~0.27.6",
     "expo-status-bar": "~1.11.1",
     "expo-updates": "~0.24.11",

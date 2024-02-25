@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover', // or 'stretch'
     justifyContent: 'center',
+    height: 900,
   },
   container: {
     flex: 1,

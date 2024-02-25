@@ -8,8 +8,10 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // Exemplo usando íco
 import image from 'src/assets/image/Grupo-6845.png';
 
 import CheckBox from './components/CheckBox';
+import SignUpForm from './components/creaetAccount';
 import { styles } from './styles';
 
+import ModalContainer from '~/components/modalContainer';
 import { RootStackParamList } from '~/navigation';
 
 const AnimatedText = Animatable.createAnimatableComponent(Text);
@@ -30,6 +32,7 @@ const Login = ({ navigation }: Props) => {
 
   const [isChecked, setIsChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -45,7 +48,7 @@ const Login = ({ navigation }: Props) => {
       }
     }
     const { data: token } = await Notifications.getExpoPushTokenAsync({
-      projectId: '6a6ca4f1-b5fa-4141-99e5-f53503a285e1',
+      projectId: `${process.env.EXPO_PUBLIC_PROJECT_ID}`,
     });
     console.log('Expo Push Token:', token);
   }
@@ -59,7 +62,8 @@ const Login = ({ navigation }: Props) => {
   };
 
   const handleSignUpPress = () => {
-    navigation.navigate('Modal');
+    //navigation.navigate('Modal');
+    setIsOpenModal(!isOpenModal);
   };
 
   const handleLogin = () => {
@@ -125,10 +129,22 @@ const Login = ({ navigation }: Props) => {
           <TouchableOpacity onPress={handleSignUpPress}>
             <Text style={styles.linkText}>Não tenho conta</Text>
           </TouchableOpacity>
-          <CheckBox isChecked={isChecked} toggleCheckbox={toggleCheckbox} />
+          <CheckBox
+            isChecked={isChecked}
+            toggleCheckbox={toggleCheckbox}
+            description="Eu aceito os termos de uso"
+            itemId={1}
+            selectedItemId={1}
+            setSelectedItemId={() => {}}
+          />
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
+          <ModalContainer onClose={handleSignUpPress} visible={isOpenModal}>
+            <View style={{ height: 500, width: 320 }}>
+              <SignUpForm />
+            </View>
+          </ModalContainer>
         </View>
       </View>
     </ImageBackground>
