@@ -4,6 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import DrawerNavigator from './drawer-navigator';
 import Modal from '../screens/modal';
 
+import { isValidateAccount } from '~/Shared/Auth';
+import Login from '~/screens/Login/login';
+
 export type RootStackParamList = {
   DrawerNavigator: undefined;
   Modal: undefined;
@@ -16,11 +19,15 @@ export default function RootStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="DrawerNavigator">
-        <Stack.Screen
-          name="DrawerNavigator"
-          component={DrawerNavigator}
-          options={{ headerShown: false }}
-        />
+        {isValidateAccount() ? (
+          <Stack.Screen
+            name="DrawerNavigator"
+            component={DrawerNavigator}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <Stack.Screen name="TabNavigator" component={Login} options={{ headerShown: false }} />
+        )}
         <Stack.Screen
           name="Modal"
           component={Modal}

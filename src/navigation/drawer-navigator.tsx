@@ -5,7 +5,7 @@ import { Pressable } from 'react-native';
 
 import { RootStackParamList } from '.';
 import TabNavigator from './tab-navigator';
-import Home from '../screens/home';
+import Home from '../screens/Teacher/home';
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 
@@ -24,14 +24,14 @@ export default function DrawerNavigator({ navigation }: Props) {
         }}
       />
       <Drawer.Screen
-        name="Tabs"
+        name="TabNavigator"
         component={TabNavigator}
         options={{
           headerRight: () => (
-            <Pressable onPress={() => navigation.navigate('Modal')}>
+            <Pressable onPress={() => navigation.navigate('DrawerNavigator')}>
               {({ pressed }) => (
                 <FontAwesome
-                  name="info-circle"
+                  name="sign-out"
                   size={25}
                   color="gray"
                   style={[
