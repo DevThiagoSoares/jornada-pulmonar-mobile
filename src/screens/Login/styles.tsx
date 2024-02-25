@@ -32,6 +32,9 @@ export const styles = StyleSheet.create({
     color: 'white',
   },
   input: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     width: '100%',
     height: 40,
     marginVertical: 10,
@@ -40,6 +43,9 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.8)',
   },
   inputError: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     width: '100%',
     height: 40,
     marginVertical: 10,
@@ -50,7 +56,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.8)',
   },
   linkText: {
-    color: 'blue',
+    color: 'black',
     textDecorationLine: 'underline',
     fontSize: 16,
     right: 100,
@@ -67,7 +73,7 @@ export const styles = StyleSheet.create({
     height: 44,
     left: 110,
     marginVertical: 10,
-    backgroundColor: '#F13005',
+    backgroundColor: '#CD4C3E',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
@@ -78,7 +84,7 @@ export const styles = StyleSheet.create({
     color: 'white',
   },
   errorText: {
-    color: '#F13005',
+    color: '#CD4C3E',
     fontSize: 12,
     marginTop: 5,
   },

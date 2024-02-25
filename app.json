@@ -3,15 +3,24 @@
     "name": "expostack",
     "slug": "expostack",
     "version": "1.0.0",
-
     "web": {
       "favicon": "./assets/favicon.png"
     },
-
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./assets/audio/sonsNotificatio.mp3"
+          ]
+        }
+      ]
+    ],
     "experiments": {
       "tsconfigPaths": true
     },
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -20,7 +29,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -29,6 +40,17 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6a6ca4f1-b5fa-4141-99e5-f53503a285e1"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/6a6ca4f1-b5fa-4141-99e5-f53503a285e1"
     }
   }
 }
