@@ -1,6 +1,12 @@
 // Modal.tsx
 import React, { ReactNode } from 'react';
-import { View, Modal as RNModal, ActivityIndicator, StyleSheet } from 'react-native';
+import {
+  View,
+  Modal as RNModal,
+  ActivityIndicator,
+  StyleSheet,
+  ImageBackground,
+} from 'react-native';
 
 interface ModalProps {
   children: ReactNode;
@@ -14,7 +20,9 @@ const ModalContainer: React.FC<ModalProps> = ({ children, visible, onClose, load
     <RNModal animationType="slide" transparent visible={visible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          {loading ? <ActivityIndicator size="large" color="#0000ff" /> : children}
+          <ImageBackground source={require('src/assets/image/Grupo-6845.png')}>
+            {loading ? <ActivityIndicator size="large" color="#0000ff" /> : children}
+          </ImageBackground>
         </View>
       </View>
     </RNModal>
@@ -29,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    backgroundColor: '#FACECA',
+    backgroundColor: 'rgb(250, 206, 210)',
     padding: 20,
     borderRadius: 10,
     width: '80%',

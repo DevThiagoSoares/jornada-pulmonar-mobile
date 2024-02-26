@@ -76,11 +76,10 @@ export const styledAvatar = StyleSheet.create({
     borderRadius: 60,
     borderWidth: 2,
     borderStyle: 'dashed',
-    borderColor: '#999',
+    borderColor: '#FFF',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 15,
-    backgroundColor: '#F8E7E3',
   },
   avatarImage: {
     width: '100%',
@@ -88,8 +87,12 @@ export const styledAvatar = StyleSheet.create({
     borderRadius: 60,
   },
   avatarIcon: {
+    width: 115,
+    height: 115,
+    borderRadius: 60,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#CD4C3E',
   },
   avatarText: {
     marginTop: 8,

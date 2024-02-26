@@ -30,12 +30,18 @@ const Login = ({ navigation }: Props) => {
     formState: { errors },
   } = useForm<FormProps>();
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState<number | string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const optionsCheckBox = [
+    {
+      label: 'Eu aceito os termos de uso',
+      value: 1,
+    },
+  ];
 
-  const toggleCheckbox = () => {
-    setIsChecked(!isChecked);
+  const toggleCheckbox = (value: number | string) => {
+    setIsChecked(value);
   };
 
   async function handleNotification() {
@@ -129,19 +135,22 @@ const Login = ({ navigation }: Props) => {
           <TouchableOpacity onPress={handleSignUpPress}>
             <Text style={styles.linkText}>Não tenho conta</Text>
           </TouchableOpacity>
-          <CheckBox
-            isChecked={isChecked}
-            toggleCheckbox={toggleCheckbox}
-            description="Eu aceito os termos de uso"
-            itemId={1}
-            selectedItemId={1}
-            setSelectedItemId={() => {}}
-          />
+          {optionsCheckBox.map((item) => (
+            <CheckBox
+              key={item.value}
+              isChecked={item.value === isChecked}
+              toggleCheckbox={() => toggleCheckbox(item.value)}
+              description={item.label}
+              itemId={item.value}
+              selectedItemId={item.value}
+              setSelectedItemId={() => setIsChecked(item.value)}
+            />
+          ))}
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
           <ModalContainer onClose={handleSignUpPress} visible={isOpenModal}>
-            <View style={{ height: 500, width: 320 }}>
+            <View style={{ height: 550, width: 320 }}>
               <SignUpForm />
             </View>
           </ModalContainer>

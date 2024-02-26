@@ -26,7 +26,13 @@ export default function RootStack() {
             options={{ headerShown: false }}
           />
         ) : (
-          <Stack.Screen name="DrawerNavigator" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="DrawerNavigator"
+            component={Login}
+            options={{
+              headerShown: false,
+            }}
+          />
         )}
         <Stack.Screen
           name="Modal"

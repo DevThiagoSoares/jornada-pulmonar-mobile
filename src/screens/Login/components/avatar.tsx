@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
-import { TouchableOpacity, Image, View, Text } from 'react-native';
+import { TouchableOpacity, Image, View } from 'react-native';
 
 import { styledAvatar } from './styles';
 
@@ -28,8 +28,7 @@ const AvatarPicker = () => {
         <Image source={{ uri: profilePic }} style={styledAvatar.avatarImage} />
       ) : (
         <View style={styledAvatar.avatarIcon}>
-          <MaterialCommunityIcons name="camera" size={40} color="#888" />
-          <Text style={styledAvatar.avatarText}>Adicione uma foto</Text>
+          <MaterialCommunityIcons name="image-plus" size={40} color="#FFF" />
         </View>
       )}
     </TouchableOpacity>

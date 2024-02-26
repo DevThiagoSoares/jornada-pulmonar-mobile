@@ -60,7 +60,7 @@ const SignUpForm: React.FC = () => {
         }}
         defaultValue=""
       />
-      {errors.password && <Text style={styledUser.error}>{errors.password.message}</Text>}
+      {errors.email && <Text style={styledUser.error}>{errors.email.message}</Text>}
 
       <Controller
         control={control}
