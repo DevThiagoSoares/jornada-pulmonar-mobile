@@ -2,30 +2,24 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover', // or 'stretch'
-    justifyContent: 'center',
-    height: 900,
-  },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 20,
+    flexDirection: 'column',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover', // ou 'stretch'
   },
   form: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 20,
-    width: '80%',
-  },
-  separator: {
-    height: 1,
-    marginVertical: 7,
-    width: '80%',
-    backgroundColor: 'rgba(255,255,255,0.5)',
+    paddingRight: 30,
+    paddingLeft: 30,
+    width: '100%',
   },
   title: {
     fontSize: 24,
@@ -38,7 +32,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     height: 40,
-    marginVertical: 10,
+    marginVertical: 5,
     padding: 10,
     borderRadius: 8,
     backgroundColor: 'rgba(255,255,255,0.8)',
@@ -49,7 +43,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     height: 40,
-    marginVertical: 10,
+    marginVertical: 5,
     padding: 10,
     borderRadius: 8,
     borderColor: '#F13005',
@@ -69,15 +63,14 @@ export const styles = StyleSheet.create({
   },
 
   button: {
-    display: 'flex',
-    width: '30%',
-    height: 44,
-    left: 110,
+    width: 100,
+    height: 40,
     marginVertical: 10,
     backgroundColor: '#CD4C3E',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
+    left: 110,
   },
   buttonText: {
     fontSize: 16,

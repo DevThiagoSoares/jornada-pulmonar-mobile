@@ -2,17 +2,17 @@ import { Text, View } from 'react-native';
 
 import EditScreenInfo from '../../components/edit-screen-info';
 
-const Page = () => {
+const PageTeacher = () => {
   return (
     <View className={styles.container}>
-      <Text className={styles.title}>Home2</Text>
+      <Text className={styles.title}>Sou Professor</Text>
       <View className={styles.separator} />
       <EditScreenInfo path="app/(tabs)/index.tsx" />
     </View>
   );
 };
 
-export default Page;
+export default PageTeacher;
 
 const styles = {
   container: `items-center flex-1 justify-center`,

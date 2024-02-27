@@ -6,9 +6,14 @@ import CheckBox from './CheckBox';
 import AvatarPicker from './avatar';
 import { styledUser } from './styles';
 
+import { UserProps, useAuth } from '~/Shared/Auth';
+import { TypeUser } from '~/Shared/Enums/typeUser';
+
 interface FormData {
+  name: string;
   email: string;
   password: string;
+  role: string;
   confirmPassword: string;
 }
 
@@ -16,23 +21,40 @@ const SignUpForm: React.FC = () => {
   const {
     control,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<FormData>();
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
-  const optionsCheckBox = [
-    { value: 1, label: 'Sou aluno' },
-    { value: 2, label: 'Sou professor' },
-  ];
+
+  const { validateUserAccess } = useAuth();
   const [selectedOption, setSelectedOption] = useState<string | number | null>(null);
+  const optionsCheckBox = [
+    { value: TypeUser.Student, label: 'Sou aluno' },
+    { value: TypeUser.Teacher, label: 'Sou professor' },
+  ];
+
+  const onSubmit = (data: FormData) => {
+    console.log('entrou', data);
+    if (selectedOption !== null && typeof selectedOption !== 'number') {
+      const result: UserProps = {
+        name: data.name,
+        password: data.name,
+        role: selectedOption,
+      };
+      validateUserAccess(result);
+    }
+  };
 
   const toggleCheckbox = (value: number | string | null) => {
     if (selectedOption === value) {
-      setSelectedOption(null); // Desmarcar o item se ele já estiver selecionado
+      setSelectedOption(null);
     } else {
-      setSelectedOption(value); // Selecionar o item se não estiver selecionado
+      setSelectedOption(value);
     }
+  };
+
+  const handleCreateUser = () => {
+    handleSubmit(onSubmit)();
+    console.log('errors', errors);
   };
 
   return (
@@ -42,12 +64,30 @@ const SignUpForm: React.FC = () => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={styledUser.input}
+            style={errors.email ? styledUser.inputError : styledUser.input}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="Nome"
+          />
+        )}
+        name="name"
+        rules={{
+          required: 'Nome é obrigatório',
+        }}
+        defaultValue=""
+      />
+      {errors.name && <Text style={styledUser.error}>{errors.name.message}</Text>}
+
+      <Controller
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={errors.email ? styledUser.inputError : styledUser.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             placeholder="Email"
-            secureTextEntry
           />
         )}
         name="email"
@@ -66,7 +106,7 @@ const SignUpForm: React.FC = () => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={styledUser.input}
+            style={errors.password ? styledUser.inputError : styledUser.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -80,7 +120,7 @@ const SignUpForm: React.FC = () => {
           pattern: {
             value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
             message:
-              'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number',
+              'A senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula e um número',
           },
         }}
         defaultValue=""
@@ -91,7 +131,7 @@ const SignUpForm: React.FC = () => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={styledUser.input}
+            style={errors.confirmPassword ? styledUser.inputError : styledUser.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -102,8 +142,7 @@ const SignUpForm: React.FC = () => {
         name="confirmPassword"
         rules={{
           required: 'Confirme a senha',
-          validate: (value) =>
-            value === control._defaultValues.password || 'The passwords do not match',
+          validate: (value) => value === getValues('password') || 'Senhas não combinam',
         }}
         defaultValue=""
       />
@@ -125,7 +164,7 @@ const SignUpForm: React.FC = () => {
         ))}
       </View>
 
-      <TouchableOpacity style={styledUser.button} onPress={handleSubmit(onSubmit)}>
+      <TouchableOpacity style={styledUser.button} onPress={handleCreateUser}>
         <Text style={styledUser.buttonText}>Finalizar</Text>
       </TouchableOpacity>
     </View>

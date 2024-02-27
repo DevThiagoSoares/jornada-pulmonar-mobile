@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { StackScreenProps } from '@react-navigation/stack';
 import * as Notifications from 'expo-notifications';
 import React, { useState } from 'react';
@@ -11,6 +12,8 @@ import CheckBox from './components/CheckBox';
 import SignUpForm from './components/creaetAccount';
 import { styles } from './styles';
 
+import { useAuth, UserProps } from '~/Shared/Auth';
+import { TypeUser } from '~/Shared/Enums/typeUser';
 import ModalContainer from '~/components/modalContainer';
 import { RootStackParamList } from '~/navigation';
 
@@ -33,6 +36,7 @@ const Login = ({ navigation }: Props) => {
   const [isChecked, setIsChecked] = useState<number | string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const { validateUserAccess } = useAuth();
   const optionsCheckBox = [
     {
       label: 'Eu aceito os termos de uso',
@@ -40,8 +44,12 @@ const Login = ({ navigation }: Props) => {
     },
   ];
 
-  const toggleCheckbox = (value: number | string) => {
-    setIsChecked(value);
+  const toggleCheckbox = (value: number | string | null) => {
+    if (isChecked === value) {
+      setIsChecked(null);
+    } else {
+      setIsChecked(value);
+    }
   };
 
   async function handleNotification() {
@@ -59,9 +67,14 @@ const Login = ({ navigation }: Props) => {
     console.log('Expo Push Token:', token);
   }
 
-  const onSubmit = (data: FormProps) => {
+  const onSubmit = async (data: FormProps) => {
     if (isChecked) {
-      console.log('Form Data:', data);
+      const result: UserProps = {
+        name: data.email,
+        password: data.password,
+        role: TypeUser.Teacher,
+      };
+      validateUserAccess(result);
     } else {
       handleNotification();
     }
@@ -71,14 +84,14 @@ const Login = ({ navigation }: Props) => {
     //navigation.navigate('Modal');
     setIsOpenModal(!isOpenModal);
   };
-
   const handleLogin = () => {
     handleSubmit(onSubmit)();
+    console.log({ errors });
   };
 
   return (
-    <ImageBackground style={styles.backgroundImage} source={image}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <ImageBackground style={styles.backgroundImage} source={image} resizeMode="cover">
         <View style={styles.form}>
           <Image style={styles.image} source={require('src/assets/image/Grupo-6680.png')} />
           <AnimatedText
@@ -150,13 +163,13 @@ const Login = ({ navigation }: Props) => {
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
           <ModalContainer onClose={handleSignUpPress} visible={isOpenModal}>
-            <View style={{ height: 550, width: 320 }}>
+            <View style={{ height: 650, width: 320 }}>
               <SignUpForm />
             </View>
           </ModalContainer>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </View>
   );
 };
 

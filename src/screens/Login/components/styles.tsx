@@ -33,10 +33,13 @@ export const styledUser = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    gap: 5,
+    gap: 10,
   },
   input: {
     ...styles.input,
+  },
+  inputError: {
+    ...styles.inputError,
   },
   error: {
     ...styles.errorText,
