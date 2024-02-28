@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // Exemplo usando íco
 import image from 'src/assets/image/Grupo-6845.png';
 
 import CheckBox from './components/CheckBox';
-import SignUpForm from './components/creaetAccount';
+import SignUpForm from './creaetAccount';
 import { styles } from './styles';
 
 import { useAuth, UserProps } from '~/Shared/Auth';
@@ -103,15 +103,16 @@ const Login = ({ navigation }: Props) => {
           <Controller
             control={control}
             rules={{
-              required: 'Campo obrigatório',
+              required: 'Campo email obrigatório',
               pattern: {
                 value: /^\S+@\S+$/i,
                 message: 'Email inválido',
               },
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-              <View style={errors.email ? styles.inputError : styles.input}>
+              <View style={errors.email ? styles.inputError : styles.ViewInput}>
                 <TextInput
+                  style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -124,12 +125,13 @@ const Login = ({ navigation }: Props) => {
             defaultValue=""
           />
           {errors.email && <Text style={styles.errorText}>{errors.email.message}</Text>}
-          <View style={errors.password ? styles.inputError : styles.input}>
+          <View style={errors.password ? styles.inputError : styles.ViewInput}>
             <Controller
               control={control}
-              rules={{ required: 'Campo obrigatório' }}
+              rules={{ required: 'Campo senha obrigatório' }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
+                  style={styles.input}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}

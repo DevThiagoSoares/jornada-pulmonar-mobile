@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Modal, TouchableOpacity } from 'react-native';
+import { Modal, TouchableOpacity, Image } from 'react-native';
 
 import { PagesTeacher } from './pages';
 import DrawerNavigator from '../drawer-navigator';
@@ -33,6 +33,14 @@ export function AppRoutes() {
                 headerShown: true,
                 headerTitleAlign: 'left',
                 headerTitle: '',
+                headerShadowVisible: true,
+                headerBackground: () => (
+                  <Image
+                    source={require('src/assets/image/image-6845.png')}
+                    style={{ width: '100%', height: '100%' }}
+                    resizeMode="cover"
+                  />
+                ),
                 headerLeft: () => (
                   <TouchableOpacity onPress={signOut} style={{ marginLeft: 10 }}>
                     <Ionicons name="log-out-outline" size={30} color="#CD4C3E" />

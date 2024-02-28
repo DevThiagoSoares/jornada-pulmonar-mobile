@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
-import CheckBox from './CheckBox';
-import AvatarPicker from './avatar';
-import { styledUser } from './styles';
+import CheckBox from './components/CheckBox';
+import AvatarPicker from './components/avatar';
+import { styledUser } from './components/styles';
 
 import { UserProps, useAuth } from '~/Shared/Auth';
 import { TypeUser } from '~/Shared/Enums/typeUser';

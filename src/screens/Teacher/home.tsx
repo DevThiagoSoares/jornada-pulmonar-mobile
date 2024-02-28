@@ -1,21 +1,38 @@
-import { Text, View } from 'react-native';
+import { View, ImageBackground } from 'react-native';
+import { Card, Text } from 'react-native-paper';
 
-import EditScreenInfo from '../../components/edit-screen-info';
+import { styledHometeacher } from './styles';
+import { styles } from '../Login/styles';
 
 const PageTeacher = () => {
   return (
-    <View className={styles.container}>
-      <Text className={styles.title}>Sou Professor</Text>
-      <View className={styles.separator} />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <ImageBackground
+      style={styles.backgroundImage}
+      source={require('src/assets/image/image-6845.png')}>
+      <View style={styledHometeacher.container}>
+        <Text style={styledHometeacher.title}>Bem-Vindo !</Text>
+        <View style={styledHometeacher.card}>
+          <Card elevation={3}>
+            <Card.Content style={styledHometeacher.boxContainer}>
+              <Text variant="titleMedium" style={styledHometeacher.boxTitle}>
+                Crie de Novas Unidades
+              </Text>
+              <Text variant="bodyMedium" style={styledHometeacher.boxSubTitle}>
+                Abaixo, você encontrará a opção "Suas Unidades" para iniciar o processo de criação
+                das unidades.
+              </Text>
+              <Text variant="bodyMedium" style={styledHometeacher.boxSubTitle}>
+                Acompanhe o desempenho individual de cada aluno acessando a opção "Ranking".
+              </Text>
+            </Card.Content>
+          </Card>
+        </View>
+        <View style={styledHometeacher.Boxseparator}>
+          <View style={styledHometeacher.separator} />
+        </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 export default PageTeacher;
-
-const styles = {
-  container: `items-center flex-1 justify-center`,
-  separator: `h-[1px] my-7 w-4/5 bg-gray-200`,
-  title: `text-xl font-bold`,
-};
