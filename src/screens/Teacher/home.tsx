@@ -1,6 +1,8 @@
 import { View, ImageBackground } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
+import { ListCard } from './Components/ListCard';
+import { DescriptionCard } from './Components/descriptionCard';
 import { styledHometeacher } from './styles';
 import { styles } from '../Login/styles';
 
@@ -12,23 +14,13 @@ const PageTeacher = () => {
       <View style={styledHometeacher.container}>
         <Text style={styledHometeacher.title}>Bem-Vindo !</Text>
         <View style={styledHometeacher.card}>
-          <Card elevation={3}>
-            <Card.Content style={styledHometeacher.boxContainer}>
-              <Text variant="titleMedium" style={styledHometeacher.boxTitle}>
-                Crie de Novas Unidades
-              </Text>
-              <Text variant="bodyMedium" style={styledHometeacher.boxSubTitle}>
-                Abaixo, você encontrará a opção "Suas Unidades" para iniciar o processo de criação
-                das unidades.
-              </Text>
-              <Text variant="bodyMedium" style={styledHometeacher.boxSubTitle}>
-                Acompanhe o desempenho individual de cada aluno acessando a opção "Ranking".
-              </Text>
-            </Card.Content>
-          </Card>
+          <DescriptionCard />
         </View>
         <View style={styledHometeacher.Boxseparator}>
           <View style={styledHometeacher.separator} />
+        </View>
+        <View style={{ display: 'flex', width: '100%' }}>
+          <ListCard />
         </View>
       </View>
     </ImageBackground>
