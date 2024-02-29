@@ -1,5 +1,7 @@
 import { List } from 'react-native-paper';
 
+import { CreateCard } from './createCard';
+import { NotFoundData } from './notFoundData';
 import { styledCard } from './styles';
 
 export function ListCard() {
@@ -12,7 +14,7 @@ export function ListCard() {
         rippleColor="#CD4C3E"
         left={() => <List.Icon color="#CD4C3E" icon="plus" />}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
-        <List.Item title="Item 1" />
+        <CreateCard />
       </List.Accordion>
       <List.Accordion
         title="Ranking"
@@ -21,7 +23,7 @@ export function ListCard() {
         style={styledCard.listOptions}
         left={() => <List.Icon color="#CD4C3E" icon="crown" />}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
-        <List.Item title="Item 2" />
+        <NotFoundData />
       </List.Accordion>
     </List.AccordionGroup>
   );

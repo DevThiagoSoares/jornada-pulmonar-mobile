@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { StackScreenProps } from '@react-navigation/stack';
-import * as Notifications from 'expo-notifications';
-import React, { useState } from 'react';
+/* import * as Notifications from 'expo-notifications';
+ */ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, Text, TextInput, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -45,7 +45,7 @@ const Login = ({ navigation }: Props) => {
     },
   ];
 
-  async function handleNotification() {
+  /*   async function handleNotification() {
     const { status } = await Notifications.getPermissionsAsync();
     console.log('status', status);
     if (status !== 'granted') {
@@ -58,7 +58,7 @@ const Login = ({ navigation }: Props) => {
       projectId: `${process.env.EXPO_PUBLIC_PROJECT_ID}`,
     });
     console.log('Expo Push Token:', token);
-  }
+  } */
 
   const onSubmit = async (data: FormProps) => {
     if (isChecked) {
@@ -69,7 +69,7 @@ const Login = ({ navigation }: Props) => {
       };
       validateUserAccess(result);
     } else {
-      handleNotification();
+      // handleNotification();
       setIsValidInput(true);
     }
   };
