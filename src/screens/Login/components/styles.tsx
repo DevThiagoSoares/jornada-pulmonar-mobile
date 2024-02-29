@@ -36,13 +36,7 @@ export const styledUser = StyleSheet.create({
     gap: 8,
   },
   input: {
-    ...styles.ViewInput,
-    padding: 5,
-    width: '90%',
-  },
-  inputError: {
-    ...styles.inputError,
-    width: '90%',
+    width: '100%',
   },
   error: {
     ...styles.errorText,
@@ -103,5 +97,12 @@ export const styledAvatar = StyleSheet.create({
   avatarText: {
     marginTop: 8,
     color: '#888',
+  },
+});
+export const styledRadio = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    width: '100%',
   },
 });

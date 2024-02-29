@@ -53,7 +53,14 @@ export function AppRoutes() {
           <Stack.Screen
             name="DrawerNavigator"
             component={DrawerNavigator}
-            options={{ headerShown: true }}
+            options={{
+              headerShown: true,
+              headerLeft: () => (
+                <TouchableOpacity onPress={signOut} style={{ marginLeft: 10 }}>
+                  <Ionicons name="log-out-outline" size={30} color="#CD4C3E" />
+                </TouchableOpacity>
+              ),
+            }}
           />
         )
       ) : (

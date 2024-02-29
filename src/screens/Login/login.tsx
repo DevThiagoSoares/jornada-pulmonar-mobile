@@ -8,7 +8,7 @@ import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Exemplo usando ícones FontAwesome, mas você pode usar qualquer conjunto de ícones suportado
 import image from 'src/assets/image/Grupo-6845.png';
 
-import CheckBox from './components/CheckBox';
+import { RadioGroup } from './components/radioGroup';
 import SignUpForm from './creaetAccount';
 import { styles } from './styles';
 
@@ -33,24 +33,17 @@ const Login = ({ navigation }: Props) => {
     formState: { errors },
   } = useForm<FormProps>();
 
-  const [isChecked, setIsChecked] = useState<number | string | null>(null);
+  const [isChecked, setIsChecked] = useState<string>('');
   const [showPassword, setShowPassword] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { validateUserAccess } = useAuth();
+  const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const optionsCheckBox = [
     {
+      value: '1',
       label: 'Eu aceito os termos de uso',
-      value: 1,
     },
   ];
-
-  const toggleCheckbox = (value: number | string | null) => {
-    if (isChecked === value) {
-      setIsChecked(null);
-    } else {
-      setIsChecked(value);
-    }
-  };
 
   async function handleNotification() {
     const { status } = await Notifications.getPermissionsAsync();
@@ -77,6 +70,7 @@ const Login = ({ navigation }: Props) => {
       validateUserAccess(result);
     } else {
       handleNotification();
+      setIsValidInput(true);
     }
   };
 
@@ -150,17 +144,14 @@ const Login = ({ navigation }: Props) => {
           <TouchableOpacity onPress={handleSignUpPress}>
             <Text style={styles.linkText}>Não tenho conta</Text>
           </TouchableOpacity>
-          {optionsCheckBox.map((item) => (
-            <CheckBox
-              key={item.value}
-              isChecked={item.value === isChecked}
-              toggleCheckbox={() => toggleCheckbox(item.value)}
-              description={item.label}
-              itemId={item.value}
-              selectedItemId={item.value}
-              setSelectedItemId={() => setIsChecked(item.value)}
+          <View style={{ display: 'flex', flexDirection: 'row', width: '100%', paddingLeft: 30 }}>
+            <RadioGroup
+              options={optionsCheckBox}
+              setValue={setIsChecked}
+              value={isChecked}
+              isValidInput={isValidInput}
             />
-          ))}
+          </View>
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>

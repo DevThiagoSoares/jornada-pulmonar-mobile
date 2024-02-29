@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { TextInput } from 'react-native-paper';
 
-import CheckBox from './components/CheckBox';
 import AvatarPicker from './components/avatar';
-import { styledUser } from './components/styles';
+import { RadioGroup } from './components/radioGroup';
+import { styledRadio, styledUser } from './components/styles';
 
 import { UserProps, useAuth } from '~/Shared/Auth';
 import { TypeUser } from '~/Shared/Enums/typeUser';
@@ -26,32 +27,25 @@ const SignUpForm: React.FC = () => {
   } = useForm<FormData>();
 
   const { validateUserAccess } = useAuth();
-  const [selectedOption, setSelectedOption] = useState<string | number | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string>('');
+  const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const optionsCheckBox = [
     { value: TypeUser.Student, label: 'Sou aluno' },
     { value: TypeUser.Teacher, label: 'Sou professor' },
   ];
 
   const onSubmit = (data: FormData) => {
-    console.log('entrou', data);
-    if (selectedOption !== null && typeof selectedOption !== 'number') {
+    if (selectedOption !== '') {
       const result: UserProps = {
         name: data.name,
         password: data.name,
         role: selectedOption,
       };
       validateUserAccess(result);
-    }
-  };
-
-  const toggleCheckbox = (value: number | string | null) => {
-    if (selectedOption === value) {
-      setSelectedOption(null);
     } else {
-      setSelectedOption(value);
+      setIsValidInput(true);
     }
   };
-
   const handleCreateUser = () => {
     handleSubmit(onSubmit)();
     console.log('errors', errors);
@@ -64,11 +58,14 @@ const SignUpForm: React.FC = () => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={errors.email ? styledUser.inputError : styledUser.input}
+            style={styledUser.input}
             onBlur={onBlur}
+            error={!!errors.name}
             onChangeText={onChange}
             value={value}
-            placeholder="Nome"
+            label={errors.name?.message || 'Nome'}
+            mode="outlined"
+            outlineColor="transparent"
           />
         )}
         name="name"
@@ -77,17 +74,19 @@ const SignUpForm: React.FC = () => {
         }}
         defaultValue=""
       />
-      {errors.name && <Text style={styledUser.error}>{errors.name.message}</Text>}
 
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={errors.email ? styledUser.inputError : styledUser.input}
+            style={styledUser.input}
             onBlur={onBlur}
+            error={!!errors.email}
             onChangeText={onChange}
             value={value}
-            placeholder="Email"
+            label={errors.email?.message || 'Email'}
+            mode="outlined"
+            outlineColor="transparent"
           />
         )}
         name="email"
@@ -100,18 +99,20 @@ const SignUpForm: React.FC = () => {
         }}
         defaultValue=""
       />
-      {errors.email && <Text style={styledUser.error}>{errors.email.message}</Text>}
 
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={errors.password ? styledUser.inputError : styledUser.input}
+            style={styledUser.input}
             onBlur={onBlur}
+            error={!!errors.password}
             onChangeText={onChange}
             value={value}
-            placeholder="Senha"
+            label={errors.password?.message || 'Senha'}
             secureTextEntry
+            mode="outlined"
+            outlineColor="transparent"
           />
         )}
         name="password"
@@ -131,12 +132,15 @@ const SignUpForm: React.FC = () => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={errors.confirmPassword ? styledUser.inputError : styledUser.input}
+            style={styledUser.input}
+            error={!!errors.confirmPassword}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="Confirme a senha"
+            label={errors.confirmPassword?.message || 'Confirme a senha'}
             secureTextEntry
+            outlineColor="transparent"
+            mode="outlined"
           />
         )}
         name="confirmPassword"
@@ -146,22 +150,14 @@ const SignUpForm: React.FC = () => {
         }}
         defaultValue=""
       />
-      {errors.confirmPassword && (
-        <Text style={styledUser.error}>{errors.confirmPassword.message}</Text>
-      )}
 
-      <View style={{ flexDirection: 'column', flexWrap: 'wrap', gap: 12 }}>
-        {optionsCheckBox.map((item) => (
-          <CheckBox
-            key={item.value}
-            description={item.label}
-            toggleCheckbox={() => toggleCheckbox(item.value)}
-            isChecked={item.value === selectedOption}
-            itemId={item.value}
-            selectedItemId={selectedOption}
-            setSelectedItemId={setSelectedOption}
-          />
-        ))}
+      <View style={styledRadio.container}>
+        <RadioGroup
+          options={optionsCheckBox}
+          setValue={setSelectedOption}
+          value={selectedOption}
+          isValidInput={isValidInput}
+        />
       </View>
 
       <TouchableOpacity style={styledUser.button} onPress={handleCreateUser}>
