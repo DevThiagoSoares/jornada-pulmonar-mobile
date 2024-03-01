@@ -98,6 +98,12 @@ export const styledAvatar = StyleSheet.create({
     marginTop: 8,
     color: '#888',
   },
+  crownIcon: {
+    position: 'absolute',
+    top: -65,
+    right: 20,
+    backgroundColor: 'transparent',
+  },
 });
 export const styledRadio = StyleSheet.create({
   container: {
