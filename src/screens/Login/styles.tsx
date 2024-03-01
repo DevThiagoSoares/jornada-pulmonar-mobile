@@ -57,7 +57,6 @@ export const styles = StyleSheet.create({
     color: 'black',
     textDecorationLine: 'underline',
     fontSize: 16,
-    right: 100,
   },
 
   image: {
@@ -84,5 +83,12 @@ export const styles = StyleSheet.create({
     color: '#CD4C3E',
     fontSize: 12,
     marginTop: 5,
+  },
+  containerOptions: {
+    display: 'flex',
+    width: '80%',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: 20,
   },
 });

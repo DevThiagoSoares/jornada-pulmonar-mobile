@@ -141,10 +141,10 @@ const Login = ({ navigation }: Props) => {
             </TouchableOpacity>
           </View>
           {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
-          <TouchableOpacity onPress={handleSignUpPress}>
-            <Text style={styles.linkText}>Não tenho conta</Text>
-          </TouchableOpacity>
-          <View style={{ display: 'flex', flexDirection: 'row', width: '100%', paddingLeft: 30 }}>
+          <View style={styles.containerOptions}>
+            <TouchableOpacity onPress={handleSignUpPress}>
+              <Text style={styles.linkText}>Não tenho conta</Text>
+            </TouchableOpacity>
             <RadioGroup
               options={optionsCheckBox}
               setValue={setIsChecked}
@@ -156,7 +156,7 @@ const Login = ({ navigation }: Props) => {
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
           <ModalContainer onClose={handleSignUpPress} visible={isOpenModal}>
-            <View style={{ height: 650, width: 320 }}>
+            <View style={{ height: 580, width: 320 }}>
               <SignUpForm />
             </View>
           </ModalContainer>
