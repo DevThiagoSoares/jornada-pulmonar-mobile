@@ -1,7 +1,11 @@
+import React from 'react';
+import { ScrollView } from 'react-native';
+import { View } from 'react-native-animatable';
 import { List } from 'react-native-paper';
 
 import { CreateCard } from './createCard';
 import { NotFoundData } from './notFoundData';
+import { OptionsCard } from './optionsCard';
 import { styledCard } from './styles';
 
 export function ListCard() {
@@ -14,7 +18,16 @@ export function ListCard() {
         rippleColor="#CD4C3E"
         left={() => <List.Icon color="#CD4C3E" icon="plus" />}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
-        <CreateCard />
+        <View>
+          <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 235 }}>
+            <View style={styledCard.cardContainer}>
+              <OptionsCard quantity={10} subTitle="ENFERMARIA" title="Unidade 1" />
+              <OptionsCard quantity={10} subTitle="UPA" title="Unidade 2" />
+              <OptionsCard quantity={10} subTitle="SPA" title="Unidade 3" />
+              <CreateCard />
+            </View>
+          </ScrollView>
+        </View>
       </List.Accordion>
       <List.Accordion
         title="Ranking"

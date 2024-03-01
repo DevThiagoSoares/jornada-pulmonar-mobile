@@ -4,38 +4,42 @@ import { StyleSheet } from 'react-native';
 export const styledCard = StyleSheet.create({
   container: {
     display: 'flex',
-    flexGrow: 1,
-    margin: 10,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
+    margin: 5,
+    flexDirection: 'column',
   },
   listOptions: {
     backgroundColor: 'rgba(229, 204, 200, 0.5)',
   },
-  ContainerCard: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 12,
-    backgroundColor: 'rgba(222, 139, 129, 0.5)',
-    borderRadius: 10,
-    padding: 15,
+  cardContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 5, // Espaçamento horizontal entre os cards
   },
   containerTitle: {
     backgroundColor: 'rgba(205, 76, 62, 0.6)',
-    borderRadius: 15,
-    padding: 10,
+    borderRadius: 10,
+    padding: 8,
+    textAlign: 'center',
   },
   title: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  description: {
+    fontSize: 11,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 
 export const styledOptions = StyleSheet.create({
   containerCard: {
-    ...styledCard.ContainerCard,
+    display: 'flex',
+    padding: 10,
+    alignItems: 'center',
+    gap: 10,
     backgroundColor: 'rgba(205, 76, 62, 0.7)',
   },
   containerTitle: {

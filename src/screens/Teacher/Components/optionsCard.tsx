@@ -19,8 +19,8 @@ export function OptionsCard(props: cardProps) {
             <View style={styledOptions.containerTitle}>
               <Text style={styledCard.title}>{props.title}</Text>
             </View>
-            <Text>{props.subTitle}</Text>
-            <Text>{props.quantity} Questões</Text>
+            <Text style={styledCard.description}>{props.subTitle}</Text>
+            <Text style={styledCard.description}>{props.quantity} Questões</Text>
           </Card.Content>
         </TouchableNativeFeedback>
       </Card>

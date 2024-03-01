@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { StackScreenProps } from '@react-navigation/stack';
-/* import * as Notifications from 'expo-notifications';
- */ import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, Text, TextInput, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -44,22 +43,6 @@ const Login = ({ navigation }: Props) => {
       label: 'Eu aceito os termos de uso',
     },
   ];
-
-  /*   async function handleNotification() {
-    const { status } = await Notifications.getPermissionsAsync();
-    console.log('status', status);
-    if (status !== 'granted') {
-      const { status: newStatus } = await Notifications.requestPermissionsAsync();
-      if (newStatus !== 'granted') {
-        return;
-      }
-    }
-    const { data: token } = await Notifications.getExpoPushTokenAsync({
-      projectId: `${process.env.EXPO_PUBLIC_PROJECT_ID}`,
-    });
-    console.log('Expo Push Token:', token);
-  } */
-
   const onSubmit = async (data: FormProps) => {
     if (isChecked) {
       const result: UserProps = {
