@@ -6,8 +6,9 @@ export const styledHometeacher = StyleSheet.create({
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        margin: 20,
-        gap: 20
+        marginLeft: 20,
+        marginRight: 20,
+        gap: 10
     },
     title: {
         fontSize: 23,

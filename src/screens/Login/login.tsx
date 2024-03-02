@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, Text, TextInput, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Exemplo usando ícones FontAwesome, mas você pode usar qualquer conjunto de ícones suportado
+import Icon from 'react-native-vector-icons/FontAwesome';
 import image from 'src/assets/image/Grupo-6845.png';
 
 import { RadioGroup } from './components/radioGroup';

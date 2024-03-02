@@ -19,7 +19,7 @@ export function ListCard() {
         left={() => <List.Icon color="#CD4C3E" icon="plus" />}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
         <View>
-          <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 235 }}>
+          <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 209 }}>
             <View style={styledCard.cardContainer}>
               <OptionsCard quantity={10} subTitle="ENFERMARIA" title="Unidade 1" />
               <OptionsCard quantity={10} subTitle="UPA" title="Unidade 2" />

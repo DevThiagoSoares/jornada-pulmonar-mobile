@@ -14,16 +14,15 @@ export const styledCard = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingHorizontal: 5, // Espaçamento horizontal entre os cards
   },
   containerTitle: {
     backgroundColor: 'rgba(205, 76, 62, 0.6)',
     borderRadius: 10,
-    padding: 8,
+    padding: 5,
     textAlign: 'center',
   },
   title: {
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: 'bold',
     color: '#fff',
   },
