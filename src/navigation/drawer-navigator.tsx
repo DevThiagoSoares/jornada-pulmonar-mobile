@@ -5,7 +5,7 @@ import { Pressable } from 'react-native';
 
 import { RootStackParamList } from '.';
 import TabNavigator from './tab-navigator';
-import Home from '../screens/Teacher/home';
+import Home from '../screens/Teacher/index';
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 

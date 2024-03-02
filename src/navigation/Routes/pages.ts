@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 
-import PageTeacher from '~/screens/Teacher/home';
+import PageTeacher from '~/screens/Teacher/index';
 
 export const PagesTeacher = [
     {

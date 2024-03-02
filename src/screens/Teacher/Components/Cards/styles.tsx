@@ -12,7 +12,6 @@ export const styledCard = StyleSheet.create({
   cardContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
   },
   containerTitle: {
     backgroundColor: 'rgba(205, 76, 62, 0.6)',
@@ -29,5 +28,13 @@ export const styledCard = StyleSheet.create({
     fontSize: 11,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  listContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    gap: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

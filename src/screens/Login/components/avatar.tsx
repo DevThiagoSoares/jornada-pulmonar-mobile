@@ -28,9 +28,6 @@ const AvatarPicker = () => {
         <Image source={{ uri: profilePic }} style={styledAvatar.avatarImage} />
       ) : (
         <View style={styledAvatar.avatarIcon}>
-          {/*  <View style={styledAvatar.crownIcon}>
-            <MaterialCommunityIcons name="crown" size={70} color="#FFD700" />
-          </View> */}
           <MaterialCommunityIcons name="image-plus" size={40} color="#FFF" />
         </View>
       )}

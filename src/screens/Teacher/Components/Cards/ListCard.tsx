@@ -6,7 +6,8 @@ import { List } from 'react-native-paper';
 import { CreateCard } from './createCard';
 import { OptionsCard } from './optionsCard';
 import { styledCard } from './styles';
-import { NotFoundData } from '../notFoundData';
+import { AvatarGroup } from '../Avatar/avatarGroup';
+//import { NotFoundData } from '../notFoundData';
 
 export function ListCard() {
   return (
@@ -16,7 +17,6 @@ export function ListCard() {
         id="1"
         style={styledCard.listOptions}
         rippleColor="#CD4C3E"
-        left={() => <List.Icon color="#CD4C3E" icon="plus" />}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
         <View>
           <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 209 }}>
@@ -34,9 +34,18 @@ export function ListCard() {
         id="2"
         rippleColor="#CD4C3E"
         style={styledCard.listOptions}
-        left={() => <List.Icon color="#CD4C3E" icon="crown" />}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
-        <NotFoundData />
+        <View style={styledCard.listContainer}>
+          <AvatarGroup name="teste1" photo="https://picsum.photos/500" points={10} sizePhoto={44} />
+          <AvatarGroup
+            name="Fernanda"
+            photo="https://picsum.photos/700"
+            points={50}
+            sizePhoto={74}
+          />
+          <AvatarGroup name="teste2" photo="https://picsum.photos/200" points={20} sizePhoto={44} />
+          {/* <NotFoundData /> */}
+        </View>
       </List.Accordion>
     </List.AccordionGroup>
   );
