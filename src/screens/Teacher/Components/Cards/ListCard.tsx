@@ -7,6 +7,7 @@ import { CreateCard } from './createCard';
 import { OptionsCard } from './optionsCard';
 import { styledCard } from './styles';
 import { AvatarGroup } from '../Avatar/avatarGroup';
+import { ListInfo } from '../List-Info/List-item-info';
 //import { NotFoundData } from '../notFoundData';
 
 export function ListCard() {
@@ -45,6 +46,11 @@ export function ListCard() {
           />
           <AvatarGroup name="teste2" photo="https://picsum.photos/200" points={20} sizePhoto={44} />
           {/* <NotFoundData /> */}
+        </View>
+        <View>
+          <ListInfo name="Fernanda Maciel" points={9} position={4} />
+          <ListInfo name="Teste1 Maciel" points={8} position={5} />
+          <ListInfo name="Teste2 Maciel" points={7} position={6} />
         </View>
       </List.Accordion>
     </List.AccordionGroup>
