@@ -109,7 +109,7 @@ export function FormLogin() {
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
       <ModalContainer onClose={handleSignUpPress} visible={isOpenModal}>
-        <View style={{ height: 580, width: 320 }}>
+        <View style={{ height: 630, width: 320 }}>
           <SignUpForm />
         </View>
       </ModalContainer>

@@ -29,13 +29,14 @@ const SignUpForm: React.FC = () => {
   const { validateUserAccess } = useAuth();
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
+  const [term, setTerm] = useState<string>('');
   const optionsCheckBox = [
     { value: TypeUser.Student, label: 'Sou aluno' },
     { value: TypeUser.Teacher, label: 'Sou professor' },
   ];
-
+  const options = [{ value: 'confirmed', label: 'Eu aceito os termos de uso' }];
   const onSubmit = (data: FormData) => {
-    if (selectedOption !== '') {
+    if (selectedOption !== '' && term !== '') {
       const result: UserProps = {
         name: data.name,
         password: data.name,
@@ -158,6 +159,23 @@ const SignUpForm: React.FC = () => {
           value={selectedOption}
           isValidInput={isValidInput}
         />
+        <View
+          style={{
+            borderWidth: 2,
+            borderRadius: 5,
+            borderStyle: 'dashed',
+            borderColor: '#FFF',
+            display: 'flex',
+            width: '100%',
+            marginTop: 10,
+          }}>
+          <RadioGroup
+            isValidInput={isValidInput}
+            setValue={setTerm}
+            options={options}
+            value={term}
+          />
+        </View>
       </View>
 
       <TouchableOpacity style={styledUser.button} onPress={handleCreateUser}>
