@@ -39,6 +39,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     width: '95%',
     borderRadius: 8,
+    backgroundColor: 'transparent',
   },
   inputError: {
     flexDirection: 'row',
