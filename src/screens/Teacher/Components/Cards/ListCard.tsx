@@ -4,9 +4,9 @@ import { View } from 'react-native-animatable';
 import { List } from 'react-native-paper';
 
 import { CreateCard } from './createCard';
-import { NotFoundData } from './notFoundData';
 import { OptionsCard } from './optionsCard';
 import { styledCard } from './styles';
+import { NotFoundData } from '../notFoundData';
 
 export function ListCard() {
   return (

@@ -2,8 +2,8 @@ import { View, ImageBackground } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
 
-import { ListCard } from './Components/ListCard';
-import { DescriptionCard } from './Components/descriptionCard';
+import { ListCard } from './Components/Cards/ListCard';
+import { DescriptionCard } from './Components/Cards/descriptionCard';
 import { styledHometeacher } from './styles';
 import { styles } from '../Login/styles';
 

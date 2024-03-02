@@ -1,6 +1,6 @@
 import { Card, Text } from 'react-native-paper';
 
-import { styledHometeacher } from '../styles';
+import { styledHometeacher } from '../../styles';
 
 export function DescriptionCard() {
   return (

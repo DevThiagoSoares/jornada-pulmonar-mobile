@@ -2,7 +2,8 @@ import { TouchableNativeFeedback } from 'react-native';
 import { View, Text } from 'react-native-animatable';
 import { Card } from 'react-native-paper';
 
-import { styledCard, styledOptions } from './styles';
+import { styledCard } from './styles';
+import { styledOptions } from '../styles';
 
 interface cardProps {
   title: string;
