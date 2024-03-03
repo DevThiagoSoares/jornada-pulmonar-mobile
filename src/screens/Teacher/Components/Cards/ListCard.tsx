@@ -37,14 +37,14 @@ export function ListCard() {
         style={styledCard.listOptions}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
         <View style={styledCard.listContainer}>
-          <AvatarGroup name="teste1" photo="https://picsum.photos/500" points={10} sizePhoto={44} />
+          <AvatarGroup name="teste1" photo="https://picsum.photos/500" points={10} sizePhoto={54} />
           <AvatarGroup
             name="Fernanda"
             photo="https://picsum.photos/700"
             points={50}
-            sizePhoto={74}
+            sizePhoto={84}
           />
-          <AvatarGroup name="teste2" photo="https://picsum.photos/200" points={20} sizePhoto={44} />
+          <AvatarGroup name="teste2" photo="https://picsum.photos/200" points={20} sizePhoto={54} />
           {/* <NotFoundData /> */}
         </View>
         <View>

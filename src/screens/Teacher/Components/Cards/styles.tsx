@@ -33,7 +33,7 @@ export const styledCard = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-    gap: 15,
+    gap: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },

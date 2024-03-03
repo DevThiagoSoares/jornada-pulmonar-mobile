@@ -3,7 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Pressable } from 'react-native';
 
-import { RootStackParamList } from '.';
+import { RootStackParamList } from './Routes';
 import TabNavigator from './tab-navigator';
 import Home from '../screens/Teacher/index';
 

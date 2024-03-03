@@ -1,15 +1,22 @@
+import { useNavigation } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 import { TouchableNativeFeedback } from 'react-native';
 import { View, Text } from 'react-native-animatable';
 import { Card, IconButton } from 'react-native-paper';
 
 import { styledCard } from './styles';
 
+import { RootStackParamList } from '~/navigation/Routes';
+
+type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
+
 export function CreateCard() {
+  const navigation = useNavigation<Props['navigation']>();
   return (
     <View style={styledCard.container}>
       <Card elevation={0} style={{ backgroundColor: 'transparent', borderRadius: 10 }}>
         <TouchableNativeFeedback
-          onPress={() => {}}
+          onPress={() => navigation.navigate('TabNavigator')}
           background={TouchableNativeFeedback.Ripple('#CD4C3E', true)}>
           <Card.Content
             style={{

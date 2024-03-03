@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StackScreenProps } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
 
-import { RootStackParamList } from '.';
+import { RootStackParamList } from './Routes';
 import One from '../screens/one';
 import Two from '../screens/two';
 
