@@ -2,6 +2,9 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { View } from 'react-native-animatable';
 import { List } from 'react-native-paper';
+import goldCrown from 'src/assets/image/Grupo-7091.png';
+import bronzeCrown from 'src/assets/image/bronze.png';
+import silverCrown from 'src/assets/image/prata.png';
 
 import { CreateCard } from './createCard';
 import { OptionsCard } from './optionsCard';
@@ -37,14 +40,27 @@ export function ListCard() {
         style={styledCard.listOptions}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
         <View style={styledCard.listContainer}>
-          <AvatarGroup name="teste1" photo="https://picsum.photos/500" points={10} sizePhoto={54} />
           <AvatarGroup
+            name="teste1"
+            photo="https://picsum.photos/500"
+            points={10}
+            sizePhoto={54}
+            crown={silverCrown}
+          />
+          <AvatarGroup
+            crown={goldCrown}
             name="Fernanda"
             photo="https://picsum.photos/700"
             points={50}
             sizePhoto={84}
           />
-          <AvatarGroup name="teste2" photo="https://picsum.photos/200" points={20} sizePhoto={54} />
+          <AvatarGroup
+            name="teste2"
+            photo="https://picsum.photos/200"
+            points={20}
+            sizePhoto={54}
+            crown={bronzeCrown}
+          />
           {/* <NotFoundData /> */}
         </View>
         <View>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
@@ -11,10 +11,7 @@ interface FormData {
   titleUnit: string;
   question: string;
   Weight: string;
-}
-interface alternativeprops {
-  value: string;
-  label: string;
+  alternatives: any;
 }
 
 export const FormComponent: React.FC = () => {
@@ -23,8 +20,6 @@ export const FormComponent: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-
-  const [alternative, setAlternative] = useState<alternativeprops[]>([]);
 
   const onSubmit = (data: FormData) => {
     console.log(data);
@@ -93,9 +88,13 @@ export const FormComponent: React.FC = () => {
           rules={{ required: 'Pergunta é obrigatória' }}
           defaultValue=""
         />
-        <Alternative description="teste" handleDelete={() => {}} />
+        <Controller
+          control={control}
+          render={({ field: { onChange } }) => <Alternative onChange={onChange} />}
+          name="alternatives"
+        />
 
-        <Button mode="contained" style={{ backgroundColor: '#CD4C3E' }} onPress={SubmitForm}>
+        <Button mode="contained" style={styledForm.button} onPress={SubmitForm}>
           Salvar
         </Button>
       </View>

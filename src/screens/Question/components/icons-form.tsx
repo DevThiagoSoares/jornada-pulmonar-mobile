@@ -6,7 +6,7 @@ import { styledForm } from './styles';
 export function IconsForm() {
   return (
     <View style={styledForm.icons}>
-      <Text style={{ color: '#CD4C3E', fontWeight: '800', fontSize: 15 }}>Questão</Text>
+      <Text style={styledForm.title}>Questão</Text>
       <View style={styledForm.icons}>
         <IconButton
           icon="image"

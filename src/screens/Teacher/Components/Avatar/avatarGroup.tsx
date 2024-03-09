@@ -8,6 +8,7 @@ interface AvatarProps {
   photo: string | null;
   sizePhoto: number;
   points: number;
+  crown: string | any;
 }
 
 export function AvatarGroup(props: AvatarProps) {
@@ -15,10 +16,7 @@ export function AvatarGroup(props: AvatarProps) {
     <View style={styledAvatar.container}>
       <View style={styledAvatar.boxAvatar}>
         <View style={styledAvatar.crownIcon}>
-          <Image
-            source={require('src/assets/image/Grupo-7091.png')}
-            style={{ width: 54, height: 35 }}
-          />
+          <Image source={props.crown} style={{ width: 54, height: 35 }} />
         </View>
         <Avatar.Image
           size={props.sizePhoto}
