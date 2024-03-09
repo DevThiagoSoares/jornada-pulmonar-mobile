@@ -6,12 +6,16 @@ import { TextInput, Button } from 'react-native-paper';
 import { Alternative } from './alternative-question';
 import { IconsForm } from './icons-form';
 import { styledForm } from './styles';
-
+interface optionsAlt {
+  label: string;
+  value: string;
+  correctAlternative: string;
+}
 interface FormData {
   titleUnit: string;
   question: string;
   Weight: string;
-  alternatives: any;
+  alternatives: optionsAlt[];
 }
 
 export const FormComponent: React.FC = () => {
@@ -22,7 +26,7 @@ export const FormComponent: React.FC = () => {
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    console.log(data.alternatives);
   };
 
   function SubmitForm() {
@@ -76,6 +80,7 @@ export const FormComponent: React.FC = () => {
           control={control}
           render={({ field: { onBlur, onChange, value } }) => (
             <TextInput
+              error={!!errors.question}
               mode="outlined"
               outlineColor="#FFFFFF"
               onBlur={onBlur}
@@ -90,8 +95,11 @@ export const FormComponent: React.FC = () => {
         />
         <Controller
           control={control}
-          render={({ field: { onChange } }) => <Alternative onChange={onChange} />}
+          render={({ field: { onChange, value } }) => (
+            <Alternative onChange={onChange} errors={errors.alternatives?.message} />
+          )}
           name="alternatives"
+          rules={{ required: 'Adicione no mínimo duas alternativas' }}
         />
 
         <Button mode="contained" style={styledForm.button} onPress={SubmitForm}>
