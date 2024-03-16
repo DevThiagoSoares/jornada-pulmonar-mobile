@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { Text, Button, RadioButton, TextInput, IconButton } from 'react-native-paper';
 
 import { styledAlternative, styledForm } from './styles';
+import { InputNormal } from './ui';
 
 interface Alternative {
   value: string;
@@ -54,15 +55,11 @@ export function Alternative(props: OptionsProps) {
   return (
     <View style={styledAlternative.container}>
       <Text style={styledForm.title}>Resposta:</Text>
-      <TextInput
-        error={!!props.errors}
-        style={styledAlternative.input}
-        mode="outlined"
-        outlineColor="#FFF"
+      <InputNormal
         label={props.errors ? props.errors : 'Insira uma alternativa'}
         value={alternative}
-        onChangeText={handleInputChange}
       />
+
       <Button onPress={handleAddAlternative} mode="contained" style={styledAlternative.button}>
         Adicionar Alternativa
       </Button>

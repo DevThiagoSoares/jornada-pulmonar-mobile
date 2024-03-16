@@ -10,10 +10,9 @@ export const styledForm = StyleSheet.create({
     backgroundColor: 'rgba(229, 204, 200, 0.8)',
   },
   box: {
-    backgroundColor: 'rgba(229, 204, 200, 0.8)',
+    backgroundColor: 'rgba(246, 174, 174, 0.5)',
     padding: 20,
     gap: 20,
-    marginTop: 20,
     borderRadius: 20,
   },
   icons: {
@@ -24,6 +23,8 @@ export const styledForm = StyleSheet.create({
   },
   button: {
     backgroundColor: '#CD4C3E',
+    borderRadius: 16,
+    padding: 10,
   },
   title: {
     color: '#CD4C3E',
