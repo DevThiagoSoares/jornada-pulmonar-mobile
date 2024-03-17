@@ -1,7 +1,7 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import img from 'src/assets/image/Grupo-6845.png';
 
-import EditScreenInfo from '../../components/screens/edit-screen-info';
+import { FormPerfil } from './Components/forms/form-perfil';
 import { styles } from '../Login/styles';
 
 import { BackgroundScreen } from '~/components/screens/background-image';
@@ -9,10 +9,8 @@ import { BackgroundScreen } from '~/components/screens/background-image';
 export default function TabPerfil() {
   return (
     <BackgroundScreen resizeMode="cover" source={img} style={styles.backgroundImage}>
-      <View>
-        <Text>TabPerfil</Text>
-        <View />
-        <EditScreenInfo path="src/screens/one.tsx" />
+      <View style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', top: 40 }}>
+        <FormPerfil />
       </View>
     </BackgroundScreen>
   );

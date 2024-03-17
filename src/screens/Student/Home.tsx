@@ -8,7 +8,7 @@ import { CardTemplate } from './Components/cards/card';
 
 import { BackgroundScreen } from '~/components/screens/background-image';
 
-const YourComponent = () => {
+const HomeStudent = () => {
   return (
     <BackgroundScreen
       resizeMode="cover"
@@ -27,7 +27,7 @@ const YourComponent = () => {
             title="UPA"
             totalQuest={8}
             totalFinishe={3}
-            progress={0.375}
+            progress={0.3}
             img={imgEnfer2}
           />
         </View>
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default YourComponent;
+export default HomeStudent;
