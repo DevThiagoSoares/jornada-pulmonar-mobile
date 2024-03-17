@@ -1,9 +1,9 @@
 import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Modal, TouchableOpacity, ImageBackground } from 'react-native';
+import { TouchableOpacity, ImageBackground } from 'react-native';
 import image from 'src/assets/image/style3.png';
 
-import DrawerNavigator from '../drawer-navigator';
+import TabLayout from '../tab-navigator';
 
 import { useAuth } from '~/Shared/Auth';
 import { TypeUser } from '~/Shared/Enums/typeUser';
@@ -58,8 +58,8 @@ export function AppRoutes() {
           </>
         ) : (
           <Stack.Screen
-            name="DrawerNavigator"
-            component={DrawerNavigator}
+            name="TabNavigator"
+            component={TabLayout}
             options={{
               headerShown: true,
               headerLeft: () => (
@@ -79,11 +79,6 @@ export function AppRoutes() {
           }}
         />
       )}
-      <Stack.Screen
-        name="Modal"
-        component={Modal}
-        options={{ presentation: 'modal', headerLeft: () => null }}
-      />
     </Stack.Navigator>
   );
 }

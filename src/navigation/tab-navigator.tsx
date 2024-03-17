@@ -1,11 +1,13 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MaterialCommunityIcons from '@expo/vector-icons/build/MaterialCommunityIcons';
+import MaterialIcons from '@expo/vector-icons/build/MaterialIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StackScreenProps } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
 
 import { RootStackParamList } from './Routes';
-import One from '../screens/one';
-import Two from '../screens/two';
+import One from '../screens/Student/one';
+import Two from '../screens/Student/two';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +24,7 @@ export default function TabLayout({ navigation }: Props) {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'black',
+        tabBarActiveTintColor: '#CD4C3E',
 
         headerShown: false,
       }}>
@@ -30,16 +32,27 @@ export default function TabLayout({ navigation }: Props) {
         name="One"
         component={One}
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Home',
+
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <Tab.Screen
         name="Two"
         component={Two}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Perfil',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="head-question" size={30} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Tree"
+        component={Two}
+        options={{
+          title: 'Ranking',
+          tabBarIcon: ({ color }) => <MaterialIcons name="stars" size={30} color={color} />,
         }}
       />
     </Tab.Navigator>
