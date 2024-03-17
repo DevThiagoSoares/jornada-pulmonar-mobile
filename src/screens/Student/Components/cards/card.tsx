@@ -1,6 +1,5 @@
 import { Image, View } from 'react-native';
 import { Button, Card, ProgressBar, Text } from 'react-native-paper';
-import img from 'src/assets/image/GrupoEnfer.png';
 
 import { styledCard } from './styles';
 
@@ -9,6 +8,7 @@ interface cardProps {
   totalQuest: number;
   totalFinishe: number;
   progress: number;
+  img: any;
 }
 
 export function CardTemplate(props: cardProps) {
@@ -17,7 +17,7 @@ export function CardTemplate(props: cardProps) {
       <Card style={styledCard.cardContainer}>
         <Card.Content style={styledCard.content}>
           <View style={styledCard.avatar}>
-            <Image source={img} style={{ width: 110, height: 175 }} />
+            <Image source={props.img} style={{ width: 110, height: 175 }} />
           </View>
           <View style={{ display: 'flex', marginBottom: 30, gap: 15 }}>
             <Text variant="titleLarge" style={styledCard.title}>
