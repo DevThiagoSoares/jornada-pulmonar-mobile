@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover', // ou 'stretch'
+    backgroundColor: 'rgba(250, 206, 202, 1)',
   },
   form: {
     flex: 1,
