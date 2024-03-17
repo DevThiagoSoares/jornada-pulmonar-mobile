@@ -1,12 +1,22 @@
 import React from 'react';
+import { InputModeOptions } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 interface InputProps {
   value: string;
   label: string;
+  icon?: React.ReactNode;
+  inputMode?: InputModeOptions;
+  onChange?: (text: string) => void;
 }
 
-export const InputNormal: React.FC<InputProps> = ({ value, label }) => {
+export const InputNormal: React.FC<InputProps> = ({
+  value,
+  label,
+  icon,
+  inputMode = 'text',
+  onChange,
+}) => {
   return (
     <TextInput
       mode="outlined"
@@ -17,9 +27,10 @@ export const InputNormal: React.FC<InputProps> = ({ value, label }) => {
       activeOutlineColor="#CD4C3E"
       selectionColor="#CD4C3E"
       underlineColor="#CD4C3E"
-      inputMode="text"
+      inputMode={inputMode}
       value={value}
       label={label}
+      onChangeText={onChange}
       style={{ backgroundColor: '#FAEBEA' }}
       theme={{
         colors: {
@@ -30,6 +41,7 @@ export const InputNormal: React.FC<InputProps> = ({ value, label }) => {
           onSurface: '#CD4C3E',
         },
       }}
+      right={icon}
     />
   );
 };

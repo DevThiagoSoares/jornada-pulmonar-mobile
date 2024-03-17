@@ -58,6 +58,8 @@ export function Alternative(props: OptionsProps) {
       <InputNormal
         label={props.errors ? props.errors : 'Insira uma alternativa'}
         value={alternative}
+        icon={<TextInput.Icon icon="delete" color="#CD4C3E" />}
+        onChange={handleInputChange}
       />
 
       <Button onPress={handleAddAlternative} mode="contained" style={styledAlternative.button}>

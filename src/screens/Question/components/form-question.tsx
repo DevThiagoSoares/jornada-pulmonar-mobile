@@ -80,7 +80,11 @@ export const FormComponent: React.FC = () => {
         <Controller
           control={control}
           render={({ field: { onBlur, onChange, value } }) => (
-            <InputNormal value={value} label={errors?.Weight?.message || 'Peso da Questão'} />
+            <InputNormal
+              value={value}
+              label={errors?.Weight?.message || 'Peso da Questão'}
+              onChange={onChange}
+            />
           )}
           name="Weight"
           rules={{ required: 'Peso da questão é obrigatório' }}
@@ -90,7 +94,11 @@ export const FormComponent: React.FC = () => {
         <Controller
           control={control}
           render={({ field: { onBlur, onChange, value } }) => (
-            <InputNormal value={value} label={errors?.question?.message || 'Digite a Pergunta'} />
+            <InputNormal
+              value={value}
+              label={errors?.question?.message || 'Digite a Pergunta'}
+              onChange={onChange}
+            />
           )}
           name="question"
           rules={{ required: 'Pergunta é obrigatória' }}
