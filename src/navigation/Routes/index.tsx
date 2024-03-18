@@ -13,12 +13,14 @@ import { TypeUser } from '~/Shared/Enums/typeUser';
 import { ComponentLevel } from '~/components/screens/component-level';
 import Login from '~/screens/Login/login';
 import { CreateQuestion } from '~/screens/Question';
-import Modal from '~/screens/Student/modal';
+import Modal from '~/screens/Student/Components/modal/modal';
+import { ModalQuestion } from '~/screens/Student/Components/modal/modal-question';
 import PageTeacher from '~/screens/Teacher';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;
   Modal: undefined;
+  ModalQuestion: undefined;
   TabNavigator: undefined;
 };
 
@@ -99,6 +101,11 @@ export function AppRoutes() {
               }}
             />
             <Stack.Screen name="Modal" component={Modal} options={{ headerTitle: 'Unidade' }} />
+            <Stack.Screen
+              name="ModalQuestion"
+              component={ModalQuestion}
+              options={{ headerTitle: 'Unidade' }}
+            />
           </>
         )
       ) : (
