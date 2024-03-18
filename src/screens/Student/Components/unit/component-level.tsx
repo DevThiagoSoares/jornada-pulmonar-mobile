@@ -18,7 +18,7 @@ export function ComponentLevel(props: levelProps) {
         alignItems: 'center',
       }}
       resizeMode="cover">
-      <Text style={{ color: '#ffff' }}>{props.level}</Text>
+      <Text style={{ color: '#ffff', fontSize: 25, fontWeight: 'bold' }}>{props.level}</Text>
     </ImageBackground>
   );
 }

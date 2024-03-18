@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity, ImageBackground, Text } from 'react-native';
 import { View } from 'react-native-animatable';
+import iconImage from 'src/assets/image/União.png';
 import image from 'src/assets/image/style3.png';
 
 import { styledHeader } from './styles';
@@ -12,6 +13,7 @@ import { TypeUser } from '~/Shared/Enums/typeUser';
 import { ComponentLevel } from '~/components/screens/component-level';
 import Login from '~/screens/Login/login';
 import { CreateQuestion } from '~/screens/Question';
+import Modal from '~/screens/Student/modal';
 import PageTeacher from '~/screens/Teacher';
 
 export type RootStackParamList = {
@@ -70,31 +72,34 @@ export function AppRoutes() {
             />
           </>
         ) : (
-          <Stack.Screen
-            name="TabNavigator"
-            component={TabLayout}
-            options={{
-              headerShown: true,
-              headerTitle: '',
-              headerLeft: () => (
-                <TouchableOpacity onPress={signOut} style={styledHeader.container}>
-                  <View style={styledHeader.boxIcon}>
-                    <Ionicons
-                      name="log-out-outline"
-                      size={30}
-                      color="#FFFF"
-                      style={{ paddingRight: 10 }}
-                    />
-                    {ComponentLevel('6')}
-                    <Text style={styledHeader.text}>Nível</Text>
-                  </View>
-                  <View>
-                    <Text style={styledHeader.text}>Olá {user.name}</Text>
-                  </View>
-                </TouchableOpacity>
-              ),
-            }}
-          />
+          <>
+            <Stack.Screen
+              name="TabNavigator"
+              component={TabLayout}
+              options={{
+                headerShown: true,
+                headerTitle: '',
+                headerLeft: () => (
+                  <TouchableOpacity onPress={signOut} style={styledHeader.container}>
+                    <View style={styledHeader.boxIcon}>
+                      <Ionicons
+                        name="log-out-outline"
+                        size={30}
+                        color="#FFFF"
+                        style={{ paddingRight: 10 }}
+                      />
+                      <ComponentLevel level="6" img={iconImage} width={40} height={40} />
+                      <Text style={styledHeader.text}>Nível</Text>
+                    </View>
+                    <View>
+                      <Text style={styledHeader.text}>Olá {user.name}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ),
+              }}
+            />
+            <Stack.Screen name="Modal" component={Modal} options={{ headerTitle: 'Unidade' }} />
+          </>
         )
       ) : (
         <Stack.Screen

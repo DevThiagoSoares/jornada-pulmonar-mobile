@@ -13,9 +13,12 @@ import { BackgroundScreen } from '~/components/screens/background-image';
 
 export default function TabRanking() {
   return (
-    <BackgroundScreen resizeMode="cover" source={img} style={styles.backgroundImage}>
+    <BackgroundScreen
+      resizeMode="cover"
+      source={img}
+      style={[styles.backgroundImage, { backgroundColor: 'rgba(250, 206, 202, 1)' }]}>
       <ScrollView showsHorizontalScrollIndicator>
-        <View style={{ display: 'flex', padding: 25 }}>
+        <View style={{ display: 'flex', padding: 25, top: 20 }}>
           <View style={styledCard.listContainer}>
             <AvatarGroup
               name="teste1"
