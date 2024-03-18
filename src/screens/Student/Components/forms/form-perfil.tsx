@@ -6,6 +6,7 @@ import { Button, TextInput } from 'react-native-paper';
 
 import { styledForm } from './styles';
 
+import { useAuth } from '~/Shared/Auth';
 import AvatarPicker from '~/screens/Login/components/avatar';
 import { styledUser } from '~/screens/Login/components/styles';
 
@@ -13,6 +14,7 @@ interface FormData {
   name: string;
   email: string;
   password: string;
+  newKey: string;
 }
 
 export function FormPerfil() {
@@ -25,6 +27,7 @@ export function FormPerfil() {
     console.log(data);
   };
   const [showPassword, setShowPassword] = useState(false);
+  const { user } = useAuth();
 
   return (
     <View style={styledForm.container}>
@@ -39,7 +42,7 @@ export function FormPerfil() {
               onBlur={onBlur}
               error={!!errors.name}
               onChangeText={onChange}
-              value={value}
+              value={user?.name}
               label={errors.name?.message || 'Nome'}
               mode="outlined"
               outlineColor="transparent"
@@ -59,7 +62,7 @@ export function FormPerfil() {
               onBlur={onBlur}
               error={!!errors.email}
               onChangeText={onChange}
-              value={value}
+              value={user?.email}
               label={errors.email?.message || 'Email'}
               mode="outlined"
               outlineColor="transparent"
@@ -85,9 +88,9 @@ export function FormPerfil() {
               error={!!errors.password}
               onBlur={onBlur}
               onChangeText={onChange}
-              value={value}
+              value={user?.password}
               secureTextEntry={!showPassword}
-              label={errors.password?.message || 'Senha'}
+              label={errors.password?.message || 'Senha Atual'}
               mode="outlined"
               outlineColor="transparent"
               right={
@@ -103,6 +106,34 @@ export function FormPerfil() {
           name="password"
           defaultValue=""
         />
+        <Controller
+          control={control}
+          rules={{ required: 'Campo senha obrigatório' }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styledUser.input}
+              error={!!errors.newKey}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              secureTextEntry={!showPassword}
+              label={errors.newKey?.message || 'Nova senha'}
+              mode="outlined"
+              outlineColor="transparent"
+              right={
+                <TextInput.Icon
+                  icon={showPassword ? 'eye' : 'eye-off'}
+                  size={20}
+                  color="#CD4C3E"
+                  onPress={() => setShowPassword(!showPassword)}
+                />
+              }
+            />
+          )}
+          name="newKey"
+          defaultValue=""
+        />
+
         <Button
           mode="contained"
           style={{ backgroundColor: '#CD4C3E' }}

@@ -34,6 +34,7 @@ export function FormLogin() {
       password: data.password,
       role: TypeUser.Teacher,
     };
+    console.log(data);
     validateUserAccess(result);
   };
 

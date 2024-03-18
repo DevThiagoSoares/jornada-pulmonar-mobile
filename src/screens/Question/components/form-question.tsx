@@ -26,7 +26,7 @@ export const FormComponent: React.FC = () => {
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    console.log(data.alternatives);
+    console.log(data);
   };
 
   function SubmitForm() {

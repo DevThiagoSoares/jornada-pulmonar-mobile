@@ -12,7 +12,7 @@ type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 interface cardProps {
   title: string;
   totalQuest: number;
-  totalFinishe: number;
+  totalFinished: number;
   progress: number;
   img: any;
 }
@@ -32,7 +32,7 @@ export function CardTemplate(props: cardProps) {
               {props.title}
             </Text>
             <Text variant="bodyMedium" style={styledCard.text}>
-              CONCLUÍDA - {props.totalFinishe} / {props.totalQuest} PERGUNTAS
+              CONCLUÍDA - {props.totalFinished} / {props.totalQuest} PERGUNTAS
             </Text>
             <ProgressBar progress={props.progress} color="#FFB100" style={styledCard.progress} />
           </View>

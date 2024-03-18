@@ -19,14 +19,14 @@ const HomeStudent = () => {
           <CardTemplate
             title="Enfermaria"
             totalQuest={10}
-            totalFinishe={1}
+            totalFinished={1}
             progress={0.1}
             img={imgEnfer1}
           />
           <CardTemplate
             title="UPA"
             totalQuest={8}
-            totalFinishe={3}
+            totalFinished={3}
             progress={0.3}
             img={imgEnfer2}
           />
