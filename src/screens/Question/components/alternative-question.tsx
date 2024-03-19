@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Text, Button, RadioButton, TextInput, IconButton } from 'react-native-paper';
 
-import { styledAlternative, styledForm } from './styles';
+import { styledAlternative, styledForm } from '../styles';
 import { InputNormal } from './ui';
 
 interface Alternative {

@@ -10,11 +10,13 @@ import { TypeUser } from '~/Shared/Enums/typeUser';
 import Login from '~/screens/Login/login';
 import { CreateQuestion } from '~/screens/Question';
 import PageTeacher from '~/screens/Teacher';
+import { ImageStep } from '~/screens/Question/FormSteps/ImageStep';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;
   Modal: undefined;
   TabNavigator: undefined;
+  ImageStepForm: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -54,6 +56,11 @@ export function AppRoutes() {
               options={{
                 headerTitle: '',
               }}
+            />
+            <Stack.Screen
+              name="ImageStepForm"
+              component={ImageStep}
+              options={{ headerLeft: () => null, headerTitle: '' }}
             />
           </>
         ) : (

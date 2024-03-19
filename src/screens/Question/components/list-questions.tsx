@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Button, List, TextInput } from 'react-native-paper';
 
 import FormComponent from './form-question';
-import { styledForm } from './styles';
+import { styledForm } from '../styles';
 
 export function ListQuestions() {
   const [questions, setQuestions] = useState([{ id: 1 }]);

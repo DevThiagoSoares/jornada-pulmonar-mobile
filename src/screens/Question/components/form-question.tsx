@@ -1,14 +1,16 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View } from 'react-native';
-import { Button } from 'react-native-paper';
 import { Alternative } from './alternative-question';
-import { IconsForm } from './icons-form';
-import { styledForm } from './styles';
+import { styledForm } from '../styles';
 import { ButtonDefault, ButtonLink, InputNormal, InputTitle } from './ui';
-import { Surface } from 'react-native-paper';
+import { Surface, Text, IconButton } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '~/navigation/Routes';
+`
+`;
 interface optionsAlt {
   label: string;
   value: string;
@@ -47,12 +49,16 @@ const styles = StyleSheet.create({
   },
 });
 
+type Props = StackScreenProps<RootStackParamList, 'ImageStepForm'>;
+
 export const FormComponent: React.FC = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+
+  const navigation = useNavigation<Props['navigation']>();
 
   const onSubmit = (data: FormData) => {
     console.log(data.alternatives);
@@ -76,7 +82,27 @@ export const FormComponent: React.FC = () => {
       />
 
       <View style={styledForm.box}>
-        <IconsForm />
+        <View style={styledForm.icons}>
+          <Text style={styledForm.title}>Questão</Text>
+          <View style={styledForm.icons}>
+            <IconButton
+              icon="image"
+              mode="contained"
+              size={30}
+              iconColor="#FFF"
+              style={{ backgroundColor: '#CD4C3E', borderRadius: 10 }}
+              onPress={() => navigation.navigate('ImageStepForm')}
+            />
+            <IconButton
+              icon="delete"
+              mode="contained"
+              size={30}
+              iconColor="#FFF"
+              style={{ backgroundColor: '#CD4C3E', borderRadius: 10 }}
+            />
+          </View>
+        </View>
+
         <Controller
           control={control}
           render={({ field: { onBlur, onChange, value } }) => (
