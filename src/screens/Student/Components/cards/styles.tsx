@@ -36,4 +36,48 @@ export const styledCard = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'transparent',
   },
+  baseAlternative: {
+    display: 'flex',
+    flexDirection: 'row',
+    borderWidth: 2,
+    borderColor: 'transparent',
+    borderRadius: 10,
+    padding: 10,
+  },
+
+  buttonTitle: {
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: '#CD4C3E',
+    width: 150,
+    padding: 6,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+  },
+});
+
+export const styledAlternative = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 20,
+    gap: 20,
+  },
+  alternativeCorrect: {
+    ...styledCard.baseAlternative,
+    backgroundColor: '#CD4C3E',
+    fontWeight: '700',
+  },
+  alternative: {
+    ...styledCard.baseAlternative,
+    backgroundColor: '#CD6B5FC4',
+    color: '#202F36',
+  },
+  title: {
+    fontSize: 16,
+  },
 });

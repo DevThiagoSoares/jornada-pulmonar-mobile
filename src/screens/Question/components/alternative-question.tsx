@@ -5,7 +5,7 @@ import { Text, Button, RadioButton, TextInput, IconButton } from 'react-native-p
 
 import { styledAlternative, styledForm } from './styles';
 
-interface Alternative {
+export interface Alternative {
   value: string;
   description: string;
 }
