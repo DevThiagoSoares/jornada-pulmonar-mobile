@@ -11,7 +11,7 @@ import { BackgroundScreen } from '~/components/screens/background-image';
 export function CreateQuestion() {
   return (
     <BackgroundScreen source={img} style={styles.backgroundImage} resizeMode="cover">
-      <View style={{ flex: 1 }}>
+      <View style={{ display: 'flex', margin: 20 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <FormComponent />
           <ButtonDefault label="Nova Questão" onClick={() => console.log('...')} />

@@ -45,7 +45,7 @@ export const FormComponent: React.FC = () => {
   }
 
   return (
-    <>
+    <View style={{ display: 'flex', gap: 20, marginBottom: 20 }}>
       <Controller
         control={control}
         render={({ field: { onBlur, onChange, value } }) => (
@@ -118,7 +118,7 @@ export const FormComponent: React.FC = () => {
           <ButtonDefault label="SALVAR" onClick={SubmitForm} />
         </View>
       </View>
-    </>
+    </View>
   );
 };
 
