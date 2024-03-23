@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import { ScrollView } from 'react-native-gesture-handler';
+import imgHome from 'src/assets/image/Grupo-6845.png';
 import img from 'src/assets/image/Retângulo.png';
 
 import { styledModal } from './style';
@@ -10,6 +11,9 @@ import { styledSelect } from '../animations/styles';
 import { AlternativaCard } from '../cards/alternative-card';
 import { CardDescription } from '../cards/card-description';
 import { CarouselComponent } from '../componentImg';
+
+import { BackgroundScreen } from '~/components/screens/background-image';
+import { styles } from '~/screens/Login/styles';
 
 export function ModalQuestion() {
   const [locationX, setLocationX] = useState<number>(0);
@@ -27,7 +31,7 @@ export function ModalQuestion() {
     setLocationY(locationY);
   };
   return (
-    <View>
+    <BackgroundScreen source={imgHome} style={styles.backgroundImage} resizeMode="cover">
       <ScrollView showsVerticalScrollIndicator={false}>
         <CardDescription />
         <View style={styledModal.containerText}>
@@ -45,6 +49,6 @@ export function ModalQuestion() {
         </View>
         <SelectPosition newLocationX={0} newLocationY={0} />
       </ScrollView>
-    </View>
+    </BackgroundScreen>
   );
 }
