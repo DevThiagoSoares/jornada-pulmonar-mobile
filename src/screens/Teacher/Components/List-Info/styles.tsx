@@ -8,7 +8,7 @@ export const styledList = StyleSheet.create({
     padding: 15,
     borderRadius: 15,
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(205, 76, 62, 0.8)',
+    backgroundColor: '#CD4C3E',
   },
   title: {
     color: '#FFF',

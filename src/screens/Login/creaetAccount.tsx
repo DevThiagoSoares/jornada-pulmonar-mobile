@@ -39,9 +39,11 @@ const SignUpForm: React.FC = () => {
     if (selectedOption !== '' && term !== '') {
       const result: UserProps = {
         name: data.name,
-        password: data.name,
+        email: data.email,
+        password: data.password,
         role: selectedOption,
       };
+      console.log(data);
       validateUserAccess(result);
     } else {
       setIsValidInput(true);

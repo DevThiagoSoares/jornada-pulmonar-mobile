@@ -31,13 +31,13 @@ export const styledAvatar = StyleSheet.create({
     boxTitle: {
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: 'rgba(229, 204, 200, 2)',
+        backgroundColor: 'rgba(205, 107, 95, 0.37)',
         borderRadius: 20,
-        padding: 5,
+        padding: 8
     },
     title: {
         color: '#CD4C3E',
         fontWeight: '600',
-        fontSize: 11
+        fontSize: 12
     },
 });

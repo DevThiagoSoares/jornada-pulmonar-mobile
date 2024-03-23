@@ -8,6 +8,7 @@ export const isValidateAccount = () => {
 export interface UserProps {
   name: string;
   role: string;
+  email?: string;
   password?: string;
 }
 

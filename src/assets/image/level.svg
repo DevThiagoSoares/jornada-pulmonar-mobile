@@ -1,0 +1,14 @@
+<svg id="Componente_50_4" data-name="Componente 50 – 4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="77.974" height="84.974" viewBox="0 0 77.974 84.974">
+  <defs>
+    <filter id="União_4" x="0" y="0" width="77.974" height="84.974" filterUnits="userSpaceOnUse">
+      <feOffset dy="7" input="SourceAlpha"/>
+      <feGaussianBlur result="blur"/>
+      <feFlood flood-color="#cd4c3e"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#União_4)">
+    <path id="União_4-2" data-name="União 4" d="M30.937,73.127l-6.476-6.254h-9a9,9,0,0,1-9-9V49.488L.427,43.663A9,9,0,0,1,.2,30.937L6.458,24.46v-9a9,9,0,0,1,9-9h8.384L29.668.427A9,9,0,0,1,42.394.2L48.87,6.458h9a9,9,0,0,1,9,9v8.385L72.9,29.668a9,9,0,0,1,.222,12.726l-6.253,6.475v9a9,9,0,0,1-9,9H49.487L43.663,72.9a9,9,0,0,1-12.726.222Z" transform="translate(2.32 2.32)" fill="#feccc7"/>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-import { View, ImageBackground } from 'react-native';
+import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
 
@@ -7,11 +7,14 @@ import { DescriptionCard } from './Components/Cards/descriptionCard';
 import { styledHometeacher } from './styles';
 import { styles } from '../Login/styles';
 
+import { BackgroundScreen } from '~/components/screens/background-image';
+
 const PageTeacher = () => {
   return (
-    <ImageBackground
+    <BackgroundScreen
       style={styles.backgroundImage}
-      source={require('src/assets/image/image-6845.png')}>
+      source={require('src/assets/image/image-6845.png')}
+      resizeMode="cover">
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styledHometeacher.container}>
           <Text style={styledHometeacher.title}>Bem-Vindo !</Text>
@@ -26,7 +29,7 @@ const PageTeacher = () => {
           </View>
         </View>
       </ScrollView>
-    </ImageBackground>
+    </BackgroundScreen>
   );
 };
 

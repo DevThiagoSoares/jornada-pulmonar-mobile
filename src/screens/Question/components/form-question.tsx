@@ -36,7 +36,7 @@ export const FormComponent: React.FC = () => {
   const navigation = useNavigation<Props['navigation']>();
 
   const onSubmit = (data: FormData) => {
-    console.log(data.alternatives);
+    console.log(data);
   };
 
   function SubmitForm() {

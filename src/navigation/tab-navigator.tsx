@@ -1,20 +1,10 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StackScreenProps } from '@react-navigation/stack';
-import { StyleSheet } from 'react-native';
 
 import { RootStackParamList } from './Routes';
-import One from '../screens/one';
-import Two from '../screens/two';
+import { PageStudent } from './Routes/pages';
 
 const Tab = createBottomTabNavigator();
-
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={styles.tabBarIcon} {...props} />;
-}
 
 type Props = StackScreenProps<RootStackParamList, 'TabNavigator'>;
 
@@ -22,35 +12,28 @@ export default function TabLayout({ navigation }: Props) {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'black',
-
+        tabBarActiveTintColor: '#CD4C3E',
         headerShown: false,
+        tabBarStyle: {
+          height: 70,
+          backgroundColor: '#F8E7E3',
+        },
       }}>
-      <Tab.Screen
-        name="One"
-        component={One}
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <Tab.Screen
-        name="Two"
-        component={Two}
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
+      {PageStudent.map((item, idx) => (
+        <Tab.Screen
+          key={idx}
+          name={item.route}
+          component={item.component}
+          options={{
+            tabBarLabel: `${item.route}`,
+            tabBarLabelPosition: 'beside-icon',
+            tabBarIconStyle: {
+              width: 30,
+            },
+            tabBarIcon: ({ color }) => item.icon(color),
+          }}
+        />
+      ))}
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  headerRight: {
-    marginRight: 15,
-  },
-  tabBarIcon: {
-    marginBottom: -3,
-  },
-});

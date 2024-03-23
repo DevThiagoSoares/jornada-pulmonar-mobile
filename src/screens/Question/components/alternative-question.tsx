@@ -6,9 +6,9 @@ import { Text, Button, RadioButton, TextInput, IconButton } from 'react-native-p
 import { styledAlternative, styledForm } from '../styles';
 import { InputNormal } from './ui';
 
-interface Alternative {
+export interface Alternative {
   value: string;
-  label: string;
+  description: string;
 }
 interface OptionsProps {
   onChange: any;
@@ -42,7 +42,7 @@ export function Alternative(props: OptionsProps) {
   };
   const handleAddAlternative = () => {
     if (alternative.trim() !== '') {
-      setAlternatives([...alternatives, { value: alternative, label: alternative }]);
+      setAlternatives([...alternatives, { value: alternative, description: alternative }]);
       setAlternative('');
       setCorrectAlternative(alternative);
     }
@@ -75,7 +75,7 @@ export function Alternative(props: OptionsProps) {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <RadioButton value={alt.value} color="green" />
               <Text>
-                {String.fromCharCode(65 + idx)}) {alt.label}
+                {String.fromCharCode(65 + idx)}) {alt.description}
               </Text>
             </View>
           </RadioButton.Group>
