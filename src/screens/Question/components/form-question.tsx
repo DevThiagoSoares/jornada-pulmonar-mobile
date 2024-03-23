@@ -1,16 +1,16 @@
+import { useNavigation } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View } from 'react-native';
+import { Text, IconButton } from 'react-native-paper';
+
 import { Alternative } from './alternative-question';
-import { styledForm } from '../styles';
-import { ButtonDefault, ButtonLink, InputNormal, InputTitle } from './ui';
-import { Surface, Text, IconButton } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { ButtonDefault, InputNormal, InputTitle } from './ui';
+import { styledForm, styles } from '../styles';
+
 import { RootStackParamList } from '~/navigation/Routes';
-`
-`;
+
 interface optionsAlt {
   label: string;
   value: string;
@@ -23,31 +23,6 @@ interface FormData {
   Weight: string;
   alternatives: optionsAlt[];
 }
-
-const styles = StyleSheet.create({
-  surface: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    borderColor: 'transparent',
-    shadowColor: 'transparent',
-    alignItems: 'center',
-  },
-  button: {
-    flex: 1,
-    margin: 5,
-    backgroundColor: '#CD4C3E',
-    borderRadius: 16,
-    padding: 10,
-  },
-  buttonLink: {
-    flex: 1,
-    margin: 5,
-    borderRadius: 16,
-    padding: 10,
-  },
-});
 
 type Props = StackScreenProps<RootStackParamList, 'ImageStepForm'>;
 
@@ -119,7 +94,7 @@ export const FormComponent: React.FC = () => {
 
         <Controller
           control={control}
-          render={({ field: { onBlur, onChange, value } }) => (
+          render={({ field: { onChange, value } }) => (
             <InputNormal
               value={value}
               label={errors?.question?.message || 'Digite a Pergunta'}
@@ -139,10 +114,9 @@ export const FormComponent: React.FC = () => {
           rules={{ required: 'Adicione no mínimo duas alternativas' }}
         />
 
-        <Surface style={styles.surface}>
-          <ButtonLink label="VOLTAR" onClick={() => console.log('...')} />
+        <View style={styles.surface}>
           <ButtonDefault label="SALVAR" onClick={SubmitForm} />
-        </Surface>
+        </View>
       </View>
     </>
   );

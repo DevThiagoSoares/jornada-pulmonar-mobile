@@ -58,3 +58,25 @@ export const styledAlternative = StyleSheet.create({
     ...styledForm.button,
   },
 });
+
+export const styles = StyleSheet.create({
+  surface: {
+    width: '50%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  button: {
+    flex: 1,
+    margin: 5,
+    backgroundColor: '#CD4C3E',
+    borderRadius: 16,
+    padding: 10,
+  },
+  buttonLink: {
+    flex: 1,
+    margin: 5,
+    borderRadius: 16,
+    padding: 10,
+  },
+});
