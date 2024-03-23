@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         gap: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     carouselItem: {
         alignItems: 'center',

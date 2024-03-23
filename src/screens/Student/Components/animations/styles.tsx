@@ -4,7 +4,6 @@ export const styledSelect = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    height: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -12,14 +11,13 @@ export const styledSelect = StyleSheet.create({
     width: '70%',
     height: '80%',
     position: 'absolute',
-    left: -169,
-    top: -750,
+    left: -199,
+    top: -770,
   },
   title: {
     display: 'flex',
-    width: 180,
+    width: 230,
     textAlign: 'center',
-    height: 70,
     fontSize: 15,
   },
 });
