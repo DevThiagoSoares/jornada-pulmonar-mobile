@@ -1,38 +1,24 @@
-import { IconButton, Text } from 'react-native-paper';
 import { ImageBackground, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { IconButton, Text } from 'react-native-paper';
+import ImgTórax1 from 'src/assets/image/Retângulo.png';
+import imgCosta from 'src/assets/image/costa.png';
+import imgLateral from 'src/assets/image/lateral.png';
 import img from 'src/assets/image/style3.png';
+
+import UploadImg from './components/uploadImg';
+import { styledImageStep } from './style';
+import { ButtonDefault } from '../../components/ui';
+
 import { styles } from '~/screens/Login/styles';
+import { CarouselComponent } from '~/screens/Student/Components/componentImg';
 
 export const ImageStep: React.FC = () => {
   return (
     <ImageBackground source={img} style={styles.backgroundImage} resizeMode="cover">
       <View style={{ display: 'flex', flexDirection: 'column', padding: 20, gap: 10 }}>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignContent: 'center',
-            alignItems: 'center',
-          }}>
-          <IconButton
-            icon="image"
-            mode="contained"
-            size={30}
-            iconColor="#FFF"
-            style={{ backgroundColor: '#CD4C3E', borderRadius: 10 }}
-            onPress={() => console.log('teste')}
-          />
-          <Text
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              color: '#CD4C3E',
-              fontSize: 16,
-              fontWeight: '800',
-            }}>
-            Adicionando Imagens
-          </Text>
+        <View style={styledImageStep.container}>
+          <Text style={styledImageStep.subTitle1}>Adicionando Imagens</Text>
           <IconButton
             icon="delete"
             mode="contained"
@@ -42,24 +28,24 @@ export const ImageStep: React.FC = () => {
             onPress={() => console.log('teste')}
           />
         </View>
-        <View
-          style={{
-            borderRadius: 24,
-            backgroundColor: 'rgba(246, 174, 174, 0.7)',
-            padding: 12,
-            paddingTop: 20,
-            paddingBottom: 20,
-          }}>
-          <Text
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              color: '#CD4C3E',
-              fontSize: 12,
-              fontWeight: '600'
-            }}>
-            Imagem Principal:
+        <View style={styledImageStep.card}>
+          <Text style={styledImageStep.textImg}>Imagem Principal:</Text>
+          <UploadImg />
+          <Text style={styledImageStep.subTitle2}>
+            Clique em um ponto da imagem abaixo para adicionar um áudio
           </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={styledImageStep.carrousel}>
+              <CarouselComponent titleImg="Tórax Anterior" img={ImgTórax1} />
+              <CarouselComponent titleImg="Tórax Anterior" img={imgCosta} />
+              <CarouselComponent titleImg="Tórax Lateral" img={imgLateral} />
+            </View>
+          </ScrollView>
+          <View style={styledImageStep.buttonContainer}>
+            <View style={styledImageStep.buttonFormat}>
+              <ButtonDefault label="SALVAR" onClick={() => {}} />
+            </View>
+          </View>
         </View>
       </View>
     </ImageBackground>

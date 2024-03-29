@@ -13,10 +13,10 @@ import { TypeUser } from '~/Shared/Enums/typeUser';
 import { ComponentLevel } from '~/components/screens/component-level';
 import Login from '~/screens/Login/login';
 import { CreateQuestion } from '~/screens/Question';
+import { ImageStep } from '~/screens/Question/FormSteps/ImageStep';
 import Modal from '~/screens/Student/Components/modal/modal';
 import { ModalQuestion } from '~/screens/Student/Components/modal/modal-question';
 import PageTeacher from '~/screens/Teacher';
-import { ImageStep } from '~/screens/Question/FormSteps/ImageStep';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;
@@ -77,7 +77,7 @@ export function AppRoutes() {
             <Stack.Screen
               name="ImageStepForm"
               component={ImageStep}
-              options={{ headerLeft: () => null, headerTitle: '' }}
+              options={{ headerTitle: '' }}
             />
           </>
         ) : (
