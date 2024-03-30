@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { Text, Button, RadioButton, TextInput, IconButton } from 'react-native-paper';
+import { Text, Button, RadioButton, IconButton } from 'react-native-paper';
 
-import { styledAlternative, styledForm } from '../styles';
 import { InputNormal } from './ui';
+import { styledAlternative, styledForm } from '../styles';
 
 export interface Alternative {
   value: string;
@@ -58,7 +58,6 @@ export function Alternative(props: OptionsProps) {
       <InputNormal
         label={props.errors ? props.errors : 'Insira uma alternativa'}
         value={alternative}
-        icon={<TextInput.Icon icon="delete" color="#CD4C3E" />}
         onChange={handleInputChange}
       />
 

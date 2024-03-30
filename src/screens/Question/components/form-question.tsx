@@ -49,7 +49,11 @@ export const FormComponent: React.FC = () => {
       <Controller
         control={control}
         render={({ field: { onBlur, onChange, value } }) => (
-          <InputTitle value={value} label={errors?.titleUnit?.message || 'Titulo da Unidade'} />
+          <InputTitle
+            value={value}
+            label={errors?.titleUnit?.message || 'Titulo da Unidade'}
+            onChange={onChange}
+          />
         )}
         name="titleUnit"
         rules={{ required: 'Titulo da unidade é obrigatório' }}
@@ -114,8 +118,10 @@ export const FormComponent: React.FC = () => {
           rules={{ required: 'Adicione no mínimo duas alternativas' }}
         />
 
-        <View style={styles.surface}>
-          <ButtonDefault label="SALVAR" onClick={SubmitForm} />
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+          <View style={styles.surface}>
+            <ButtonDefault label="SALVAR" onClick={SubmitForm} />
+          </View>
         </View>
       </View>
     </View>

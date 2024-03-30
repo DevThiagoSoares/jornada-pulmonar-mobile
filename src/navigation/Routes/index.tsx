@@ -17,6 +17,7 @@ import { ImageStep } from '~/screens/Question/FormSteps/ImageStep';
 import Modal from '~/screens/Student/Components/modal/modal';
 import { ModalQuestion } from '~/screens/Student/Components/modal/modal-question';
 import PageTeacher from '~/screens/Teacher';
+import { ScreenResponse } from '~/screens/responseScreen';
 
 export type RootStackParamList = {
   DrawerNavigator: undefined;
@@ -24,6 +25,7 @@ export type RootStackParamList = {
   ModalQuestion: undefined;
   TabNavigator: undefined;
   ImageStepForm: undefined;
+  ScreenResponse: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -112,6 +114,11 @@ export function AppRoutes() {
               name="ModalQuestion"
               component={ModalQuestion}
               options={{ headerTitle: 'Unidade' }}
+            />
+            <Stack.Screen
+              name="ScreenResponse"
+              component={ScreenResponse}
+              options={{ headerTitle: '' }}
             />
           </>
         )

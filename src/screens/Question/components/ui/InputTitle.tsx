@@ -4,9 +4,10 @@ import { TextInput } from 'react-native-paper';
 interface InputProps {
   value: string;
   label: string;
+  onChange?: (text: string) => void;
 }
 
-export const InputTitle: React.FC<InputProps> = ({ value, label }) => {
+export const InputTitle: React.FC<InputProps> = ({ value, label, onChange }) => {
   return (
     <TextInput
       mode="outlined"
@@ -20,6 +21,7 @@ export const InputTitle: React.FC<InputProps> = ({ value, label }) => {
       underlineColor="#CD4C3E"
       value={value}
       label={label}
+      onChangeText={onChange}
     />
   );
 };
