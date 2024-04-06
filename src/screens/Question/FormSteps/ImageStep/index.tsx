@@ -11,6 +11,7 @@ import { styledImageStep } from './style';
 import { ButtonDefault } from '../../components/ui';
 import { AudioImg } from '../AudioStep';
 
+import { ListAudio } from '~/components/Audio/list-audio';
 import { styles } from '~/screens/Login/styles';
 
 export const ImageStep: React.FC = () => {
@@ -19,6 +20,7 @@ export const ImageStep: React.FC = () => {
       <View style={{ display: 'flex', flexDirection: 'column', padding: 20, gap: 10 }}>
         <View style={styledImageStep.container}>
           <Text style={styledImageStep.subTitle1}>Adicionando Imagens</Text>
+          <ListAudio />
         </View>
         <View style={styledImageStep.card}>
           <Text style={styledImageStep.textImg}>Imagem Principal:</Text>
