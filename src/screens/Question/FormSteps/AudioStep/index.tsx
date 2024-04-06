@@ -18,7 +18,7 @@ export function AudioImg(props: imgProps) {
   const [audioIconPosition, setAudioIconPosition] = useState<{ x: number; y: number } | null>(null);
   const soundObject = useRef(new Audio.Sound()).current;
   const [songActive, setSongActive] = useState(false);
-  console.log(audioFile);
+
   useEffect(() => {
     if (songActive) {
       handleAudioIconPress();
@@ -40,6 +40,7 @@ export function AudioImg(props: imgProps) {
   const handleAudioIconPress = async () => {
     if (audioFile) {
       const { uri } = audioFile;
+      console.log(uri);
       try {
         await soundObject.unloadAsync();
         await soundObject.loadAsync({ uri });

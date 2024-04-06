@@ -1,25 +1,50 @@
+import { Ionicons } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 import React, { useState } from 'react';
-import { Modal, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { Modal, Text, View, TouchableOpacity } from 'react-native';
+import { RadioButton } from 'react-native-paper';
+
+import { styledAudio } from './styles';
 
 export function ListAudio() {
   const [modalVisible, setModalVisible] = useState(false);
-  const totalAudios = 20; // Total de áudios que você deseja listar
+  const [audio, setAudio] = useState<any>();
+  const totalAudios = 20;
   const audioFiles = Array.from({ length: totalAudios }, (_, index) => ({
     id: index + 1,
-    title: `Audio ${index + 1}`,
-    uri: `src/assets/SONS_PULMONARES/Caso_${index}.mp3`,
+    title: `Caso ${index + 1}`,
+    uri: `asset/SONS_PULMONARES/Caso_${index + 1}.mp3`,
   }));
-  console.log(audioFiles);
+  const handleAudioIconPress = async (item: any) => {
+    const { uri } = item;
+    try {
+      const soundObject = new Audio.Sound();
+      await soundObject.unloadAsync();
+      await soundObject.loadAsync({ uri });
+      await soundObject.playAsync();
+    } catch (error) {
+      console.error('Erro ao carregar/reproduzir áudio:', error);
+    }
+    console.log(item);
+  };
+
   const renderItem = (item: any) => (
-    <TouchableOpacity onPress={() => handleAudioSelection(item)}>
-      <Text>{item.title}</Text>
-    </TouchableOpacity>
+    <RadioButton.Group onValueChange={(newValue) => setAudio(newValue)} value={audio} key={item.id}>
+      <View key={item.id} style={styledAudio.container}>
+        <View style={styledAudio.containerRadius}>
+          <RadioButton value={item.title} color="#CD4C3E" />
+          <Text>{item.title}</Text>
+        </View>
+        <TouchableOpacity onPress={() => handleAudioIconPress(item)}>
+          <Ionicons name="caret-forward-circle" size={25} color="#CD4C3E" />
+        </TouchableOpacity>
+      </View>
+    </RadioButton.Group>
   );
 
   const handleAudioSelection = (selectedAudio: any) => {
-    // Aqui você pode adicionar a lógica para salvar ou manipular o áudio selecionado
     console.log('Áudio selecionado:', selectedAudio);
-    setModalVisible(false); // Fechar o modal após selecionar um áudio
+    setModalVisible(false);
   };
 
   return (
@@ -31,9 +56,7 @@ export function ListAudio() {
       <Modal visible={modalVisible} animationType="slide">
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text>Lista de Áudios:</Text>
-          {audioFiles.map((item, idx) => (
-            <Text key={idx}>{item.title}</Text>
-          ))}
+          {audioFiles.map((item, idx) => renderItem(item))}
           <TouchableOpacity onPress={() => setModalVisible(false)}>
             <Text>Fechar</Text>
           </TouchableOpacity>
