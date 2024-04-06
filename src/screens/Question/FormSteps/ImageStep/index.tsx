@@ -9,9 +9,9 @@ import img from 'src/assets/image/style3.png';
 import UploadImg from './components/uploadImg';
 import { styledImageStep } from './style';
 import { ButtonDefault } from '../../components/ui';
+import { AudioImg } from '../AudioStep';
 
 import { styles } from '~/screens/Login/styles';
-import { CarouselComponent } from '~/screens/Student/Components/componentImg';
 
 export const ImageStep: React.FC = () => {
   return (
@@ -28,9 +28,9 @@ export const ImageStep: React.FC = () => {
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={styledImageStep.carrousel}>
-              <CarouselComponent titleImg="Tórax Anterior" img={ImgTórax1} />
-              <CarouselComponent titleImg="Tórax Anterior" img={imgCosta} />
-              <CarouselComponent titleImg="Tórax Lateral" img={imgLateral} />
+              <AudioImg titleImg="Tórax Anterior" img={ImgTórax1} />
+              <AudioImg titleImg="Tórax Anterior" img={imgCosta} />
+              <AudioImg titleImg="Tórax Lateral" img={imgLateral} />
             </View>
           </ScrollView>
           <View style={styledImageStep.buttonContainer}>
