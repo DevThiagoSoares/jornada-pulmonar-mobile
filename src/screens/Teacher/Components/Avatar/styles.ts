@@ -12,11 +12,7 @@ export const styledAvatar = StyleSheet.create({
     },
     boxAvatar: {
         alignItems: 'center',
-        borderWidth: 2,
-        borderStyle: 'dashed',
         borderRadius: 50,
-        borderColor: '#A20F07',
-        padding: 5
     },
     crownIcon: {
         position: 'absolute',

@@ -1,6 +1,6 @@
 import { ImageBackground, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { IconButton, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import ImgTórax1 from 'src/assets/image/Retângulo.png';
 import imgCosta from 'src/assets/image/costa.png';
 import imgLateral from 'src/assets/image/lateral.png';
@@ -19,14 +19,6 @@ export const ImageStep: React.FC = () => {
       <View style={{ display: 'flex', flexDirection: 'column', padding: 20, gap: 10 }}>
         <View style={styledImageStep.container}>
           <Text style={styledImageStep.subTitle1}>Adicionando Imagens</Text>
-          <IconButton
-            icon="delete"
-            mode="contained"
-            size={30}
-            iconColor="#FFF"
-            style={{ backgroundColor: '#CD4C3E', borderRadius: 10 }}
-            onPress={() => console.log('teste')}
-          />
         </View>
         <View style={styledImageStep.card}>
           <Text style={styledImageStep.textImg}>Imagem Principal:</Text>
