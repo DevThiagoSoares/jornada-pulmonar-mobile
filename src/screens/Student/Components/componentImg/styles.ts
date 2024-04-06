@@ -3,14 +3,9 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
-        display: 'flex',
+        flex: 1,
         gap: 20,
         justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-    },
-    carouselItem: {
-        alignItems: 'center',
     },
     title: {
         fontSize: 15,
@@ -27,8 +22,51 @@ export const styles = StyleSheet.create({
     image: {
         width: 300,
         height: 200,
-        borderWidth: 2,
-        borderRadius: 30,
+        resizeMode: 'cover',
+        marginBottom: 20,
+    },
+    audioIcon: {
+        position: 'absolute',
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        borderRadius: 20,
+        padding: 10,
+        zIndex: 2,
+    },
+    audioIconText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+        margin: 20
+    },
+    modalText: {
+        color: "#ccc",
+        fontWeight: "500",
+        fontSize: 20,
+        padding: 15
+    },
+    modalButton: {
+        backgroundColor: '#CD4C3E',
+        margin: 10,
+        width: 200
+    },
+    audioInput: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        padding: 10,
+        width: '100%',
+        marginBottom: 20,
     },
     paginationContainer: {
         paddingVertical: 8,
