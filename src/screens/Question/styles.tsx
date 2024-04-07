@@ -33,6 +33,19 @@ export const styledForm = StyleSheet.create({
   },
 });
 
+export const styledSavedQuestion = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#F6AEAE',
+    padding: 10,
+    gap: 10,
+    borderRadius: 10,
+  },
+});
+
 export const styledAlternative = StyleSheet.create({
   container: {
     display: 'flex',

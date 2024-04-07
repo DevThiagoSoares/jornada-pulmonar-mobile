@@ -14,7 +14,6 @@ export function CreateQuestion() {
       <View style={{ display: 'flex', margin: 20 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <FormComponent />
-          <ButtonDefault label="Nova Questão" onClick={() => console.log('...')} />
         </ScrollView>
       </View>
     </BackgroundScreen>

@@ -1,15 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { View } from 'react-native';
-import { Text, IconButton } from 'react-native-paper';
+import { View, Text, TouchableOpacity } from 'react-native';
 
-import { Alternative } from './alternative-question';
-import { ButtonDefault, InputNormal, InputTitle } from './ui';
-import { styledForm, styles } from '../styles';
+import { ButtonDefault, InputTitle } from './ui';
 
-import { RootStackParamList } from '~/navigation/Routes';
+import { ListQuestionsCard } from './list-question-card';
+import { styledForm, styledSavedQuestion } from '../styles';
+import { IconButton } from 'react-native-paper';
+import { ListSavedQuestion } from './list-saved-question';
 
 interface optionsAlt {
   label: string;
@@ -24,25 +22,29 @@ interface FormData {
   alternatives: optionsAlt[];
 }
 
-type Props = StackScreenProps<RootStackParamList, 'ImageStepForm'>;
-
 export const FormComponent: React.FC = () => {
   const {
     control,
     handleSubmit,
+    reset,
+    setValue,
     formState: { errors },
   } = useForm<FormData>();
 
-  const navigation = useNavigation<Props['navigation']>();
+  const [questionCount, setQuestionCount] = useState(1);
+  const [savedQuestions, setSavedQuestions] = useState<string[]>([]);
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    const { question } = data;
+    setSavedQuestions([...savedQuestions, question]);
+    setValue('Weight', '');
+    setValue('question', '');
+    setQuestionCount(questionCount - 1);
   };
 
-  function SubmitForm() {
-    handleSubmit(onSubmit)();
-    console.log(errors);
-  }
+  const handleAddQuestion = () => {
+    setQuestionCount(questionCount + 1);
+  };
 
   return (
     <View style={{ display: 'flex', gap: 20, marginBottom: 20 }}>
@@ -59,71 +61,24 @@ export const FormComponent: React.FC = () => {
         rules={{ required: 'Titulo da unidade é obrigatório' }}
         defaultValue=""
       />
-
-      <View style={styledForm.box}>
-        <View style={styledForm.icons}>
-          <Text style={styledForm.title}>Questão</Text>
-          <View style={styledForm.icons}>
-            <IconButton
-              icon="image"
-              mode="contained"
-              size={30}
-              iconColor="#FFF"
-              style={{ backgroundColor: '#CD4C3E', borderRadius: 10 }}
-              onPress={() => navigation.navigate('ImageStepForm')}
-            />
-            <IconButton
-              icon="delete"
-              mode="contained"
-              size={30}
-              iconColor="#FFF"
-              style={{ backgroundColor: '#CD4C3E', borderRadius: 10 }}
-            />
-          </View>
-        </View>
-
-        <Controller
-          control={control}
-          render={({ field: { onBlur, onChange, value } }) => (
-            <InputNormal
-              value={value}
-              label={errors?.Weight?.message || 'Peso da Questão'}
-              onChange={onChange}
-            />
-          )}
-          name="Weight"
-          rules={{ required: 'Peso da questão é obrigatório' }}
-          defaultValue=""
+      {savedQuestions.map((savedQuestion, index) => (
+        <ListSavedQuestion
+          key={index}
+          navigation={() => {}}
+          reset={() => reset()}
+          questioNumber={index + 1}
         />
-
-        <Controller
+      ))}
+      {[...Array(questionCount)].map((_, index) => (
+        <ListQuestionsCard
           control={control}
-          render={({ field: { onChange, value } }) => (
-            <InputNormal
-              value={value}
-              label={errors?.question?.message || 'Digite a Pergunta'}
-              onChange={onChange}
-            />
-          )}
-          name="question"
-          rules={{ required: 'Pergunta é obrigatória' }}
-          defaultValue=""
+          errors={errors}
+          key={index}
+          submitForm={handleSubmit(onSubmit)}
+          reset={() => reset()}
         />
-        <Controller
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <Alternative onChange={onChange} errors={errors.alternatives?.message} />
-          )}
-          name="alternatives"
-          rules={{ required: 'Adicione no mínimo duas alternativas' }}
-        />
-
-        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-          <View style={styles.surface}>
-            <ButtonDefault label="SALVAR" onClick={SubmitForm} />
-          </View>
-        </View>
-      </View>
+      ))}
+      <ButtonDefault label="Nova Questão" onClick={handleAddQuestion} />
     </View>
   );
 };
