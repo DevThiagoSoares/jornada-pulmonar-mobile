@@ -25,7 +25,14 @@ export function Alternative(props: OptionsProps) {
       props.onChange([]);
     }
     if (alternatives.length > 1) {
-      props.onChange([...alternatives, { correctAlternative }]);
+      const newlist = alternatives.map((item) => {
+        if (item.value === correctAlternative) {
+          return { description: item.description, correctOption: true };
+        } else {
+          return { description: item.description, correctOption: false };
+        }
+      });
+      props.onChange(newlist);
     }
   }, [alternatives, correctAlternative]);
 
