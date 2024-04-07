@@ -20,8 +20,8 @@ export const styles = StyleSheet.create({
         backgroundColor: '#CD4C3E'
     },
     image: {
-        width: 300,
-        height: 200,
+        width: 360,
+        height: 300,
         resizeMode: 'cover',
         marginBottom: 20,
     },

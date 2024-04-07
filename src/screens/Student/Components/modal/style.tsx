@@ -18,7 +18,7 @@ export const styledModal = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 20,
-    padding: 10,
+    padding: 5,
     zIndex: 2,
   },
 });
