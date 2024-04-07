@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import { ImageBackground, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';

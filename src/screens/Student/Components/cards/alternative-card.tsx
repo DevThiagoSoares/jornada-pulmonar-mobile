@@ -1,6 +1,7 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 
@@ -18,9 +19,47 @@ type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 export function AlternativaCard(props: alternativaProps) {
   const navigation = useNavigation<Props['navigation']>();
   const [correctAlternative, setCorrectAlternative] = useState<string>('');
+  const [isRunning, setIsRunning] = useState(false);
+  const [timer, setTimer] = useState(0);
 
   const handleSelectCorrectAlternative = (value: string) => {
     setCorrectAlternative(value);
+  };
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (isRunning) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    } else if (!isRunning && timer !== 0) {
+      clearInterval(interval!);
+    }
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [isRunning, timer]);
+  useEffect(() => {
+    setIsRunning(true);
+  }, []);
+
+  const handleReset = () => {
+    setTimer(0);
+    setIsRunning(false);
+  };
+
+  const handleSubmit = () => {
+    navigation.navigate('ScreenResponse');
+    handleReset();
+  };
+
+  const formatTime = (timeInSeconds: number): string => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = timeInSeconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
   return (
@@ -44,9 +83,13 @@ export function AlternativaCard(props: alternativaProps) {
           style={styledCard.button}
           textColor="#FFFF"
           labelStyle={{ fontSize: 15 }}
-          onPress={() => navigation.navigate('ScreenResponse')}>
+          onPress={handleSubmit}>
           SALVAR
         </Button>
+      </View>
+      <View style={styledCard.containerTimer}>
+        <Ionicons name="hourglass" size={20} color="#CD4C3E" />
+        <Text style={styledCard.timerText}>{formatTime(timer)}</Text>
       </View>
     </View>
   );

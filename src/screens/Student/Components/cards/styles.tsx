@@ -6,6 +6,22 @@ export const styledCard = StyleSheet.create({
     padding: 10,
     margin: 10,
   },
+  containerTimer: {
+    position: 'absolute',
+    left: 250,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    borderRadius: 10,
+    padding: 5,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
+    flexDirection: 'row',
+  },
+  timerText: {
+    color: '#FFFF',
+    fontSize: 15,
+    fontWeight: '800',
+  },
   content: {
     display: 'flex',
     flexDirection: 'row',

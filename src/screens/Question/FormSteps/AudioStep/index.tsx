@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import * as DocumentPicker from 'expo-document-picker';
