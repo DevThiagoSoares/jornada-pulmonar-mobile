@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 
 import { ButtonDefault, InputTitle } from './ui';
 
 import { ListQuestionsCard } from './list-question-card';
-import { styledForm, styledSavedQuestion } from '../styles';
-import { IconButton } from 'react-native-paper';
 import { ListSavedQuestion } from './list-saved-question';
+import { useData } from '~/Shared/hooks/audio.context';
 
 interface optionsAlt {
   label: string;
@@ -33,10 +32,19 @@ export const FormComponent: React.FC = () => {
 
   const [questionCount, setQuestionCount] = useState(1);
   const [savedQuestions, setSavedQuestions] = useState<string[]>([]);
+  const { data } = useData();
 
-  const onSubmit = (data: FormData) => {
-    const { question } = data;
-    console.log(data);
+  const onSubmit = (value: FormData) => {
+    const payload = {
+      title: value.titleUnit,
+      weight: value.Weight,
+      alternatives: value.alternatives,
+      audio: data.audioUrl,
+      img: data.imUrl,
+    };
+
+    console.log(payload);
+    const { question } = value;
     setSavedQuestions([...savedQuestions, question]);
     setValue('Weight', '');
     setValue('question', '');

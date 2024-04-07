@@ -6,6 +6,7 @@ import { View, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import { styles } from './styles';
+import { useData } from '~/Shared/hooks/audio.context';
 
 interface imgProps {
   titleImg: string;
@@ -18,7 +19,7 @@ export function AudioImg(props: imgProps) {
   const [audioIconPosition, setAudioIconPosition] = useState<{ x: number; y: number } | null>(null);
   const soundObject = useRef(new Audio.Sound()).current;
   const [songActive, setSongActive] = useState(false);
-
+  const { setData } = useData();
   useEffect(() => {
     if (songActive) {
       handleAudioIconPress();
@@ -63,6 +64,7 @@ export function AudioImg(props: imgProps) {
 
     if (!result.canceled) {
       setAudioFile(result.assets[0]);
+      setData({ audioUrl: result.assets[0].uri, imgUrl: props.img });
     }
   };
 

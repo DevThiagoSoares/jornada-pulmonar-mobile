@@ -3,7 +3,6 @@ import { View, ScrollView } from 'react-native';
 import img from 'src/assets/image/style3.png';
 
 import FormComponent from './components/form-question';
-import { ButtonDefault } from './components/ui';
 import { styles } from '../Login/styles';
 
 import { BackgroundScreen } from '~/components/screens/background-image';
