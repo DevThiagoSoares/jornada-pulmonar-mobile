@@ -29,7 +29,7 @@ export function AudioImg(props: imgProps) {
 
   const handlePress = (event: any) => {
     const { locationX, locationY } = event.nativeEvent;
-    setAudioIconPosition({ x: locationX, y: locationY });
+    setAudioIconPosition({ x: locationX - 30, y: locationY + 30 });
     setModalVisible(true);
   };
 
@@ -40,7 +40,6 @@ export function AudioImg(props: imgProps) {
   const handleAudioIconPress = async () => {
     if (audioFile) {
       const { uri } = audioFile;
-      console.log(uri);
       try {
         await soundObject.unloadAsync();
         await soundObject.loadAsync({ uri });

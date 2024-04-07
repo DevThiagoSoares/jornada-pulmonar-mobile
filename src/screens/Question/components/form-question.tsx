@@ -36,6 +36,7 @@ export const FormComponent: React.FC = () => {
 
   const onSubmit = (data: FormData) => {
     const { question } = data;
+    console.log(data);
     setSavedQuestions([...savedQuestions, question]);
     setValue('Weight', '');
     setValue('question', '');
