@@ -10,11 +10,12 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/icon.png",
+          "icon": "./assets/pulmoes.png",
           "color": "#ffffff",
           "sounds": [
             "./assets/audio/sonsNotificatio.mp3"
-          ]
+          ],
+          "name": "Jornada Pulmonar"
         }
       ]
     ],
@@ -40,7 +41,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.fernanda0122.expostack"
+      "package": "com.fernanda0122.expostack",
+      "icon": "./assets/pulmoes.png",
+      "name": "Jornada Pulmonar"
     },
     "extra": {
       "eas": {

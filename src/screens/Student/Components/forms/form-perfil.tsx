@@ -88,7 +88,6 @@ export function FormPerfil() {
               error={!!errors.password}
               onBlur={onBlur}
               onChangeText={onChange}
-              value={user?.password}
               secureTextEntry={!showPassword}
               label={errors.password?.message || 'Senha Atual'}
               mode="outlined"

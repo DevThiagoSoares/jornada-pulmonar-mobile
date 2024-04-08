@@ -1,4 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import Toast from 'react-native-toast-message';
 
 import { AppRoutes } from './Routes';
 
@@ -12,6 +14,7 @@ export default function RootStack() {
         <DataProvider>
           <AppRoutes />
         </DataProvider>
+        <Toast />
       </NavigationContainer>
     </AuthContextProvider>
   );

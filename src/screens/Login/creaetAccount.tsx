@@ -9,6 +9,9 @@ import { styledRadio, styledUser } from './components/styles';
 
 import { UserProps, useAuth } from '~/Shared/Auth';
 import { TypeUser } from '~/Shared/Enums/typeUser';
+import { createUsers } from '~/Shared/api/services/users';
+import { EnviarNotificacao } from '~/Shared/notification/external';
+import { Toastfy } from '~/Shared/notification/internal';
 
 interface FormData {
   name: string;
@@ -30,12 +33,13 @@ const SignUpForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [term, setTerm] = useState<string>('');
+
   const optionsCheckBox = [
     { value: TypeUser.Student, label: 'Sou aluno' },
     { value: TypeUser.Teacher, label: 'Sou professor' },
   ];
   const options = [{ value: 'confirmed', label: 'Eu aceito os termos de uso' }];
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     if (selectedOption !== '' && term !== '') {
       const result: UserProps = {
         name: data.name,
@@ -43,8 +47,15 @@ const SignUpForm: React.FC = () => {
         password: data.password,
         role: selectedOption,
       };
-      console.log(data);
-      validateUserAccess(result);
+      try {
+        await createUsers(result);
+        validateUserAccess(result);
+        EnviarNotificacao();
+        Toastfy('success', 'Bem vindo ao Jornada Pulmonar ');
+      } catch (error) {
+        console.log(error);
+        Toastfy('error', 'Deu ruim');
+      }
     } else {
       setIsValidInput(true);
     }

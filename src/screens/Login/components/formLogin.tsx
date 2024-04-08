@@ -7,8 +7,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SignUpForm from '../creaetAccount';
 import { styles } from '../styles';
 
-import { UserProps, useAuth } from '~/Shared/Auth';
-import { TypeUser } from '~/Shared/Enums/typeUser';
+import { useAuth } from '~/Shared/Auth';
+import { validateEmail } from '~/Shared/api/services/users';
+import { Toastfy } from '~/Shared/notification/internal';
 import ModalContainer from '~/components/modalContainer';
 
 const AnimatedText = Animatable.createAnimatableComponent(Text);
@@ -29,13 +30,13 @@ export function FormLogin() {
   const { validateUserAccess } = useAuth();
 
   const onSubmit = async (data: FormProps) => {
-    const result: UserProps = {
-      name: data.email,
-      password: data.password,
-      role: TypeUser.Teacher,
-    };
-    console.log(data);
-    validateUserAccess(result);
+    try {
+      const response = await validateEmail(data.email);
+      validateUserAccess(response.data);
+      Toastfy('success', 'Bem vindo ao Jornada pulmonar');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSignUpPress = () => {

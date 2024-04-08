@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API = axios.create({
-    baseURL: process.env.URL_PROJECT_BACKEND,
-    withCredentials: true,
+export const api = axios.create({
+  baseURL: 'http://192.168.0.126:3333',
+  withCredentials: true,
 });
