@@ -1,12 +1,15 @@
-import { View, Text } from 'react-native';
-import { styledForm, styles } from '../styles';
-import { IconButton } from 'react-native-paper';
-import { Controller } from 'react-hook-form';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '~/navigation/Routes';
 import { useNavigation } from '@react-navigation/native';
-import { ButtonDefault, InputNormal } from './ui';
+import { StackScreenProps } from '@react-navigation/stack';
+import { Controller } from 'react-hook-form';
+import { View, Text } from 'react-native';
+import { IconButton } from 'react-native-paper';
+
 import { Alternative } from './alternative-question';
+import { ButtonDefault, InputNormal } from './ui';
+import { styledForm, styles } from '../styles';
+
+import { RootStackParamList } from '~/navigation/Routes';
+
 type Props = StackScreenProps<RootStackParamList, 'ImageStepForm'>;
 interface PropsQuestion {
   control: any;

@@ -118,7 +118,7 @@ export function AppRoutes() {
             <Stack.Screen
               name="ScreenResponse"
               component={ScreenResponse}
-              options={{ headerTitle: '' }}
+              options={{ headerShown: false }}
             />
           </>
         )

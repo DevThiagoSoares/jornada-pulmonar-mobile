@@ -1,11 +1,30 @@
 import { StyleSheet } from 'react-native';
 
 export const styledResponse = StyleSheet.create({
+  backgroundScreen: {
+    flex: 1,
+    resizeMode: 'cover', // ou 'stretch'
+    backgroundColor: 'rgba(205, 107, 95, 0.5)',
+  },
   conatiner: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    height: 820,
+    gap: 25,
+  },
+  containerPts: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  textPts: {
+    color: '#FFF',
+    fontWeight: '800',
+    fontSize: 18,
+    padding: 12,
+    backgroundColor: 'rgba(205, 107, 95, 0.5)',
+    borderRadius: 20,
   },
   img: {
     width: 130,
