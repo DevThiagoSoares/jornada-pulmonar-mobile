@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -8,7 +7,6 @@ import costa from 'src/assets/image/costa.png';
 import lateral from 'src/assets/image/lateral.png';
 
 import { styledModal } from './style';
-import { SelectPosition } from '../animations';
 import { styledSelect } from '../animations/styles';
 import { AlternativaCard } from '../cards/alternative-card';
 import { CardDescription } from '../cards/card-description';
@@ -18,8 +16,8 @@ import { BackgroundScreen } from '~/components/screens/background-image';
 import { styles } from '~/screens/Login/styles';
 
 export function ModalQuestion() {
-  const [locationX, setLocationX] = useState<number>(0);
-  const [locationY, setLocationY] = useState<number>(0);
+  /*  const [locationX, setLocationX] = useState<number>(0);
+  const [locationY, setLocationY] = useState<number>(0); */
 
   const options = [
     { value: 'a', description: 'test' },
@@ -30,8 +28,8 @@ export function ModalQuestion() {
   const handlePress = (event: { nativeEvent: { locationX: any; locationY: any } }) => {
     const { locationX, locationY } = event.nativeEvent;
     console.log(locationX - 30, locationY + 30);
-    setLocationX(locationX - 170);
-    setLocationY(locationY);
+    /*  setLocationX(locationX - 170);
+    setLocationY(locationY); */
   };
   return (
     <BackgroundScreen source={imgHome} style={styles.backgroundImage} resizeMode="cover">

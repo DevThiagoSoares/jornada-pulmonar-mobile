@@ -1,10 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import { defaultPosition } from './positions';
 import { styles } from './styles';
 import { styledModal } from '../modal/style';
+
+import { Toastfy } from '~/Shared/notification/internal';
 
 interface ImgProps {
   titleImg: string;
@@ -22,6 +25,11 @@ export function CarouselComponent(props: ImgProps) {
 
   const handlePosition = () => {
     setActive(!isActive);
+    Toast.hide();
+  };
+
+  const handleClick = () => {
+    Toastfy('error', 'Lugar errado! Por favor, tente novamente. 😢');
   };
 
   return (
@@ -39,7 +47,9 @@ export function CarouselComponent(props: ImgProps) {
         </TouchableOpacity>
       ))}
       <Text style={styles.title}>{props.titleImg}</Text>
-      <Image source={props.img} style={styles.image} />
+      <TouchableOpacity onPress={handleClick}>
+        <Image source={props.img} style={styles.image} />
+      </TouchableOpacity>
     </View>
   );
 }
