@@ -9,7 +9,6 @@ import { styles } from '../styles';
 
 import { useAuth } from '~/Shared/Auth';
 import { validateEmail } from '~/Shared/api/services/users';
-import { Toastfy } from '~/Shared/notification/internal';
 import ModalContainer from '~/components/modalContainer';
 
 const AnimatedText = Animatable.createAnimatableComponent(Text);
@@ -33,7 +32,6 @@ export function FormLogin() {
     try {
       const response = await validateEmail(data.email);
       validateUserAccess(response.data);
-      Toastfy('success', 'Bem vindo ao Jornada pulmonar');
     } catch (error) {
       console.log(error);
     }

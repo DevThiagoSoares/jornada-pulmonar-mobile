@@ -2,6 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import { TouchableOpacity, Image, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import { styledAvatar } from './styles';
 
@@ -31,6 +32,7 @@ const AvatarPicker = () => {
           <MaterialCommunityIcons name="image-plus" size={40} color="#FFF" />
         </View>
       )}
+      <Toast />
     </TouchableOpacity>
   );
 };
