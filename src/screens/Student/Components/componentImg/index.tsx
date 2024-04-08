@@ -5,7 +5,7 @@ import Toast from 'react-native-toast-message';
 
 import { defaultPosition } from './positions';
 import { styles } from './styles';
-import { styledModal } from '../modal/style';
+import { ActionIcon } from '../modal/style';
 
 import { Toastfy } from '~/Shared/notification/internal';
 
@@ -21,11 +21,13 @@ interface Coordinate {
 }
 
 export function CarouselComponent(props: ImgProps) {
-  const [isActive, setActive] = useState(true);
+  const [isActive, setActive] = useState(false);
+  const [activeIcon, setActiveIcon] = useState(false);
 
   const handlePosition = () => {
     setActive(!isActive);
     Toast.hide();
+    setActiveIcon(true);
   };
 
   const handleClick = () => {
@@ -38,11 +40,22 @@ export function CarouselComponent(props: ImgProps) {
         <TouchableOpacity
           key={idx}
           onPress={handlePosition}
-          style={[styledModal.iconImg, { left: coord.latX, top: coord.lgnY }]}>
+          style={[
+            activeIcon ? ActionIcon.active : ActionIcon.noActive,
+            { left: coord.latX, top: coord.lgnY },
+          ]}>
           {isActive ? (
-            <Ionicons name="volume-high-outline" size={15} color="#CD4C3E" />
+            <Ionicons
+              name="volume-high-outline"
+              size={15}
+              color={activeIcon ? '#CD4C3E' : '#00000000'}
+            />
           ) : (
-            <Ionicons name="volume-mute-outline" size={15} color="#CD4C3E" />
+            <Ionicons
+              name="volume-mute-outline"
+              size={15}
+              color={activeIcon ? '#CD4C3E' : '#00000000'}
+            />
           )}
         </TouchableOpacity>
       ))}

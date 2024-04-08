@@ -22,3 +22,13 @@ export const styledModal = StyleSheet.create({
     zIndex: 2,
   },
 });
+
+export const ActionIcon = StyleSheet.create({
+  active: {
+    ...styledModal.iconImg,
+  },
+  noActive: {
+    ...styledModal.iconImg,
+    backgroundColor: 'transparent',
+  },
+});
