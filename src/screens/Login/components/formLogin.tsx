@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View, Image, Text, TouchableOpacity, TextInput } from 'react-native';
@@ -7,8 +8,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SignUpForm from '../creaetAccount';
 import { styles } from '../styles';
 
-import { useAuth } from '~/Shared/Auth';
-import { validateEmail } from '~/Shared/api/services/users';
+import { ValidateLogin } from '~/Shared/api/services/users';
+import { Toastfy } from '~/Shared/notification/internal';
 import ModalContainer from '~/components/modalContainer';
 
 const AnimatedText = Animatable.createAnimatableComponent(Text);
@@ -26,14 +27,23 @@ export function FormLogin() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const { validateUserAccess } = useAuth();
+  // const { validateUserAccess } = useAuth();
 
   const onSubmit = async (data: FormProps) => {
     try {
-      const response = await validateEmail(data.email);
-      validateUserAccess(response.data);
-    } catch (error) {
-      console.log(error);
+      const response = await ValidateLogin(data);
+      // validateUserAccess(response.data);
+      AsyncStorage.setItem('access_token', JSON.stringify(response.data.access_token))
+        .then(() => {})
+        .catch((error: any) => {
+          console.error('Erro ao armazenar os dados do usuário:', error);
+        });
+    } catch (error: any) {
+      if (error.response.statusCode === 401) {
+        Toastfy('error', error.response.data.message);
+      } else {
+        Toastfy('error', 'Ops.. Algo deu errado!');
+      }
     }
   };
 

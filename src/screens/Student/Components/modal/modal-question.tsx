@@ -41,7 +41,7 @@ export function ModalQuestion() {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} onTouchStart={handlePress}>
           <View style={styledModal.carouselContainer}>
             <CarouselComponent titleImg="Tórax Anterior" img={img} idImg={1} />
-            <CarouselComponent titleImg="Tórax Anterior" img={costa} idImg={2} />
+            <CarouselComponent titleImg="Tórax Posterior" img={costa} idImg={2} />
             <CarouselComponent titleImg="Tórax Lateral" img={lateral} idImg={3} />
           </View>
         </ScrollView>

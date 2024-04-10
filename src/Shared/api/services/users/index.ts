@@ -9,3 +9,7 @@ export async function createUsers(data: UserProps) {
 export async function validateEmail(email: string) {
   return await api.get(`/api/v1/users/${email}`);
 }
+
+export async function ValidateLogin(params: any) {
+  return await api.post('/api/v1/login', params);
+}
