@@ -65,6 +65,7 @@ export function AudioImg(props: imgProps) {
 
     if (!result.canceled) {
       setAudioFile(result.assets[0]);
+      console.log(result.assets[0]);
       setData({ audioUrl: result.assets[0].uri, imgUrl: props.img });
     }
   };

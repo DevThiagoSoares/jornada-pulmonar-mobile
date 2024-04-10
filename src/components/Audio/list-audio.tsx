@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
-import React, { useState } from 'react';
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
+import React, { useEffect, useState } from 'react';
 import { Modal, Text, View, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
@@ -10,22 +10,41 @@ export function ListAudio() {
   const [modalVisible, setModalVisible] = useState(false);
   const [audio, setAudio] = useState<any>();
   const totalAudios = 20;
+
   const audioFiles = Array.from({ length: totalAudios }, (_, index) => ({
     id: index + 1,
     title: `Caso ${index + 1}`,
-    uri: `asset/SONS_PULMONARES/Caso_${index + 1}.mp3`,
+    uri: `assets/audio/SONS_PULMONARES/Caso_${index + 1}.mp3`,
   }));
+
+  useEffect(() => {
+    Audio.requestPermissionsAsync().then(({ granted }) => {
+      if (granted) {
+        Audio.setAudioModeAsync({
+          allowsRecordingIOS: true,
+          interruptionModeIOS: InterruptionModeIOS.DoNotMix,
+          playsInSilentModeIOS: true,
+          shouldDuckAndroid: true,
+          interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+          playThroughEarpieceAndroid: true,
+        });
+      }
+    });
+  }, []);
+
   const handleAudioIconPress = async (item: any) => {
     const { uri } = item;
-    try {
-      const soundObject = new Audio.Sound();
-      await soundObject.unloadAsync();
-      await soundObject.loadAsync({ uri });
-      await soundObject.playAsync();
-    } catch (error) {
-      console.error('Erro ao carregar/reproduzir áudio:', error);
+    const soundObject = new Audio.Sound();
+    console.log({ soundObject, uri });
+    if (soundObject && uri) {
+      try {
+        await soundObject.unloadAsync();
+        await soundObject.loadAsync({ uri });
+        await soundObject.playAsync();
+      } catch (error) {
+        console.error('Erro ao carregar/reproduzir áudio:', error);
+      }
     }
-    console.log(item);
   };
 
   const renderItem = (item: any) => (

@@ -15,6 +15,7 @@ import { styles } from '~/screens/Login/styles';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '~/navigation/Routes';
 import { useNavigation } from '@react-navigation/native';
+import { ListAudio } from '~/components/Audio/list-audio';
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 
@@ -25,7 +26,7 @@ export const ImageStep: React.FC = () => {
       <View style={{ display: 'flex', flexDirection: 'column', padding: 20, gap: 10 }}>
         <View style={styledImageStep.container}>
           <Text style={styledImageStep.subTitle1}>Adicionando Imagens</Text>
-          {/* <ListAudio /> */}
+          <ListAudio />
         </View>
         <View style={styledImageStep.card}>
           <Text style={styledImageStep.textImg}>Imagem Principal:</Text>
