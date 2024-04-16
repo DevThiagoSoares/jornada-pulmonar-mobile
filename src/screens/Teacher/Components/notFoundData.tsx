@@ -6,7 +6,7 @@ export function NotFoundData() {
   return (
     <View style={styles.container}>
       <MaterialIcons name="error-outline" size={30} color="#CD4C3E" />
-      <Text style={styles.text}>Dados não encontrados</Text>
+      <Text style={styles.text}>Não há dados</Text>
     </View>
   );
 }

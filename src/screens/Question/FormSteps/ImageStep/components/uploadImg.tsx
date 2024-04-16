@@ -5,8 +5,11 @@ import { TouchableOpacity, Image, View } from 'react-native';
 
 import { styledImg } from '../style';
 
+import { useData } from '~/Shared/hooks/audio.context';
+
 const UploadImg = () => {
   const [profilePic, setProfilePic] = useState<string | null>(null);
+  const { setData, data } = useData();
 
   const selectProfilePic = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -19,6 +22,7 @@ const UploadImg = () => {
     if (!result.canceled) {
       const url = result.assets.map((item) => item.uri);
       setProfilePic(url[0]);
+      setData({ ...data, imgUrl: url[0] });
     }
   };
 

@@ -31,6 +31,7 @@ export function ListCard() {
   };
   const getModule = async () => {
     const response = await getModules();
+    console.log(response.data);
     setModule(response.data);
   };
   useEffect(() => {
@@ -49,8 +50,12 @@ export function ListCard() {
         <View>
           <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 209 }}>
             <View style={styledCard.cardContainer}>
-              {module.length > 0 && (
-                <OptionsCard quantity={10} subTitle="ENFERMARIA" title="Unidade 1" />
+              {module.length > 0 ? (
+                module.map((item: any, idx: number) => (
+                  <OptionsCard quantity={10} subTitle={item.title} title={`Unidade ${idx + 1}`} />
+                ))
+              ) : (
+                <></>
               )}
               <CreateCard />
             </View>

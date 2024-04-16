@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View } from 'react-native';
 
-import { ButtonDefault, InputTitle } from './ui';
-
 import { ListQuestionsCard } from './list-question-card';
 import { ListSavedQuestion } from './list-saved-question';
+import { ButtonDefault, InputTitle } from './ui';
+
+import { CreateQuestion } from '~/Shared/api/services/questions';
 import { useData } from '~/Shared/hooks/audio.context';
 
 interface optionsAlt {
@@ -34,16 +35,21 @@ export const FormComponent: React.FC = () => {
   const [savedQuestions, setSavedQuestions] = useState<string[]>([]);
   const { data } = useData();
 
-  const onSubmit = (value: FormData) => {
+  const onSubmit = async (value: FormData) => {
     const payload = {
-      title: value.titleUnit,
+      userId: '9863cbbe-d443-4063-9f65-ca0d5f9ebb4e',
+      titleUnit: value.titleUnit,
       weight: value.Weight,
-      alternatives: value.alternatives,
-      audio: data.audioUrl,
-      img: data.imUrl,
+      questions: [{ question: value.question, alternatives: value.alternatives }],
+      audioUrl: data.audioUrl,
     };
 
-    console.log(payload);
+    try {
+      console.log('img', data);
+      await CreateQuestion(data.imgUrl, payload);
+    } catch (error) {
+      console.log(error);
+    }
     const { question } = value;
     setSavedQuestions([...savedQuestions, question]);
     setValue('Weight', '');

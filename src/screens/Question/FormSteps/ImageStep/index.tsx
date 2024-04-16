@@ -21,6 +21,7 @@ type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 
 export const ImageStep: React.FC = () => {
   const navigation = useNavigation<Props['navigation']>();
+
   return (
     <ImageBackground source={img} style={styles.backgroundImage} resizeMode="cover">
       <View style={{ display: 'flex', flexDirection: 'column', padding: 20, gap: 10 }}>
