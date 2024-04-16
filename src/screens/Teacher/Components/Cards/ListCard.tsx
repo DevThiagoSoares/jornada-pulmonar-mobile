@@ -31,7 +31,6 @@ export function ListCard() {
   };
   const getModule = async () => {
     const response = await getModules();
-    console.log(response.data);
     setModule(response.data);
   };
   useEffect(() => {

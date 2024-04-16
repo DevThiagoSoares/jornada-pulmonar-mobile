@@ -68,9 +68,9 @@ export function ListAudio() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TouchableOpacity onPress={() => setModalVisible(true)}>
+      {/* <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Text>Abrir Modal</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <Modal visible={modalVisible} animationType="slide">
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
