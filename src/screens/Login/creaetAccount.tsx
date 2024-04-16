@@ -33,6 +33,11 @@ const SignUpForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [term, setTerm] = useState<string>('');
+  const [avatar, setAvatar] = useState<string | null>(null);
+
+  const handleImg = (img: string | null) => {
+    setAvatar(img);
+  };
 
   const optionsCheckBox = [
     { value: TypeUser.Student, label: 'Sou aluno' },
@@ -48,13 +53,15 @@ const SignUpForm: React.FC = () => {
         role: selectedOption,
       };
       try {
-        await createUsers(result);
+        const formData = new FormData();
+        formData.append('file', JSON.stringify(avatar));
+        await createUsers(formData, result);
         validateUserAccess(result);
         EnviarNotificacao();
         Toastfy('success', 'Bem vindo ao Jornada Pulmonar ');
       } catch (error) {
         console.log(error);
-        Toastfy('error', 'Deu ruim');
+        Toastfy('error', 'Ops.. Algo deu errado!');
       }
     } else {
       setIsValidInput(true);
@@ -67,7 +74,7 @@ const SignUpForm: React.FC = () => {
 
   return (
     <View style={styledUser.container}>
-      <AvatarPicker />
+      <AvatarPicker setImg={handleImg} />
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (

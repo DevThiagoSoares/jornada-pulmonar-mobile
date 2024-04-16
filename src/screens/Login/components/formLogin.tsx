@@ -39,10 +39,11 @@ export function FormLogin() {
           console.error('Erro ao armazenar os dados do usuário:', error);
         });
     } catch (error: any) {
-      if (error.response.data.statusCode === 401) {
+      if (error?.response?.data?.statusCode === 401) {
         Toastfy('error', error.response.data.message);
       } else {
         Toastfy('error', 'Ops.. Algo deu errado!');
+        console.log(error);
       }
     }
   };

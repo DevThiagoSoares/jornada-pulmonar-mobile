@@ -6,7 +6,11 @@ import Toast from 'react-native-toast-message';
 
 import { styledAvatar } from './styles';
 
-const AvatarPicker = () => {
+interface avatarProps {
+  setImg: (value: any | null) => void;
+}
+
+const AvatarPicker = (props: avatarProps) => {
   const [profilePic, setProfilePic] = useState<string | null>(null);
 
   const selectProfilePic = async () => {
@@ -20,6 +24,18 @@ const AvatarPicker = () => {
     if (!result.canceled) {
       const url = result.assets.map((item) => item.uri);
       setProfilePic(url[0]);
+      const blob = await fetch(url[0]).then((res) => res.blob());
+
+      const formData = new FormData();
+      formData.append('file', blob, `${url[0]}`);
+
+      const fileInfo = {
+        originalname: url[0],
+        mimetype: blob.type,
+        buffer: blob,
+        size: blob.size,
+      };
+      props.setImg(fileInfo);
     }
   };
 
