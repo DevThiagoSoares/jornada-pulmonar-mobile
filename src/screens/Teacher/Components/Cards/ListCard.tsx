@@ -14,10 +14,12 @@ import { ListInfo } from '../List-Info/List-item-info';
 import { NotFoundData } from '../notFoundData';
 
 import { TypeUser } from '~/Shared/Enums/typeUser';
+import { getModules } from '~/Shared/api/services/modules/modules';
 import { Ranking } from '~/Shared/api/services/users';
 
 export function ListCard() {
   const [listRanking, setListRanking] = useState([]);
+  const [module, setModule] = useState([]);
   const getUser = async () => {
     const response = await Ranking();
     const newList = response.data.map((item: any) => {
@@ -27,8 +29,13 @@ export function ListCard() {
     });
     setListRanking(newList.filter(Boolean));
   };
+  const getModule = async () => {
+    const response = await getModules();
+    setModule(response.data);
+  };
   useEffect(() => {
     getUser();
+    getModule();
   }, []);
 
   return (
@@ -42,9 +49,9 @@ export function ListCard() {
         <View>
           <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 209 }}>
             <View style={styledCard.cardContainer}>
-              <OptionsCard quantity={10} subTitle="ENFERMARIA" title="Unidade 1" />
-              <OptionsCard quantity={10} subTitle="UPA" title="Unidade 2" />
-              <OptionsCard quantity={10} subTitle="SPA" title="Unidade 3" />
+              {module.length > 0 && (
+                <OptionsCard quantity={10} subTitle="ENFERMARIA" title="Unidade 1" />
+              )}
               <CreateCard />
             </View>
           </ScrollView>
