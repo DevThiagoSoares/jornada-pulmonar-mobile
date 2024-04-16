@@ -8,7 +8,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SignUpForm from '../creaetAccount';
 import { styles } from '../styles';
 
-import { ValidateLogin } from '~/Shared/api/services/users';
+//import { useAuth } from '~/Shared/Auth';
+import { ValidateLogin, validateEmail } from '~/Shared/api/services/users';
 import { Toastfy } from '~/Shared/notification/internal';
 import ModalContainer from '~/components/modalContainer';
 
@@ -27,12 +28,14 @@ export function FormLogin() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  // const { validateUserAccess } = useAuth();
+  //const { validateUserAccess } = useAuth();
 
   const onSubmit = async (data: FormProps) => {
     try {
       const response = await ValidateLogin(data);
-      // validateUserAccess(response.data);
+      const validateAccess = await validateEmail(data.email);
+      console.log(validateAccess.data);
+      //' validateUserAccess(data);
       AsyncStorage.setItem('access_token', JSON.stringify(response.data.access_token))
         .then(() => {})
         .catch((error: any) => {

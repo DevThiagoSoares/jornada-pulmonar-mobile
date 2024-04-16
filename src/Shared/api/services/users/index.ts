@@ -18,9 +18,13 @@ export async function createUsers(file: any, body: UserProps) {
 }
 
 export async function validateEmail(email: string) {
-  return await api.get(`/api/v1/users/${email}`);
+  return await api.get(`/api/v1/users/:${email}`);
 }
 
 export async function ValidateLogin(params: any) {
   return await api.post('/api/v1/login', params);
+}
+
+export async function Ranking() {
+  return await api.get('/api/v1/users');
 }
