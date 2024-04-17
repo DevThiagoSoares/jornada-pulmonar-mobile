@@ -1,21 +1,34 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
+import * as FileSystem from 'expo-file-system';
 import React, { useEffect, useState } from 'react';
 import { Modal, Text, View, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
 import { styledAudio } from './styles';
 
+const test = 'file:///data/user/0/host.exp.exponent/files/assets/audio/SONS_PULMONARES/Caso_20.mp3';
+
 export function ListAudio() {
   const [modalVisible, setModalVisible] = useState(false);
   const [audio, setAudio] = useState<any>();
   const totalAudios = 20;
 
+  const getAudioUri = (index: number) => {
+    const audioFilename = `assets/audio/SONS_PULMONARES/Caso_${index + 1}.mp3`;
+
+    const fileUri = FileSystem.documentDirectory + audioFilename;
+    FileSystem.makeDirectoryAsync(fileUri, { intermediates: true });
+
+    return fileUri;
+  };
+
   const audioFiles = Array.from({ length: totalAudios }, (_, index) => ({
     id: index + 1,
     title: `Caso ${index + 1}`,
-    uri: `assets/audio/SONS_PULMONARES/Caso_${index + 1}.mp3`,
+    uri: getAudioUri(index),
   }));
+  console.log({ audioFiles });
 
   useEffect(() => {
     Audio.requestPermissionsAsync().then(({ granted }) => {
@@ -35,11 +48,10 @@ export function ListAudio() {
   const handleAudioIconPress = async (item: any) => {
     const { uri } = item;
     const soundObject = new Audio.Sound();
-    console.log({ soundObject, uri });
     if (soundObject && uri) {
       try {
         await soundObject.unloadAsync();
-        await soundObject.loadAsync({ uri });
+        await soundObject.loadAsync({ uri }); // Aqui você deve passar a URI do arquivo local
         await soundObject.playAsync();
       } catch (error) {
         console.error('Erro ao carregar/reproduzir áudio:', error);
@@ -51,10 +63,10 @@ export function ListAudio() {
     <RadioButton.Group onValueChange={(newValue) => setAudio(newValue)} value={audio} key={item.id}>
       <View key={item.id} style={styledAudio.container}>
         <View style={styledAudio.containerRadius}>
-          <RadioButton value={item.title} color="#CD4C3E" />
+          <RadioButton value={item.title} color="#CD4C3E" key={item.id} />
           <Text>{item.title}</Text>
         </View>
-        <TouchableOpacity onPress={() => handleAudioIconPress(item)}>
+        <TouchableOpacity onPress={() => handleAudioIconPress(item)} key={item.id}>
           <Ionicons name="caret-forward-circle" size={25} color="#CD4C3E" />
         </TouchableOpacity>
       </View>
@@ -68,7 +80,7 @@ export function ListAudio() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {/* <TouchableOpacity onPress={() => setModalVisible(true)}>
+      {/*   <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Text>Abrir Modal</Text>
       </TouchableOpacity> */}
 

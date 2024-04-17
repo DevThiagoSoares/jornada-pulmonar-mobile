@@ -31,7 +31,7 @@ export function FormPerfil() {
 
   return (
     <View style={styledForm.container}>
-      <AvatarPicker />
+      <AvatarPicker setImg={() => {}} />
       <Text>Adicione sua foto</Text>
       <View style={styledForm.boxForm}>
         <Controller

@@ -29,6 +29,8 @@ export function AudioImg(props: imgProps) {
     }
   }, [songActive]);
 
+  console.log(audioFile);
+
   const handlePress = (event: any) => {
     const { locationX, locationY } = event.nativeEvent;
     setAudioIconPosition({ x: locationX - 30, y: locationY + 30 });

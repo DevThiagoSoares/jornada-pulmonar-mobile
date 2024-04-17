@@ -51,7 +51,12 @@ export function ListCard() {
             <View style={styledCard.cardContainer}>
               {module.length > 0 ? (
                 module.map((item: any, idx: number) => (
-                  <OptionsCard quantity={10} subTitle={item.title} title={`Unidade ${idx + 1}`} />
+                  <OptionsCard
+                    key={idx}
+                    quantity={10}
+                    subTitle={item.title}
+                    title={`Unidade ${idx + 1}`}
+                  />
                 ))
               ) : (
                 <></>
