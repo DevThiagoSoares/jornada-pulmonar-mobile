@@ -53,7 +53,7 @@ export function ListCard() {
                 module.map((item: any, idx: number) => (
                   <OptionsCard
                     key={idx}
-                    quantity={10}
+                    quantity={item.questionsCount}
                     subTitle={item.title}
                     title={`Unidade ${idx + 1}`}
                   />

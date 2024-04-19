@@ -6,16 +6,17 @@ import { Modal, Text, View, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
 import { styledAudio } from './styles';
-
-const test = 'file:///data/user/0/host.exp.exponent/files/assets/audio/SONS_PULMONARES/Caso_20.mp3';
-
+const test =
+  'https://github.com/DevThiagoSoares/jornada-pulmonar-mobile/blob/7e2663abea1ac7b9e00fcf218e2ca19939eaaa89/assets';
 export function ListAudio() {
   const [modalVisible, setModalVisible] = useState(false);
   const [audio, setAudio] = useState<any>();
   const totalAudios = 20;
 
   const getAudioUri = (index: number) => {
-    const audioFilename = `assets/audio/SONS_PULMONARES/Caso_${index + 1}.mp3`;
+    const audioFilename = `/audio/SONS_PULMONARES/Caso_${index + 1}.mp3`;
+    const fileInfo = FileSystem.getInfoAsync(audioFilename);
+    //console.log(fileInfo);
 
     const fileUri = FileSystem.documentDirectory + audioFilename;
     FileSystem.makeDirectoryAsync(fileUri, { intermediates: true });
@@ -28,7 +29,7 @@ export function ListAudio() {
     title: `Caso ${index + 1}`,
     uri: getAudioUri(index),
   }));
-  console.log({ audioFiles });
+  // console.log({ audioFiles });
 
   useEffect(() => {
     Audio.requestPermissionsAsync().then(({ granted }) => {
@@ -73,16 +74,11 @@ export function ListAudio() {
     </RadioButton.Group>
   );
 
-  const handleAudioSelection = (selectedAudio: any) => {
-    console.log('Áudio selecionado:', selectedAudio);
-    setModalVisible(false);
-  };
-
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {/*   <TouchableOpacity onPress={() => setModalVisible(true)}>
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Text>Abrir Modal</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
 
       <Modal visible={modalVisible} animationType="slide">
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

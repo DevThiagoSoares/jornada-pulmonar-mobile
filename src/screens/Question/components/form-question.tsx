@@ -35,20 +35,22 @@ export const FormComponent: React.FC = () => {
   const [savedQuestions, setSavedQuestions] = useState<string[]>([]);
   const { data } = useData();
 
+  console.log({ data });
   const onSubmit = async (value: FormData) => {
     const payload = {
-      userId: '03b15cbc-4f42-4eb6-ad99-cde36c0d372f',
+      userId: '98a83f40-1c80-46c7-8694-df8d8bd38cbb',
       titleUnit: value.titleUnit,
-      weight: value.Weight,
-      questions: [{ question: value.question, alternatives: value.alternatives }],
+      weight: Number(value.Weight),
+      alternatives: value.alternatives,
+      question: value.question,
       audioUrl: data.audioUrl,
     };
 
     try {
-      console.log('img', data);
       await CreateQuestion(data.imgUrl, payload);
     } catch (error) {
       console.log(error);
+      console.log(payload);
     }
     const { question } = value;
     setSavedQuestions([...savedQuestions, question]);

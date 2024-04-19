@@ -20,6 +20,13 @@ interface FormData {
   role: string;
   confirmPassword: string;
 }
+export interface FileDTO {
+  fieldname?: string;
+  originalname?: string;
+  mimetype?: string;
+  buffer?: Buffer;
+  size?: number;
+}
 
 const SignUpForm: React.FC = () => {
   const {
@@ -33,9 +40,9 @@ const SignUpForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [term, setTerm] = useState<string>('');
-  const [avatar, setAvatar] = useState<string | null>(null);
+  const [avatar, setAvatar] = useState<Blob>();
 
-  const handleImg = (img: string | null) => {
+  const handleImg = (img: FileDTO | any) => {
     setAvatar(img);
   };
 
@@ -53,12 +60,12 @@ const SignUpForm: React.FC = () => {
         role: selectedOption,
       };
       try {
-        const formData = new FormData();
-        formData.append('file', JSON.stringify(avatar));
-        await createUsers(formData, result);
-        validateUserAccess(result);
-        EnviarNotificacao();
-        Toastfy('success', 'Bem vindo ao Jornada Pulmonar ');
+        if (avatar) {
+          await createUsers(avatar, result);
+          //validateUserAccess(result);
+          EnviarNotificacao();
+          Toastfy('success', 'Bem vindo ao Jornada Pulmonar ');
+        }
       } catch (error) {
         console.log(error);
         Toastfy('error', 'Ops.. Algo deu errado!');

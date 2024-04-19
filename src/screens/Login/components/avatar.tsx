@@ -6,11 +6,11 @@ import Toast from 'react-native-toast-message';
 
 import { styledAvatar } from './styles';
 
-interface avatarProps {
+interface AvatarProps {
   setImg: (value: any | null) => void;
 }
 
-const AvatarPicker = (props: avatarProps) => {
+const AvatarPicker = (props: AvatarProps) => {
   const [profilePic, setProfilePic] = useState<string | null>(null);
 
   const selectProfilePic = async () => {
@@ -19,23 +19,24 @@ const AvatarPicker = (props: avatarProps) => {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
+      base64: true,
     });
 
     if (!result.canceled) {
-      const url = result.assets.map((item) => item.uri);
-      setProfilePic(url[0]);
-      const blob = await fetch(url[0]).then((res) => res.blob());
-
-      const formData = new FormData();
-      formData.append('file', blob, `${url[0]}`);
-
+      setProfilePic(result.assets[0].uri); // Define a imagem selecionada no estado
+      const blob = await fetch(result.assets[0].uri).then((res) => res.blob()); // Obtém o blob da image
+      const pic = result.assets[0];
+      setProfilePic(pic.uri); // Define a imagem selecionada no estado
       const fileInfo = {
-        originalname: url[0],
-        mimetype: blob.type,
-        buffer: blob,
-        size: blob.size,
+        fieldname: 'file',
+        originalname: pic.uri,
+        mimetype: pic.type,
+        buffer: pic.base64,
+        size: pic.fileSize,
+        path: pic.uri,
       };
-      props.setImg(fileInfo);
+
+      props.setImg(pic); // Passa o objeto com o buffer para a função setImg
     }
   };
 

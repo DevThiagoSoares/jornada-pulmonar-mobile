@@ -20,7 +20,7 @@ export function AudioImg(props: imgProps) {
   const [audioIconPosition, setAudioIconPosition] = useState<{ x: number; y: number } | null>(null);
   const soundObject = useRef(new Audio.Sound()).current;
   const [songActive, setSongActive] = useState(false);
-  const { setData } = useData();
+  const { setData, data } = useData();
   useEffect(() => {
     if (songActive) {
       handleAudioIconPress();
@@ -28,8 +28,6 @@ export function AudioImg(props: imgProps) {
       handleStopAudio();
     }
   }, [songActive]);
-
-  console.log(audioFile);
 
   const handlePress = (event: any) => {
     const { locationX, locationY } = event.nativeEvent;
@@ -67,7 +65,7 @@ export function AudioImg(props: imgProps) {
 
     if (!result.canceled) {
       setAudioFile(result.assets[0]);
-      setData({ audioUrl: result.assets[0].uri });
+      setData({ ...data, audioUrl: result.assets[0].uri });
     }
   };
 
