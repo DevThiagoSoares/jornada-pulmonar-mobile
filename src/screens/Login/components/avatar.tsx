@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import { TouchableOpacity, Image, View } from 'react-native';
@@ -6,37 +7,49 @@ import Toast from 'react-native-toast-message';
 
 import { styledAvatar } from './styles';
 
+import { api } from '~/Shared/api/api-config';
+
 interface AvatarProps {
-  setImg: (value: any | null) => void;
+  setImg: (value: string) => void;
 }
 
 const AvatarPicker = (props: AvatarProps) => {
   const [profilePic, setProfilePic] = useState<string | null>(null);
 
   const selectProfilePic = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-      base64: true,
-    });
+    try {
+      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permissionResult.granted) {
+        throw new Error('Permissão de acesso à biblioteca de mídia não concedida.');
+      }
 
-    if (!result.canceled) {
-      setProfilePic(result.assets[0].uri); // Define a imagem selecionada no estado
-      const blob = await fetch(result.assets[0].uri).then((res) => res.blob()); // Obtém o blob da image
-      const pic = result.assets[0];
-      setProfilePic(pic.uri); // Define a imagem selecionada no estado
-      const fileInfo = {
-        fieldname: 'file',
-        originalname: pic.uri,
-        mimetype: pic.type,
-        buffer: pic.base64,
-        size: pic.fileSize,
-        path: pic.uri,
-      };
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+        base64: true,
+      });
 
-      props.setImg(pic); // Passa o objeto com o buffer para a função setImg
+      if (!result.canceled) {
+        const pic = result.assets[0];
+        // Comprimir a imagem
+        const compressedImage = await ImageManipulator.manipulateAsync(pic.uri, [], {
+          compress: 0.5, // Ajuste a qualidade conforme necessário
+          format: ImageManipulator.SaveFormat.JPEG, // Formato de saída
+        });
+        console.log({ compressedImage });
+        const responseBlob = api
+          .get(`data:image/jpeg;base64,${compressedImage.base64}`)
+          .catch((er) => console.log({ er }));
+        console.log({ responseBlob });
+        // Aqui você pode fazer o que precisar com o base64 da imagem, como enviar para o servidor
+        if (!responseBlob) props.setImg(responseBlob);
+
+        setProfilePic(pic.uri);
+      }
+    } catch (error) {
+      console.error('Erro ao selecionar a imagem:', error);
     }
   };
 

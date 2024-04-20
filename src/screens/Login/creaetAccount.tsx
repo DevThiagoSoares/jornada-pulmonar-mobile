@@ -1,3 +1,4 @@
+import { ImagePickerAsset } from 'expo-image-picker';
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -22,10 +23,11 @@ interface FormData {
 }
 export interface FileDTO {
   fieldname?: string;
-  originalname?: string;
+  originalname?: any;
   mimetype?: string;
   buffer?: Buffer;
   size?: number;
+  path: string;
 }
 
 const SignUpForm: React.FC = () => {
@@ -40,7 +42,7 @@ const SignUpForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [term, setTerm] = useState<string>('');
-  const [avatar, setAvatar] = useState<Blob>();
+  const [avatar, setAvatar] = useState<string>();
 
   const handleImg = (img: FileDTO | any) => {
     setAvatar(img);
