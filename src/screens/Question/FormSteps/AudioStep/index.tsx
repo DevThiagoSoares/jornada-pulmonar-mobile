@@ -1,13 +1,14 @@
 /* eslint-disable import/order */
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
-import * as DocumentPicker from 'expo-document-picker';
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import { styles } from './styles';
 import { useData } from '~/Shared/hooks/audio.context';
+import { ListAudio } from '~/components/Audio/list-audio';
+import { ScrollView } from 'react-native-gesture-handler';
 
 interface imgProps {
   titleImg: string;
@@ -41,7 +42,7 @@ export function AudioImg(props: imgProps) {
 
   const handleAudioIconPress = async () => {
     if (audioFile) {
-      const { uri } = audioFile;
+      const uri = audioFile;
       try {
         await soundObject.unloadAsync();
         await soundObject.loadAsync({ uri });
@@ -52,6 +53,11 @@ export function AudioImg(props: imgProps) {
     }
   };
 
+  const handleGetAudio = (uri: string) => {
+    setAudioFile(uri);
+    setData({ audioUrl: uri });
+  };
+
   const handleStopAudio = async () => {
     try {
       await soundObject.stopAsync();
@@ -60,14 +66,11 @@ export function AudioImg(props: imgProps) {
     }
   };
 
-  const pickAudio = async () => {
-    const result = await DocumentPicker.getDocumentAsync({ type: 'audio/*' });
-
-    if (!result.canceled) {
-      setAudioFile(result.assets[0]);
-      setData({ ...data, audioUrl: result.assets[0].uri });
-    }
+  const CloseModal = () => {
+    setModalVisible(!modalVisible);
   };
+
+  console.log({ data });
 
   return (
     <View style={styles.container}>
@@ -92,14 +95,10 @@ export function AudioImg(props: imgProps) {
         <View style={styles.container}>
           <View style={styles.modalContent}>
             <Text style={styles.modalText}>Selecione um arquivo de áudio:</Text>
-            <Button style={styles.modalButton} mode="contained" onPress={pickAudio}>
-              Selecionar áudio
-            </Button>
-            {audioFile && <Text style={styles.modalText}>{audioFile.name}</Text>}
-            <Button
-              style={styles.modalButton}
-              mode="contained"
-              onPress={() => setModalVisible(false)}>
+            <ScrollView style={{ height: 200, width: '100%' }}>
+              <ListAudio getAudio={handleGetAudio} />
+            </ScrollView>
+            <Button style={styles.modalButton} mode="contained" onPress={() => CloseModal()}>
               Salvar
             </Button>
           </View>

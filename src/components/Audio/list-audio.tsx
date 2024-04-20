@@ -1,25 +1,32 @@
 import { Ionicons } from '@expo/vector-icons';
+import { Asset } from 'expo-asset';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
-import * as FileSystem from 'expo-file-system';
-import React, { useEffect, useState } from 'react';
-import { Modal, Text, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
+import { AudioFiles } from './list-file';
 import { styledAudio } from './styles';
-const test =
-  'https://github.com/DevThiagoSoares/jornada-pulmonar-mobile/blob/7e2663abea1ac7b9e00fcf218e2ca19939eaaa89/assets';
-export function ListAudio() {
-  const [modalVisible, setModalVisible] = useState(false);
+
+interface audioProps {
+  getAudio: (value: string) => void;
+}
+
+export function ListAudio(props: audioProps) {
   const [audio, setAudio] = useState<any>();
+  const [option, setOption] = useState('');
+  const [isActiveSong, setIsActiveSong] = useState(false);
   const totalAudios = 20;
+  const soundObject = useRef(new Audio.Sound()).current;
 
   const getAudioUri = (index: number) => {
-    const audioFilename = `/audio/SONS_PULMONARES/Caso_${index + 1}.mp3`;
-    const fileInfo = FileSystem.getInfoAsync(audioFilename);
-    //console.log(fileInfo);
+    const audioFilename = Asset.fromModule(AudioFiles[`Caso_${index}`] ?? '');
+    if (!audioFilename) {
+      console.error(`Arquivo de áudio não encontrado para o índice ${index + 1}`);
+      return ''; // Ou retorne um valor padrão caso não encontre o arquivo
+    }
 
-    const fileUri = FileSystem.documentDirectory + audioFilename;
-    FileSystem.makeDirectoryAsync(fileUri, { intermediates: true });
+    const fileUri = audioFilename.uri;
 
     return fileUri;
   };
@@ -47,8 +54,9 @@ export function ListAudio() {
   }, []);
 
   const handleAudioIconPress = async (item: any) => {
+    setIsActiveSong(!isActiveSong);
     const { uri } = item;
-    const soundObject = new Audio.Sound();
+    setAudio(uri);
     if (soundObject && uri) {
       try {
         await soundObject.unloadAsync();
@@ -59,36 +67,42 @@ export function ListAudio() {
       }
     }
   };
+  const handleStopAudio = async () => {
+    try {
+      setIsActiveSong(!isActiveSong);
+      setAudio(null);
+      await soundObject.stopAsync();
+    } catch (error) {
+      console.error('Erro ao parar o áudio:', error);
+    }
+  };
 
+  const SelectOption = (option: string, uri: string) => {
+    setOption(option);
+    props.getAudio(uri);
+  };
   const renderItem = (item: any) => (
-    <RadioButton.Group onValueChange={(newValue) => setAudio(newValue)} value={audio} key={item.id}>
+    <RadioButton.Group
+      onValueChange={(newValue) => SelectOption(newValue, item.uri)}
+      value={option}
+      key={item.id}>
       <View key={item.id} style={styledAudio.container}>
         <View style={styledAudio.containerRadius}>
           <RadioButton value={item.title} color="#CD4C3E" key={item.id} />
-          <Text>{item.title}</Text>
+          <Text style={{ color: '#ffff' }}>{item.title}</Text>
         </View>
-        <TouchableOpacity onPress={() => handleAudioIconPress(item)} key={item.id}>
-          <Ionicons name="caret-forward-circle" size={25} color="#CD4C3E" />
-        </TouchableOpacity>
+        {audio === item.uri ? (
+          <TouchableOpacity key={item.id} onPress={() => handleStopAudio()}>
+            <Ionicons name="pause-circle" size={25} color="#CD4C3E" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity key={item.id} onPress={() => handleAudioIconPress(item)}>
+            <Ionicons name="caret-forward-circle" size={25} color="#CD4C3E" />
+          </TouchableOpacity>
+        )}
       </View>
     </RadioButton.Group>
   );
 
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <Text>Abrir Modal</Text>
-      </TouchableOpacity>
-
-      <Modal visible={modalVisible} animationType="slide">
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Lista de Áudios:</Text>
-          {audioFiles.map((item, idx) => renderItem(item))}
-          <TouchableOpacity onPress={() => setModalVisible(false)}>
-            <Text>Fechar</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-    </View>
-  );
+  return <>{audioFiles.map((item, idx) => renderItem(item))}</>;
 }

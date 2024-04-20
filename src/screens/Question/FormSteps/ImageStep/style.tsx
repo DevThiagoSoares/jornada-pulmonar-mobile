@@ -61,7 +61,7 @@ export const styledImageStep = StyleSheet.create({
 export const styledImg = StyleSheet.create({
   container: {
     width: 315,
-    height: 150,
+    height: 170,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 15,

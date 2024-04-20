@@ -5,8 +5,10 @@ export const styledAudio = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
+    paddingLeft: 20,
+    paddingRight: 20,
     justifyContent: 'space-between',
-    width: '50%',
+    width: '100%',
   },
   containerRadius: {
     display: 'flex',

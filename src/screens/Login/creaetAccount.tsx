@@ -1,4 +1,3 @@
-import { ImagePickerAsset } from 'expo-image-picker';
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -64,7 +63,7 @@ const SignUpForm: React.FC = () => {
       try {
         if (avatar) {
           await createUsers(avatar, result);
-          //validateUserAccess(result);
+          validateUserAccess(result);
           EnviarNotificacao();
           Toastfy('success', 'Bem vindo ao Jornada Pulmonar ');
         }

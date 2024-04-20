@@ -1,5 +1,8 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as ImageManipulator from 'expo-image-manipulator';
+//import * as ImageManipulator from 'expo-image-manipulator';
+import test from 'assets/audio/SONS_PULMONARES/Caso_1.mp3';
+import { Asset } from 'expo-asset';
+//import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import { TouchableOpacity, Image, View } from 'react-native';
@@ -7,7 +10,7 @@ import Toast from 'react-native-toast-message';
 
 import { styledAvatar } from './styles';
 
-import { api } from '~/Shared/api/api-config';
+//import { api } from '~/Shared/api/api-config';
 
 interface AvatarProps {
   setImg: (value: string) => void;
@@ -28,13 +31,19 @@ const AvatarPicker = (props: AvatarProps) => {
         allowsEditing: true,
         aspect: [1, 1],
         quality: 1,
-        base64: true,
+        base64: false,
       });
 
       if (!result.canceled) {
         const pic = result.assets[0];
+        const file = Asset.fromURI(pic.uri);
+        file.downloadAsync();
+        const imgurl = Asset.fromModule(test);
+        console.log('file', { file });
+        console.log('\n uri', pic.uri);
+        console.log('\n imgurl', imgurl);
         // Comprimir a imagem
-        const compressedImage = await ImageManipulator.manipulateAsync(pic.uri, [], {
+        /* const compressedImage = await ImageManipulator.manipulateAsync(pic.uri, [], {
           compress: 0.5, // Ajuste a qualidade conforme necessário
           format: ImageManipulator.SaveFormat.JPEG, // Formato de saída
         });
@@ -42,9 +51,9 @@ const AvatarPicker = (props: AvatarProps) => {
         const responseBlob = api
           .get(`data:image/jpeg;base64,${compressedImage.base64}`)
           .catch((er) => console.log({ er }));
-        console.log({ responseBlob });
+        console.log({ responseBlob }); */
         // Aqui você pode fazer o que precisar com o base64 da imagem, como enviar para o servidor
-        if (!responseBlob) props.setImg(responseBlob);
+        props.setImg(pic.uri);
 
         setProfilePic(pic.uri);
       }
