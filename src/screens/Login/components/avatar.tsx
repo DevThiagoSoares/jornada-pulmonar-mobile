@@ -1,8 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 //import * as ImageManipulator from 'expo-image-manipulator';
-import test from 'assets/audio/SONS_PULMONARES/Caso_1.mp3';
-import { Asset } from 'expo-asset';
-//import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import { TouchableOpacity, Image, View } from 'react-native';
@@ -36,26 +34,18 @@ const AvatarPicker = (props: AvatarProps) => {
 
       if (!result.canceled) {
         const pic = result.assets[0];
-        const file = Asset.fromURI(pic.uri);
-        file.downloadAsync();
-        const imgurl = Asset.fromModule(test);
-        console.log('file', { file });
-        console.log('\n uri', pic.uri);
-        console.log('\n imgurl', imgurl);
-        // Comprimir a imagem
-        /* const compressedImage = await ImageManipulator.manipulateAsync(pic.uri, [], {
-          compress: 0.5, // Ajuste a qualidade conforme necessário
-          format: ImageManipulator.SaveFormat.JPEG, // Formato de saída
-        });
-        console.log({ compressedImage });
-        const responseBlob = api
-          .get(`data:image/jpeg;base64,${compressedImage.base64}`)
-          .catch((er) => console.log({ er }));
-        console.log({ responseBlob }); */
-        // Aqui você pode fazer o que precisar com o base64 da imagem, como enviar para o servidor
-        props.setImg(pic.uri);
+        const fileInfo = await FileSystem.getInfoAsync(pic.uri);
 
-        setProfilePic(pic.uri);
+        if (fileInfo.exists) {
+          /*  const base64 = await FileSystem.readAsStringAsync(pic.uri, {
+            encoding: FileSystem.EncodingType.Base64,
+          });
+          const httpUri = `data:image/jpeg;base64,${base64}`;
+          const buffer = Buffer.from(httpUri, 'base64');
+          console.log('====>', buffer); */
+          setProfilePic(pic.uri);
+          props.setImg(pic.uri);
+        }
       }
     } catch (error) {
       console.error('Erro ao selecionar a imagem:', error);

@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "expostack",
+    "name": "JornadaPulmonar",
     "slug": "expostack",
     "version": "1.0.0",
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "assets/pulmoes.png"
     },
     "plugins": [
       [
@@ -13,9 +13,8 @@
           "icon": "./assets/pulmoes.png",
           "color": "#ffffff",
           "sounds": [
-            "./assets/audio/sonsNotificatio.mp3"
-          ],
-          "name": "Jornada Pulmonar"
+            "./assets/audio/sonsnotificatio.mp3"
+          ]
         }
       ]
     ],
@@ -42,8 +41,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.fernanda0122.expostack",
-      "icon": "./assets/pulmoes.png",
-      "name": "Jornada Pulmonar"
+      "icon": "./assets/pulmoes.png"
     },
     "extra": {
       "eas": {

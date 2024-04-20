@@ -26,11 +26,11 @@ function dataURItoBlob(dataURI: string): Blob {
 
 export async function createUsers(fileInfo: string, body: UserProps) {
   const formData = new FormData();
-  formData.append('payload', JSON.stringify(body));
-
   if (!fileInfo) return;
   formData.append('file', fileInfo);
-
+  formData.append('payload', JSON.stringify(body));
+  /*   console.log('\n file', formData.getAll('file'));
+  console.log('\npayload', formData.getAll('payload')); */
   return await api
     .post('/api/v1/users/', formData, {
       headers: {

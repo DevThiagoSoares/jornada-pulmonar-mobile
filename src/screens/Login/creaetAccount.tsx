@@ -63,7 +63,7 @@ const SignUpForm: React.FC = () => {
       try {
         if (avatar) {
           await createUsers(avatar, result);
-          validateUserAccess(result);
+          // validateUserAccess(result);
           EnviarNotificacao();
           Toastfy('success', 'Bem vindo ao Jornada Pulmonar ');
         }
