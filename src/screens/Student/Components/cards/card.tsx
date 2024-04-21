@@ -4,7 +4,9 @@ import { Image, View } from 'react-native';
 import { Button, Card, ProgressBar, Text } from 'react-native-paper';
 
 import { styledCard } from './styles';
+import { modulesDto } from '../../Home';
 
+import { ListQuestionApi } from '~/Shared/api/services/questions';
 import { RootStackParamList } from '~/navigation/Routes';
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
@@ -15,11 +17,15 @@ interface cardProps {
   totalFinished: number;
   progress: number;
   img: any;
+  data?: modulesDto[];
 }
-
+export interface questionsDto {}
 export function CardTemplate(props: cardProps) {
   const navigation = useNavigation<Props['navigation']>();
-
+  const handleListQuestions = async () => {
+    const resp = await ListQuestionApi();
+    console.log(resp?.data);
+  };
   return (
     <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
       <Card style={styledCard.cardContainer}>
@@ -44,7 +50,7 @@ export function CardTemplate(props: cardProps) {
             contentStyle={{ flexDirection: 'row-reverse' }}
             style={{ backgroundColor: '#FFE815' }}
             labelStyle={styledCard.buttonLabel}
-            onPress={() => navigation.navigate('Modal')}
+            onPress={() => handleListQuestions()}
             color="#9F8500">
             Começar
           </Button>

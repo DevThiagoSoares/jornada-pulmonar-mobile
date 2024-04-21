@@ -9,7 +9,7 @@ import { CardTemplate } from './Components/cards/card';
 import { getModules } from '~/Shared/api/services/modules/modules';
 import { BackgroundScreen } from '~/components/screens/background-image';
 
-interface modulesDto {
+export interface modulesDto {
   id: string;
   questionsCount: number;
   title: string;
@@ -42,7 +42,6 @@ const HomeStudent = () => {
       return imgEnfer1;
     }
   };
-  console.log({ listModules });
   return (
     <BackgroundScreen
       resizeMode="cover"
@@ -53,11 +52,13 @@ const HomeStudent = () => {
           {listModules.length > 0 ? (
             listModules.map((item: modulesDto, idx: number) => (
               <CardTemplate
+                key={idx}
                 title={item.title}
                 totalQuest={item.questionsCount}
                 totalFinished={0}
                 progress={item.questionsCount > 0 ? 0 / item.questionsCount : 0}
                 img={getAvatar(idx)}
+                data={listModules}
               />
             ))
           ) : (
