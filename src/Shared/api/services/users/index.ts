@@ -27,7 +27,7 @@ export async function createUsers(fileInfo: FileDTO, body: UserProps) {
 }
 
 export async function validateEmail(email: string) {
-  return await api.get(`/api/v1/users/:${email}`);
+  return await api.get(`/api/v1/users?email=${email}`);
 }
 
 export async function ValidateLogin(params: any) {

@@ -1,5 +1,6 @@
 import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useEffect } from 'react';
 import { TouchableOpacity, ImageBackground, Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import iconImage from 'src/assets/image/União.png';
@@ -10,6 +11,7 @@ import TabLayout from '../tab-navigator';
 
 import { useAuth } from '~/Shared/Auth';
 import { TypeUser } from '~/Shared/Enums/typeUser';
+import { validateEmail } from '~/Shared/api/services/users';
 import { ComponentLevel } from '~/components/screens/component-level';
 import Login from '~/screens/Login/login';
 import { CreateQuestion } from '~/screens/Question';
@@ -99,7 +101,12 @@ export function AppRoutes() {
                         color="#FFFF"
                         style={{ paddingRight: 10 }}
                       />
-                      <ComponentLevel level="6" img={iconImage} width={40} height={40} />
+                      <ComponentLevel
+                        level={user.score ?? ''}
+                        img={iconImage}
+                        width={40}
+                        height={40}
+                      />
                       <Text style={styledHeader.text}>Nível</Text>
                     </View>
                     <View>

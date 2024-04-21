@@ -9,7 +9,7 @@ import { SignUpForm } from '../creaetAccount';
 import { styles } from '../styles';
 
 import { useAuth } from '~/Shared/Auth';
-import { ValidateLogin } from '~/Shared/api/services/users';
+import { ValidateLogin, validateEmail } from '~/Shared/api/services/users';
 import { Toastfy } from '~/Shared/notification/internal';
 import ModalContainer from '~/components/modalContainer';
 
@@ -33,7 +33,10 @@ export function FormLogin() {
   const onSubmit = async (data: FormProps) => {
     try {
       const response = await ValidateLogin(data);
-      validateUserAccess(response.data);
+      const userData = await validateEmail(data.email);
+      const { access_token, email, role, id } = response.data;
+      const { name, imgUrl, score } = userData.data[0];
+      validateUserAccess({ access_token, email, role, id, imgUrl, name, score });
       AsyncStorage.setItem('access_token', JSON.stringify(response.data.access_token))
         .then(() => {})
         .catch((error: any) => {

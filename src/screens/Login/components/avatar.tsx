@@ -11,6 +11,7 @@ import { FileDTO } from '../creaetAccount';
 
 interface AvatarProps {
   setImg: (value: FileDTO) => void;
+  userImg?: string;
 }
 
 const AvatarPicker = (props: AvatarProps) => {
@@ -61,7 +62,7 @@ const AvatarPicker = (props: AvatarProps) => {
   return (
     <TouchableOpacity style={styledAvatar.avatarContainer} onPress={selectProfilePic}>
       {profilePic ? (
-        <Image source={{ uri: profilePic }} style={styledAvatar.avatarImage} />
+        <Image source={{ uri: props.userImg ?? profilePic }} style={styledAvatar.avatarImage} />
       ) : (
         <View style={styledAvatar.avatarIcon}>
           <MaterialCommunityIcons name="image-plus" size={40} color="#FFF" />

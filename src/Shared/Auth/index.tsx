@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useContext, createContext, ReactNode, useState, useEffect } from 'react';
+import { useContext, createContext, ReactNode, useState } from 'react';
 
 export const isValidateAccount = () => {
   return false;
@@ -7,15 +7,18 @@ export const isValidateAccount = () => {
 
 export interface UserProps {
   name: string;
-  role: string;
+  role?: string;
   email?: string;
   password?: string;
   access_token?: string;
   id?: string;
+  imgUrl?: string;
+  score: string;
 }
 
 type AuthContextProps = {
   user: UserProps | null;
+  setUser: (value: UserProps | null) => void;
   validateUserAccess: (value: UserProps) => void;
   signOut: () => void;
 };
@@ -30,7 +33,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
   };
 
-  const validateUserAccess = (body: UserProps) => {
+  const validateUserAccess = async (body: UserProps) => {
     setUser(body);
     const { access_token } = body;
 
@@ -42,7 +45,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, validateUserAccess, signOut }}>
+    <AuthContext.Provider value={{ user, validateUserAccess, signOut, setUser }}>
       {children}
     </AuthContext.Provider>
   );
