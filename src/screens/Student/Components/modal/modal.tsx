@@ -22,28 +22,27 @@ export default function Modal() {
 
   const handleListQuestion = async () => {
     const resp = await ListQuestionApi();
+    console.log(resp?.data);
     if (resp) setListQuestion(resp.data);
   };
   return (
     <BackgroundScreen source={img} style={styles.backgroundImage} resizeMode="cover">
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View style={{ display: 'flex', flexDirection: 'column', margin: 30 }}>
-          <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-          {listQuestion.length > 0 &&
-            listQuestion.map((item: modulesDto, idx: number) => (
-              <>
-                <UnitCard
-                  key={idx}
-                  question={item.title}
-                  finishe="Não iniciada"
-                  level={String(idx + 1)}
-                  imgLevel={imgLevel}
-                  data={item}
-                />
-                <Divider />
-              </>
-            ))}
-        </View>
+        <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+        {listQuestion.length > 0 &&
+          listQuestion.map((item: modulesDto, idx: number) => (
+            <View key={idx} style={{ display: 'flex', flexDirection: 'column', margin: 30 }}>
+              <UnitCard
+                key={idx}
+                question={item.title}
+                finishe="Não iniciada"
+                level={String(idx + 1)}
+                imgLevel={imgLevel}
+                data={item}
+              />
+              <Divider key={idx} />
+            </View>
+          ))}
       </ScrollView>
     </BackgroundScreen>
   );

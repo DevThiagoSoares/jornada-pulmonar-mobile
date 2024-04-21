@@ -36,8 +36,6 @@ export function CarouselComponent(props: ImgProps) {
     if (question) setAudio(question.audioUrl);
   };
 
-  console.log({ audio });
-
   const handlePosition = () => {
     Toast.hide();
     setActiveIcon(true);
@@ -48,6 +46,7 @@ export function CarouselComponent(props: ImgProps) {
   };
   const handleAudioIconPress = async () => {
     setActive(!isActive);
+    handlePosition();
     if (audio) {
       if (soundObject) {
         try {
@@ -63,6 +62,7 @@ export function CarouselComponent(props: ImgProps) {
   const handleStopAudio = async () => {
     try {
       setActive(!isActive);
+      handlePosition();
       await soundObject.stopAsync();
       setAudio(null);
     } catch (error) {
