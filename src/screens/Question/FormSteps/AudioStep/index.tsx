@@ -21,7 +21,7 @@ export function AudioImg(props: imgProps) {
   const [audioIconPosition, setAudioIconPosition] = useState<{ x: number; y: number } | null>(null);
   const soundObject = useRef(new Audio.Sound()).current;
   const [songActive, setSongActive] = useState(false);
-  const { setData, data } = useData();
+  const { setData, data, setAudioCoordinates, audioCoordinates } = useData();
   useEffect(() => {
     if (songActive) {
       handleAudioIconPress();
@@ -30,9 +30,16 @@ export function AudioImg(props: imgProps) {
     }
   }, [songActive]);
 
+  useEffect(() => {
+    if (audioCoordinates) {
+      setAudioIconPosition(audioCoordinates);
+    }
+  }, []);
+
   const handlePress = (event: any) => {
     const { locationX, locationY } = event.nativeEvent;
     setAudioIconPosition({ x: locationX - 30, y: locationY + 30 });
+    setAudioCoordinates({ x: locationX, y: locationY });
     setModalVisible(true);
   };
 

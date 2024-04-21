@@ -9,6 +9,7 @@ import { ButtonDefault, InputTitle } from './ui';
 import { useAuth } from '~/Shared/Auth';
 import { CreateQuestion } from '~/Shared/api/services/questions';
 import { useData } from '~/Shared/hooks/audio.context';
+import { Toastfy } from '~/Shared/notification/internal';
 
 interface optionsAlt {
   label: string;
@@ -34,7 +35,7 @@ export const FormComponent: React.FC = () => {
 
   const [questionCount, setQuestionCount] = useState(1);
   const [savedQuestions, setSavedQuestions] = useState<string[]>([]);
-  const { data } = useData();
+  const { data, setAudioCoordinates, setData } = useData();
   const { user } = useAuth();
 
   const onSubmit = async (value: FormData) => {
@@ -49,6 +50,9 @@ export const FormComponent: React.FC = () => {
 
     try {
       await CreateQuestion(data.imgUrl, payload);
+      setData(null);
+      setAudioCoordinates(null);
+      Toastfy('error', 'Questão cadastrada com sucesso!');
     } catch (error) {
       console.log(error);
     }

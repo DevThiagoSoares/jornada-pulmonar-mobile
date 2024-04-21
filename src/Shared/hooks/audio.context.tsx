@@ -4,6 +4,8 @@ import React, { ReactNode, createContext, useContext, useState } from 'react';
 type DataType = {
   data: any;
   setData: (value: any) => void;
+  setAudioCoordinates: (value: any) => void;
+  audioCoordinates: any;
 };
 
 interface ContextProps {
@@ -15,9 +17,14 @@ const DataContext = createContext<DataType>({} as DataType);
 
 // Crie o provedor do contexto
 export const DataProvider = ({ children }: ContextProps) => {
-  const [data, setData] = useState<any>('');
+  const [data, setData] = useState<any>(null);
+  const [audioCoordinates, setAudioCoordinates] = useState<any>(null);
 
-  return <DataContext.Provider value={{ data, setData }}>{children}</DataContext.Provider>;
+  return (
+    <DataContext.Provider value={{ data, setData, audioCoordinates, setAudioCoordinates }}>
+      {children}
+    </DataContext.Provider>
+  );
 };
 
 export function useData() {
