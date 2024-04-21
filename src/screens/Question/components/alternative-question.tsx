@@ -15,6 +15,7 @@ export interface Alternative {
 interface OptionsProps {
   onChange: any;
   errors?: string | undefined;
+  inputError?: boolean;
 }
 
 export function Alternative(props: OptionsProps) {
@@ -50,7 +51,7 @@ export function Alternative(props: OptionsProps) {
     }
   };
   const handleAddAlternative = () => {
-    const alternativeExist = alternatives.find((item) => item.value);
+    const alternativeExist = alternatives.find((item) => item.value === alternative);
     if (!alternativeExist) {
       if (alternative.trim() !== '') {
         setAlternatives([...alternatives, { value: alternative, description: alternative }]);
@@ -75,6 +76,7 @@ export function Alternative(props: OptionsProps) {
         label={props.errors ? props.errors : 'Insira uma alternativa'}
         value={alternative}
         onChange={handleInputChange}
+        errors={props.inputError}
       />
 
       <Button onPress={handleAddAlternative} mode="contained" style={styledAlternative.button}>

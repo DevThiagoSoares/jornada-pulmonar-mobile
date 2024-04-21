@@ -8,6 +8,7 @@ interface InputProps {
   icon?: React.ReactNode;
   inputMode?: InputModeOptions;
   onChange?: (text: string) => void;
+  errors?: boolean;
 }
 
 export const InputNormal: React.FC<InputProps> = ({
@@ -16,9 +17,11 @@ export const InputNormal: React.FC<InputProps> = ({
   icon,
   inputMode = 'text',
   onChange,
+  errors,
 }) => {
   return (
     <TextInput
+      error={errors}
       mode="outlined"
       outlineStyle={{ borderRadius: 12 }}
       outlineColor="#FFFFFF"

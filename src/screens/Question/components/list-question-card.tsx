@@ -48,6 +48,7 @@ export function ListQuestionsCard(props: PropsQuestion) {
         render={({ field: { onBlur, onChange, value } }) => (
           <InputNormal
             inputMode="numeric"
+            errors={props.errors.Weight !== undefined}
             value={value}
             label={props.errors?.Weight?.message || 'Peso da Questão'}
             onChange={onChange}
@@ -62,6 +63,7 @@ export function ListQuestionsCard(props: PropsQuestion) {
         control={props.control}
         render={({ field: { onChange, value } }) => (
           <InputNormal
+            errors={props.errors.question !== undefined}
             value={value}
             label={props.errors?.question?.message || 'Digite a Pergunta'}
             onChange={onChange}
@@ -74,7 +76,11 @@ export function ListQuestionsCard(props: PropsQuestion) {
       <Controller
         control={props.control}
         render={({ field: { onChange, value } }) => (
-          <Alternative onChange={onChange} errors={props.errors.alternatives?.message} />
+          <Alternative
+            inputError={props.errors.alternatives !== undefined}
+            onChange={onChange}
+            errors={props.errors.alternatives?.message}
+          />
         )}
         name="alternatives"
         rules={{ required: 'Adicione no mínimo duas alternativas' }}

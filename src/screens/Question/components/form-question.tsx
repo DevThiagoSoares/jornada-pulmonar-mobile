@@ -70,6 +70,7 @@ export const FormComponent: React.FC = () => {
         render={({ field: { onBlur, onChange, value } }) => (
           <InputTitle
             value={value}
+            errors={errors?.titleUnit !== undefined}
             label={errors?.titleUnit?.message || 'Titulo da Unidade'}
             onChange={onChange}
           />

@@ -5,11 +5,13 @@ interface InputProps {
   value: string;
   label: string;
   onChange?: (text: string) => void;
+  errors?: boolean;
 }
 
-export const InputTitle: React.FC<InputProps> = ({ value, label, onChange }) => {
+export const InputTitle: React.FC<InputProps> = ({ value, label, onChange, errors }) => {
   return (
     <TextInput
+      error={errors}
       mode="outlined"
       outlineStyle={{ borderRadius: 12 }}
       outlineColor="rgba(229, 204, 200, 0.5)"
