@@ -5,35 +5,18 @@ import { Platform } from 'react-native';
 import { api } from '../../api-config';
 
 import { UserProps } from '~/Shared/Auth';
+import { FileDTO } from '~/screens/Login/creaetAccount';
 
-/* // Função para converter uma string base64 em Blob
-function dataURItoBlob(dataURI: string): Blob {
-  // Divide a string base64 para separar o cabeçalho 'data:image/jpeg;base64,' do conteúdo base64
-  const byteString = atob(dataURI.split(',')[1]);
-
-  // Cria um array de bytes para cada caractere da string base64
-  const arrayBuffer = new ArrayBuffer(byteString.length);
-  const intArray = new Uint8Array(arrayBuffer);
-  for (let i = 0; i < byteString.length; i++) {
-    intArray[i] = byteString.charCodeAt(i);
-  }
-
-  // Cria o Blob a partir do array de bytes
-  const blob = new Blob([intArray], { type: 'image/jpeg' }); // Substitua 'image/jpeg' pelo tipo correto se necessário
-
-  return blob;
-} */
-
-export async function createUsers(fileInfo: string, body: UserProps) {
+export async function createUsers(fileInfo: FileDTO, body: UserProps) {
   const formData = new FormData();
-  if (!fileInfo) return;
-  formData.append('file', fileInfo);
+  if (!fileInfo.blob && fileInfo) return;
+  formData.append('file', fileInfo.blob);
   formData.append('payload', JSON.stringify(body));
-  /*   console.log('\n file', formData.getAll('file'));
-  console.log('\npayload', formData.getAll('payload')); */
   return await api
     .post('/api/v1/users/', formData, {
+      maxBodyLength: Infinity,
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
         ...Platform.select({
           android: { 'Access-Control-Allow-Origin': '*' },

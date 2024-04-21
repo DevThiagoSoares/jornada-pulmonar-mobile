@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "JornadaPulmonar",
+    "name": "Jornada Pulmonar",
     "slug": "expostack",
     "version": "1.0.0",
     "web": {
-      "favicon": "assets/pulmoes.png"
+      "favicon": "./assets/pulmoes.png"
     },
     "plugins": [
       [
@@ -13,7 +13,10 @@
           "icon": "./assets/pulmoes.png",
           "color": "#ffffff",
           "sounds": [
-            "./assets/audio/sonsnotificatio.mp3"
+            {
+              "name": "default",
+              "filename": "./assets/audio/sonsnotificatio.mp3"
+            }
           ]
         }
       ]
@@ -22,10 +25,10 @@
       "tsconfigPaths": true
     },
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/pulmoes.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/pulmoes.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -37,7 +40,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/pulmoes.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.fernanda0122.expostack",

@@ -26,7 +26,8 @@ export interface FileDTO {
   mimetype?: string;
   buffer?: Buffer;
   size?: number;
-  path: string;
+  encoding?: any;
+  blob: Blob;
 }
 
 const SignUpForm: React.FC = () => {
@@ -41,7 +42,7 @@ const SignUpForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [term, setTerm] = useState<string>('');
-  const [avatar, setAvatar] = useState<string>();
+  const [avatar, setAvatar] = useState<FileDTO>();
 
   const handleImg = (img: FileDTO | any) => {
     setAvatar(img);
@@ -63,7 +64,7 @@ const SignUpForm: React.FC = () => {
       try {
         if (avatar) {
           await createUsers(avatar, result);
-          // validateUserAccess(result);
+          validateUserAccess(result);
           EnviarNotificacao();
           Toastfy('success', 'Bem vindo ao Jornada Pulmonar ');
         }
