@@ -10,7 +10,6 @@ import { styles } from '../Login/styles';
 import { AvatarGroup } from '../Teacher/Components/Avatar/avatarGroup';
 import { styledCard } from '../Teacher/Components/Cards/styles';
 import { ListInfo } from '../Teacher/Components/List-Info/List-item-info';
-import { NotFoundData } from '../Teacher/Components/notFoundData';
 
 import { Ranking } from '~/Shared/api/services/users';
 import { BackgroundScreen } from '~/components/screens/background-image';
@@ -90,7 +89,7 @@ export default function TabRanking() {
                 <ListInfo key={idx} name={item.name} points={item.score} position={idx + 1} />
               ))
             ) : (
-              <NotFoundData />
+              <></>
             )}
           </View>
         </View>
