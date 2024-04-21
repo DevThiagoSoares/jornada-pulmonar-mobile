@@ -5,7 +5,7 @@ import { View, Image, Text, TouchableOpacity, TextInput } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import SignUpForm from '../creaetAccount';
+import { SignUpForm } from '../creaetAccount';
 import { styles } from '../styles';
 
 import { useAuth } from '~/Shared/Auth';
@@ -122,7 +122,7 @@ export function FormLogin() {
       </TouchableOpacity>
       <ModalContainer onClose={handleSignUpPress} visible={isOpenModal}>
         <View style={{ height: 630, width: 320 }}>
-          <SignUpForm />
+          <SignUpForm handleIsActiveModal={handleSignUpPress} />
         </View>
       </ModalContainer>
     </View>

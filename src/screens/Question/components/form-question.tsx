@@ -50,7 +50,6 @@ export const FormComponent: React.FC = () => {
       await CreateQuestion(data.imgUrl, payload);
     } catch (error) {
       console.log(error);
-      console.log(payload);
     }
     const { question } = value;
     setSavedQuestions([...savedQuestions, question]);

@@ -26,9 +26,9 @@ const UploadImg = () => {
     });
 
     if (!result.canceled) {
-      const url = result.assets.map((item) => item.uri);
-      setProfilePic(url[0]);
-      setData({ ...data, imgUrl: url[0] });
+      const url = result.assets[0].uri;
+      setProfilePic(url);
+      setData({ ...data, imgUrl: url });
     }
   };
 

@@ -7,7 +7,7 @@ import AvatarPicker from './components/avatar';
 import { RadioGroup } from './components/radioGroup';
 import { styledRadio, styledUser } from './components/styles';
 
-import { UserProps, useAuth } from '~/Shared/Auth';
+import { UserProps } from '~/Shared/Auth';
 import { TypeUser } from '~/Shared/Enums/typeUser';
 import { createUsers } from '~/Shared/api/services/users';
 import { EnviarNotificacao } from '~/Shared/notification/external';
@@ -30,7 +30,11 @@ export interface FileDTO {
   blob: Blob;
 }
 
-const SignUpForm: React.FC = () => {
+export interface signProps {
+  handleIsActiveModal: () => void;
+}
+
+export const SignUpForm = (props: signProps) => {
   const {
     control,
     handleSubmit,
@@ -38,7 +42,6 @@ const SignUpForm: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const { validateUserAccess } = useAuth();
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [term, setTerm] = useState<string>('');
@@ -64,9 +67,9 @@ const SignUpForm: React.FC = () => {
       try {
         if (avatar) {
           await createUsers(avatar, result);
-          validateUserAccess(result);
           EnviarNotificacao();
-          Toastfy('success', 'Bem vindo ao Jornada Pulmonar ');
+          props.handleIsActiveModal();
+          Toastfy('success', 'Cadastrado com sucesso!');
         }
       } catch (error) {
         console.log(error);
@@ -213,5 +216,3 @@ const SignUpForm: React.FC = () => {
     </View>
   );
 };
-
-export default SignUpForm;

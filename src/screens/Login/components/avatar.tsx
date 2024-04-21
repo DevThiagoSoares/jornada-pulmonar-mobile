@@ -42,15 +42,14 @@ const AvatarPicker = (props: AvatarProps) => {
           });
           const blob = new Blob([fileInfo.uri], { type: '[content-type]' });
           const data: FileDTO = {
-            buffer: Buffer.from(buffer, 'base64'), // Criar o buffer diretamente do base64
+            buffer: Buffer.from(buffer, 'base64'),
             fieldname: pic.fileName ?? '',
-            mimetype: pic.type ?? '', // pic.type pode ser usado para obter o mimetype
+            mimetype: pic.type ?? '',
             originalname: pic.uri,
             size: fileInfo.size,
             encoding: '7bit',
             blob,
           };
-          // console.log({ data });
           props.setImg(data);
         }
       }
