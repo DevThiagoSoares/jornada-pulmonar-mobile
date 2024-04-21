@@ -11,7 +11,6 @@ export const InputTitle: React.FC<InputProps> = ({ value, label, onChange }) => 
   return (
     <TextInput
       mode="outlined"
-      style={{ backgroundColor: 'rgba(246, 174, 174, 0.5)' }}
       outlineStyle={{ borderRadius: 12 }}
       outlineColor="rgba(229, 204, 200, 0.5)"
       textColor="#CD4C3E"

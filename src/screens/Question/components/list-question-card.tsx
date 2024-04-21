@@ -47,6 +47,7 @@ export function ListQuestionsCard(props: PropsQuestion) {
         control={props.control}
         render={({ field: { onBlur, onChange, value } }) => (
           <InputNormal
+            inputMode="numeric"
             value={value}
             label={props.errors?.Weight?.message || 'Peso da Questão'}
             onChange={onChange}

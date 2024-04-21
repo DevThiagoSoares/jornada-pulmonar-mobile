@@ -6,6 +6,8 @@ import { Text, Button, RadioButton, IconButton } from 'react-native-paper';
 import { InputNormal } from './ui';
 import { styledAlternative, styledForm } from '../styles';
 
+import { Toastfy } from '~/Shared/notification/internal';
+
 export interface Alternative {
   value: string;
   description: string;
@@ -48,10 +50,17 @@ export function Alternative(props: OptionsProps) {
     }
   };
   const handleAddAlternative = () => {
-    if (alternative.trim() !== '') {
-      setAlternatives([...alternatives, { value: alternative, description: alternative }]);
-      setAlternative('');
-      setCorrectAlternative(alternative);
+    const alternativeExist = alternatives.find((item) => item.value);
+    if (!alternativeExist) {
+      if (alternative.trim() !== '') {
+        setAlternatives([...alternatives, { value: alternative, description: alternative }]);
+        setAlternative('');
+        setCorrectAlternative(alternative);
+      } else {
+        Toastfy('error', 'Insira uma alternativa');
+      }
+    } else {
+      Toastfy('error', 'Essa Alternativa já foi adicionada');
     }
   };
 
