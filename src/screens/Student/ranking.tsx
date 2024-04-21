@@ -18,6 +18,7 @@ interface rankingDto {
   name: string;
   score: number;
   imgNameUrl: string;
+  role: string;
 }
 
 export default function TabRanking() {
@@ -35,12 +36,14 @@ export default function TabRanking() {
     const winners = sortedRanking.slice(0, 3); // Pega os três primeiros vencedores
 
     setListWinner(winners);
-    const newList = response.data.map((item: rankingDto) => {
-      return {
-        name: item.name,
-        imgNameUrl: item.imgNameUrl,
-        score: item.score,
-      };
+    const newList = response.data.filter((item: rankingDto) => {
+      if (item.role !== 'teacher') {
+        return {
+          name: item.name,
+          imgNameUrl: item.imgNameUrl,
+          score: item.score,
+        };
+      }
     });
     setListRanking(newList);
   };

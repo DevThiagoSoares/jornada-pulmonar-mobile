@@ -13,7 +13,7 @@ export interface UserProps {
   access_token?: string;
   id?: string;
   imgUrl?: string;
-  score: string;
+  score?: string;
 }
 
 type AuthContextProps = {

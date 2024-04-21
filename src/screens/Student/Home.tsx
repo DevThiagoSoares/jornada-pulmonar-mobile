@@ -58,7 +58,7 @@ const HomeStudent = () => {
                 totalFinished={0}
                 progress={item.questionsCount > 0 ? 0 / item.questionsCount : 0}
                 img={getAvatar(idx)}
-                data={listModules}
+                data={[item]}
               />
             ))
           ) : (

@@ -1,5 +1,7 @@
 import { api } from '../../api-config';
 
+import { Toastfy } from '~/Shared/notification/internal';
+
 export async function CreateQuestion(file: any, body: any) {
   console.log({ file });
   const blob = await fetch(file).then((res) => res.blob());
@@ -21,5 +23,6 @@ export async function ListQuestionApi() {
     return await api.get('/api/v1/questions');
   } catch (error) {
     console.log(error);
+    Toastfy('error', 'Ops!... Algo deu errado');
   }
 }

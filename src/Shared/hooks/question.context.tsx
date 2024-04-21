@@ -14,7 +14,7 @@ interface ContextProps {
 const DataContext = createContext<DataType>({} as DataType);
 
 // Crie o provedor do contexto
-export const DataProvider = ({ children }: ContextProps) => {
+export const DataQuestions = ({ children }: ContextProps) => {
   const [question, setQuestion] = useState<any>(null);
 
   return <DataContext.Provider value={{ question, setQuestion }}>{children}</DataContext.Provider>;
