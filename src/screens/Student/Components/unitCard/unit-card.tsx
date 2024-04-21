@@ -27,7 +27,7 @@ export function UnitCard(props: cardProps) {
 
   const handleListQuestion = async (data: modulesDto) => {
     const resp = await findQuestionById(data.id);
-    if (resp) setQuestion(resp.data);
+    if (resp) setQuestion({ ...resp?.data[0], level: props.level });
     navigation.navigate('ModalQuestion');
   };
 

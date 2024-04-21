@@ -13,17 +13,10 @@ import { AlternativaCard } from '../cards/alternative-card';
 import { CardDescription } from '../cards/card-description';
 import { CarouselComponent } from '../componentImg';
 
-import { useQuestion } from '~/Shared/hooks/question.context';
 import { BackgroundScreen } from '~/components/screens/background-image';
 import { styles } from '~/screens/Login/styles';
 
 export function ModalQuestion() {
-  const { question } = useQuestion();
-  const [ListQuestion, setListQuestion] = useState([]);
-  useEffect(() => {
-    handleListQuestion();
-  }, []);
-  const handleListQuestion = () => {};
   const options = [
     { value: 'a', description: 'test' },
     { value: 'b', description: 'test2' },

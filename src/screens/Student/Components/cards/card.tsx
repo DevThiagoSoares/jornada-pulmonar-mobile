@@ -8,7 +8,6 @@ import { styledCard } from './styles';
 import { modulesDto } from '../../Home';
 
 import { ListQuestionApi } from '~/Shared/api/services/questions';
-import { useQuestion } from '~/Shared/hooks/question.context';
 import { Toastfy } from '~/Shared/notification/internal';
 import { RootStackParamList } from '~/navigation/Routes';
 
@@ -28,6 +27,7 @@ export interface questionsDto {
   id: string;
   imgNameUrl: string;
   moduleId: string;
+  level?: number;
   title: string;
 }
 export function CardTemplate(props: cardProps) {

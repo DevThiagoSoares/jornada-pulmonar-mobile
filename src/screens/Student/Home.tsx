@@ -14,6 +14,7 @@ export interface modulesDto {
   questionsCount: number;
   title: string;
   userId: string;
+  level?: number;
 }
 
 const HomeStudent = () => {
