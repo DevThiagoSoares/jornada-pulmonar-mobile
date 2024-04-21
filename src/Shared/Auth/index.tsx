@@ -10,6 +10,8 @@ export interface UserProps {
   role: string;
   email?: string;
   password?: string;
+  access_token?: string;
+  id?: string;
 }
 
 type AuthContextProps = {
@@ -23,18 +25,6 @@ export const AuthContext = createContext<AuthContextProps>({} as AuthContextProp
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserProps | null>(null);
 
-  useEffect(() => {
-    loadingUser();
-  }, [setUser]);
-
-  async function loadingUser() {
-    const response = await AsyncStorage.getItem('userData');
-    if (response) {
-      const data = JSON.parse(response);
-      setUser(data);
-    }
-  }
-
   const signOut = async () => {
     await AsyncStorage.clear();
     setUser(null);
@@ -42,8 +32,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const validateUserAccess = (body: UserProps) => {
     setUser(body);
-    const { name, role } = body;
-    AsyncStorage.setItem('userData', JSON.stringify({ name, role }))
+    const { access_token } = body;
+
+    AsyncStorage.setItem('access_token', JSON.stringify(access_token))
       .then(() => {})
       .catch((error) => {
         console.error('Erro ao armazenar os dados do usuário:', error);

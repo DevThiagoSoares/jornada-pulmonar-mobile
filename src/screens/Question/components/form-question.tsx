@@ -6,6 +6,7 @@ import { ListQuestionsCard } from './list-question-card';
 import { ListSavedQuestion } from './list-saved-question';
 import { ButtonDefault, InputTitle } from './ui';
 
+import { useAuth } from '~/Shared/Auth';
 import { CreateQuestion } from '~/Shared/api/services/questions';
 import { useData } from '~/Shared/hooks/audio.context';
 
@@ -34,11 +35,11 @@ export const FormComponent: React.FC = () => {
   const [questionCount, setQuestionCount] = useState(1);
   const [savedQuestions, setSavedQuestions] = useState<string[]>([]);
   const { data } = useData();
+  const { user } = useAuth();
 
-  console.log({ data });
   const onSubmit = async (value: FormData) => {
     const payload = {
-      userId: '98a83f40-1c80-46c7-8694-df8d8bd38cbb',
+      userId: user?.id,
       titleUnit: value.titleUnit,
       weight: Number(value.Weight),
       alternatives: value.alternatives,

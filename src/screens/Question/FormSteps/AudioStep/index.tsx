@@ -55,7 +55,7 @@ export function AudioImg(props: imgProps) {
 
   const handleGetAudio = (uri: string) => {
     setAudioFile(uri);
-    setData({ audioUrl: uri });
+    setData({ ...data, audioUrl: uri });
   };
 
   const handleStopAudio = async () => {
@@ -69,8 +69,6 @@ export function AudioImg(props: imgProps) {
   const CloseModal = () => {
     setModalVisible(!modalVisible);
   };
-
-  console.log({ data });
 
   return (
     <View style={styles.container}>

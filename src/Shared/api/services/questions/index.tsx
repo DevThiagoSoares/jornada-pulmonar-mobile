@@ -15,3 +15,11 @@ export async function CreateQuestion(file: any, body: any) {
     maxBodyLength: Infinity,
   });
 }
+
+export async function ListQuestionApi() {
+  try {
+    return await api.get('/api/v1/questions');
+  } catch (error) {
+    console.log(error);
+  }
+}
