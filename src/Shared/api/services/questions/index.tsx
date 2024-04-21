@@ -26,3 +26,12 @@ export async function ListQuestionApi() {
     Toastfy('error', 'Ops!... Algo deu errado');
   }
 }
+
+export async function findQuestionById(id: string) {
+  try {
+    return await api.get(`/api/v1/questions?id=${id}`);
+  } catch (error) {
+    Toastfy('error', 'Ops!... Algo deu errado');
+    console.log(error);
+  }
+}

@@ -5,7 +5,10 @@ import { TouchableRipple } from 'react-native-paper';
 
 import { ComponentLevel } from './component-level';
 import { styledUnit } from './styles';
+import { modulesDto } from '../../Home';
 
+import { findQuestionById } from '~/Shared/api/services/questions';
+import { useQuestion } from '~/Shared/hooks/question.context';
 import { RootStackParamList } from '~/navigation/Routes';
 
 interface cardProps {
@@ -13,16 +16,24 @@ interface cardProps {
   finishe: string;
   level: string;
   imgLevel: any;
+  data: modulesDto;
 }
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 
 export function UnitCard(props: cardProps) {
   const navigation = useNavigation<Props['navigation']>();
+  const { setQuestion } = useQuestion();
+
+  const handleListQuestion = async (data: modulesDto) => {
+    const resp = await findQuestionById(data.id);
+    if (resp) setQuestion(resp.data);
+    navigation.navigate('ModalQuestion');
+  };
 
   return (
     <TouchableRipple
-      onPress={() => navigation.navigate('ModalQuestion')}
+      onPress={() => handleListQuestion(props.data)}
       rippleColor="rgba(205, 76, 62, 0.7)">
       <View style={styledUnit.container}>
         <ComponentLevel level={props.level} img={props.imgLevel} width={65} height={70} />

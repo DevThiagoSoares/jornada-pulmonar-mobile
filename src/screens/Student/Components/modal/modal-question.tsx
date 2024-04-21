@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,13 +13,17 @@ import { AlternativaCard } from '../cards/alternative-card';
 import { CardDescription } from '../cards/card-description';
 import { CarouselComponent } from '../componentImg';
 
+import { useQuestion } from '~/Shared/hooks/question.context';
 import { BackgroundScreen } from '~/components/screens/background-image';
 import { styles } from '~/screens/Login/styles';
 
 export function ModalQuestion() {
-  /*  const [locationX, setLocationX] = useState<number>(0);
-  const [locationY, setLocationY] = useState<number>(0); */
-
+  const { question } = useQuestion();
+  const [ListQuestion, setListQuestion] = useState([]);
+  useEffect(() => {
+    handleListQuestion();
+  }, []);
+  const handleListQuestion = () => {};
   const options = [
     { value: 'a', description: 'test' },
     { value: 'b', description: 'test2' },
@@ -27,7 +32,6 @@ export function ModalQuestion() {
   ];
   const handlePress = (event: { nativeEvent: { locationX: any; locationY: any } }) => {
     const { locationX, locationY } = event.nativeEvent;
-    console.log(locationX - 30, locationY + 30);
     /*  setLocationX(locationX - 170);
     setLocationY(locationY); */
   };

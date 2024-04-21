@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Image, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button, Card, ProgressBar, Text } from 'react-native-paper';
 
 import { styledCard } from './styles';
@@ -31,7 +32,6 @@ export interface questionsDto {
 }
 export function CardTemplate(props: cardProps) {
   const navigation = useNavigation<Props['navigation']>();
-  const { setQuestion } = useQuestion();
   const handleListQuestions = async (data: modulesDto[]) => {
     const resp = await ListQuestionApi();
     if (resp && resp.data) {
@@ -40,10 +40,8 @@ export function CardTemplate(props: cardProps) {
         const foundQuestions = resp.data.filter((item: questionsDto) =>
           moduledId.includes(item.moduleId)
         );
-        console.log(foundQuestions.length);
         if (foundQuestions.length > 0) {
-          setQuestion([...foundQuestions]);
-          navigation.navigate('ScreenResponse');
+          navigation.navigate('Modal');
         } else {
           Toastfy('error', 'Não há Questões cadastradas para esta unidade');
         }
@@ -68,16 +66,18 @@ export function CardTemplate(props: cardProps) {
           </View>
         </Card.Content>
         <Card.Actions>
-          <Button
-            mode="contained"
-            icon="arrow-right"
-            contentStyle={{ flexDirection: 'row-reverse' }}
-            style={{ backgroundColor: '#FFE815' }}
-            labelStyle={styledCard.buttonLabel}
-            onPress={() => handleListQuestions(props.data)}
-            color="#9F8500">
-            Começar
-          </Button>
+          <TouchableOpacity style={{ backgroundColor: 'transparent' }}>
+            <Button
+              mode="contained"
+              icon="arrow-right"
+              contentStyle={{ flexDirection: 'row-reverse' }}
+              style={{ backgroundColor: '#FFE815' }}
+              labelStyle={styledCard.buttonLabel}
+              onPress={() => handleListQuestions(props.data)}
+              color="#9F8500">
+              Começar
+            </Button>
+          </TouchableOpacity>
         </Card.Actions>
       </Card>
     </View>
