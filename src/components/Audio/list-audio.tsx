@@ -53,6 +53,7 @@ export function ListAudio(props: audioProps) {
   }, []);
 
   const handleAudioIconPress = async (item: any) => {
+    console.log({ item });
     setIsActiveSong(!isActiveSong);
     const { uri } = item;
     setAudio(uri);

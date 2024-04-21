@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import { Audio } from 'expo-av';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Toast from 'react-native-toast-message';
 
@@ -7,6 +8,7 @@ import { defaultPosition } from './positions';
 import { styles } from './styles';
 import { ActionIcon } from '../modal/style';
 
+import { useQuestion } from '~/Shared/hooks/question.context';
 import { Toastfy } from '~/Shared/notification/internal';
 
 interface ImgProps {
@@ -23,15 +25,49 @@ interface Coordinate {
 export function CarouselComponent(props: ImgProps) {
   const [isActive, setActive] = useState(false);
   const [activeIcon, setActiveIcon] = useState(false);
+  const [audio, setAudio] = useState<any>();
+  const { question } = useQuestion();
+  const soundObject = useRef(new Audio.Sound()).current;
+
+  useEffect(() => {
+    handleListQuestion();
+  }, []);
+  const handleListQuestion = () => {
+    if (question) setAudio(question.audioUrl);
+  };
+
+  console.log({ audio });
 
   const handlePosition = () => {
-    setActive(!isActive);
     Toast.hide();
     setActiveIcon(true);
   };
 
   const handleClick = () => {
     Toastfy('error', 'Lugar errado! Por favor, tente novamente. 😢');
+  };
+  const handleAudioIconPress = async () => {
+    setActive(!isActive);
+    if (audio) {
+      if (soundObject) {
+        try {
+          await soundObject.unloadAsync();
+          await soundObject.loadAsync({ uri: audio });
+          await soundObject.playAsync();
+        } catch (error) {
+          console.error('Erro ao carregar/reproduzir áudio:', error);
+        }
+      }
+    }
+  };
+  const handleStopAudio = async () => {
+    try {
+      setActive(!isActive);
+      await soundObject.stopAsync();
+      setAudio(null);
+    } catch (error) {
+      console.error('Erro ao parar o áudio:', error);
+    }
   };
 
   return (
@@ -47,6 +83,7 @@ export function CarouselComponent(props: ImgProps) {
           {isActive ? (
             <Ionicons
               name="volume-high-outline"
+              onPress={() => handleStopAudio()}
               size={15}
               color={activeIcon ? '#CD4C3E' : '#00000000'}
             />
@@ -54,6 +91,7 @@ export function CarouselComponent(props: ImgProps) {
             <Ionicons
               name="volume-mute-outline"
               size={15}
+              onPress={() => handleAudioIconPress()}
               color={activeIcon ? '#CD4C3E' : '#00000000'}
             />
           )}
