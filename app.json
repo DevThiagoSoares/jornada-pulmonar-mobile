@@ -12,12 +12,7 @@
         {
           "icon": "./assets/pulmoes.png",
           "color": "#ffffff",
-          "sounds": [
-            {
-              "name": "default",
-              "filename": "./assets/audio/sonsnotificatio.mp3"
-            }
-          ]
+          "sounds": ["./assets/audio/sonsnotificatio.mp3"]
         }
       ]
     ],
