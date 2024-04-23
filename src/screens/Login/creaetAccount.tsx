@@ -45,7 +45,7 @@ export const SignUpForm = (props: signProps) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [term, setTerm] = useState<string>('');
-  const [avatar, setAvatar] = useState<FileDTO>();
+  const [avatar, setAvatar] = useState<any>();
 
   const handleImg = (img: FileDTO | any) => {
     setAvatar(img);
@@ -64,6 +64,7 @@ export const SignUpForm = (props: signProps) => {
         password: data.password,
         role: selectedOption,
       };
+
       try {
         if (avatar) {
           await createUsers(avatar, result);

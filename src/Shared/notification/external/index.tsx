@@ -21,7 +21,7 @@ export const EnviarNotificacao = async () => {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: 'Bem vindo ao Jornada pulmonar',
-      sound: '../../../assets/audio/sonsnotificatio.mp3',
+      sound: '../../../assets/audio/sonsnotification.wav',
     },
     trigger: null,
   });

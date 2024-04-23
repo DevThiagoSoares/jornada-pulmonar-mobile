@@ -1,5 +1,4 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Buffer } from 'buffer';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
@@ -7,10 +6,9 @@ import { TouchableOpacity, Image, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { styledAvatar } from './styles';
-import { FileDTO } from '../creaetAccount';
 
 interface AvatarProps {
-  setImg: (value: FileDTO) => void;
+  setImg: (value: any) => void;
   userImg?: string;
 }
 
@@ -29,29 +27,18 @@ const AvatarPicker = (props: AvatarProps) => {
         allowsEditing: true,
         aspect: [1, 1],
         quality: 1,
-        base64: false, // Não precisamos mais do base64
+        base64: true, // Não precisamos mais do base64
       });
 
       if (!result.canceled) {
         const pic = result.assets[0];
+
         const fileInfo = await FileSystem.getInfoAsync(pic.uri);
         setProfilePic(pic.uri);
 
         if (fileInfo.exists) {
-          const buffer = await FileSystem.readAsStringAsync(fileInfo.uri, {
-            encoding: FileSystem.EncodingType.Base64,
-          });
-          const blob = new Blob([fileInfo.uri], { type: '[content-type]' });
-          const data: FileDTO = {
-            buffer: Buffer.from(buffer, 'base64'),
-            fieldname: pic.fileName ?? '',
-            mimetype: pic.type ?? '',
-            originalname: pic.uri,
-            size: fileInfo.size,
-            encoding: '7bit',
-            blob,
-          };
-          props.setImg(data);
+          const urlImg = `data:image/png;base64,${pic.base64}`;
+          props.setImg(urlImg);
         }
       }
     } catch (error) {

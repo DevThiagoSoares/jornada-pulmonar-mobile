@@ -12,9 +12,12 @@
         {
           "icon": "./assets/pulmoes.png",
           "color": "#ffffff",
-          "sounds": ["./assets/audio/sonsnotificatio.mp3"]
+          "sounds": [
+            "./assets/audio/sonsnotification.wav"
+          ]
         }
-      ]
+      ],
+      "expo-build-properties"
     ],
     "experiments": {
       "tsconfigPaths": true

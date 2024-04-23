@@ -66,7 +66,7 @@ export function FormLogin() {
         animation="fadeIn"
         duration={1500}
         style={{ fontSize: 24, color: '#CD4C3E', fontWeight: 'bold' }}>
-        Jornanda Pulmonar
+        Jornada Pulmonar
       </AnimatedText>
       <Controller
         control={control}
