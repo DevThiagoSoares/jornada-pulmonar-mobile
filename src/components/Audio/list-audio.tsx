@@ -33,7 +33,7 @@ export function ListAudio(props: audioProps) {
 
   const audioFiles = Array.from({ length: totalAudios }, (_, index) => ({
     id: index + 1,
-    title: `Caso ${index + 1}`,
+    title: `Caso - ${index + 1}`,
     uri: getAudioUri(index + 1),
   }));
 
