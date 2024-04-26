@@ -47,6 +47,7 @@ export function FormLogin() {
         Toastfy('error', error.response.data.message);
       } else {
         Toastfy('error', 'Ops.. Algo deu errado!');
+        Toastfy('error', JSON.stringify(error));
         console.log(error);
       }
     }
