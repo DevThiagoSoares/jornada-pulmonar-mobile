@@ -14,6 +14,9 @@ interface imgProps {
   titleImg: string;
   img: any;
 }
+interface AudioData {
+  audioUrl: string;
+}
 
 export function AudioImg(props: imgProps) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -21,6 +24,7 @@ export function AudioImg(props: imgProps) {
   const [audioIconPosition, setAudioIconPosition] = useState<{ x: number; y: number } | null>(null);
   const soundObject = useRef(new Audio.Sound()).current;
   const [songActive, setSongActive] = useState(false);
+  const [audios, setAudios] = useState<AudioData[]>([]);
   const { setData, data, setAudioCoordinates, audioCoordinates } = useData();
   useEffect(() => {
     if (songActive) {
@@ -62,9 +66,8 @@ export function AudioImg(props: imgProps) {
 
   const handleGetAudio = (uri: string) => {
     setAudioFile(uri);
-    setData({ ...data, audioUrl: uri });
+    setAudios([...audios, { audioUrl: uri }]);
   };
-
   const handleStopAudio = async () => {
     try {
       await soundObject.stopAsync();
@@ -75,6 +78,7 @@ export function AudioImg(props: imgProps) {
 
   const CloseModal = () => {
     setModalVisible(!modalVisible);
+    setData({ ...data, audioUrl: audios });
   };
 
   return (

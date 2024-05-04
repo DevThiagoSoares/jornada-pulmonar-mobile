@@ -27,7 +27,7 @@ const AvatarPicker = (props: AvatarProps) => {
         allowsEditing: true,
         aspect: [4, 3],
         quality: 0.5,
-        base64: true, // Não precisamos mais do base64
+        base64: true,
       });
 
       if (!result.canceled) {

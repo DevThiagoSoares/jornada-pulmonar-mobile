@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, Image, View } from 'react-native';
@@ -21,14 +22,19 @@ const UploadImg = () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
+      aspect: [4, 3],
+      quality: 0.5,
+      base64: true,
     });
 
     if (!result.canceled) {
-      const url = result.assets[0].uri;
-      setProfilePic(url);
-      setData({ ...data, imgUrl: url });
+      const url = result.assets[0];
+      const fileInfo = await FileSystem.getInfoAsync(url.uri);
+      if (fileInfo.exists) {
+        const urlImg = `data:image/png;base64,${url.base64}`;
+        setProfilePic(urlImg);
+        setData({ ...data, imgUrl: urlImg });
+      }
     }
   };
 

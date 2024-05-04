@@ -42,23 +42,22 @@ export const FormComponent: React.FC = () => {
     const payload = {
       userId: user?.id,
       titleUnit: value.titleUnit,
-      weight: Number(value.Weight),
       alternatives: value.alternatives,
       question: value.question,
-      audioUrl: data.audioUrl,
+      audioUrl: JSON.stringify(data.audioUrl),
+      imageBase64: data.imgUrl,
     };
 
     try {
-      await CreateQuestion(data.imgUrl, payload);
+      await CreateQuestion(payload);
       setData(null);
       setAudioCoordinates(null);
-      Toastfy('error', 'Questão cadastrada com sucesso!');
+      Toastfy('success', 'Questão cadastrada com sucesso!');
     } catch (error) {
       console.log(error);
     }
     const { question } = value;
     setSavedQuestions([...savedQuestions, question]);
-    setValue('Weight', '');
     setValue('question', '');
     setQuestionCount(questionCount - 1);
   };

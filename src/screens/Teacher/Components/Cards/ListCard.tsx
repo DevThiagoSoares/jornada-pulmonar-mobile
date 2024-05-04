@@ -22,7 +22,6 @@ export function ListCard() {
   const [module, setModule] = useState([]);
   const getUser = async () => {
     const response = await Ranking();
-    console.log(response.data);
     const newList = response.data.map((item: any) => {
       if (item.role !== TypeUser.Teacher && item.score > 0) {
         return item;
