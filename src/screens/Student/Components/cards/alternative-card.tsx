@@ -70,6 +70,10 @@ export function AlternativaCard(props: alternativaProps) {
         Toastfy('error', response.data.message);
         return;
       }
+      if (response.data.message === 'respota incorreta') {
+        Toastfy('error', response.data.message);
+        return;
+      }
       navigation.navigate('ScreenResponse');
       handleReset();
       setData({ isAnswer: true });

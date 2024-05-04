@@ -14,7 +14,6 @@ interface AvatarProps {
 
 const AvatarPicker = (props: AvatarProps) => {
   const [profilePic, setProfilePic] = useState<string | null>(null);
-  console.log(props?.userImg);
 
   useEffect(() => {
     if (props.userImg) {

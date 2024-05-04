@@ -9,6 +9,7 @@ import { styles } from './styles';
 import { useData } from '~/Shared/hooks/audio.context';
 import { ListAudio } from '~/components/Audio/list-audio';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Toastfy } from '~/Shared/notification/internal';
 
 interface imgProps {
   titleImg: string;
@@ -60,6 +61,7 @@ export function AudioImg(props: imgProps) {
         await soundObject.playAsync();
       } catch (error) {
         console.error('Erro ao carregar/reproduzir áudio:', error);
+        Toastfy('error', JSON.stringify(error));
       }
     }
   };

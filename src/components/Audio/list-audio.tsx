@@ -8,6 +8,8 @@ import { RadioButton } from 'react-native-paper';
 import { AudioFiles } from './list-file';
 import { styledAudio } from './styles';
 
+import { Toastfy } from '~/Shared/notification/internal';
+
 interface audioProps {
   getAudio: (value: string) => void;
 }
@@ -64,6 +66,7 @@ export function ListAudio(props: audioProps) {
         await soundObject.playAsync();
       } catch (error) {
         console.error('Erro ao carregar/reproduzir áudio:', error);
+        Toastfy('error', JSON.stringify(error));
       }
     }
   };
