@@ -34,9 +34,9 @@ export function FormLogin() {
     try {
       const response = await ValidateLogin(data);
       const userData = await validateEmail(data.email.toLowerCase());
-      const { access_token, email, role, id } = response.data;
-      const { name, imgUrl, score } = userData.data[0];
-      validateUserAccess({ access_token, email, role, id, imgUrl, name, score });
+      const { access_token, email, role } = response.data;
+      const { name, imageBase64, score, id } = userData.data[0];
+      validateUserAccess({ access_token, email, role, id, imageBase64, name, score });
       AsyncStorage.setItem('access_token', JSON.stringify(response.data.access_token))
         .then(() => {})
         .catch((error: any) => {

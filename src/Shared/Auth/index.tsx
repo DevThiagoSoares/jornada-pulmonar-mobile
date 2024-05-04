@@ -12,7 +12,7 @@ export interface UserProps {
   password?: string;
   access_token?: string;
   id?: string;
-  imgUrl?: string;
+  imageBase64?: string;
   score?: string;
 }
 

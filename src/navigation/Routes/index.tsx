@@ -11,7 +11,6 @@ import TabLayout from '../tab-navigator';
 
 import { useAuth } from '~/Shared/Auth';
 import { TypeUser } from '~/Shared/Enums/typeUser';
-import { validateEmail } from '~/Shared/api/services/users';
 import { ComponentLevel } from '~/components/screens/component-level';
 import Login from '~/screens/Login/login';
 import { CreateQuestion } from '~/screens/Question';

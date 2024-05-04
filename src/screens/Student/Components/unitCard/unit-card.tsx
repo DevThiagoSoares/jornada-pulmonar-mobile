@@ -5,7 +5,7 @@ import { TouchableRipple } from 'react-native-paper';
 
 import { ComponentLevel } from './component-level';
 import { styledUnit } from './styles';
-import { modulesDto } from '../../Home';
+import { questionEntity } from '../modal/modal';
 
 import { findQuestionById } from '~/Shared/api/services/questions';
 import { useQuestion } from '~/Shared/hooks/question.context';
@@ -16,7 +16,7 @@ interface cardProps {
   finishe: string;
   level: string;
   imgLevel: any;
-  data: modulesDto;
+  data: questionEntity;
 }
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
@@ -25,7 +25,7 @@ export function UnitCard(props: cardProps) {
   const navigation = useNavigation<Props['navigation']>();
   const { setQuestion } = useQuestion();
 
-  const handleListQuestion = async (data: modulesDto) => {
+  const handleListQuestion = async (data: questionEntity) => {
     const resp = await findQuestionById(data.id);
     if (resp) setQuestion({ ...resp?.data[0], level: props.level });
     navigation.navigate('ModalQuestion');

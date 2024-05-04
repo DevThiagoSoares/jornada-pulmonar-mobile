@@ -15,6 +15,7 @@ export interface modulesDto {
   title: string;
   userId: string;
   level?: number;
+  responsesId?: string;
 }
 
 const HomeStudent = () => {

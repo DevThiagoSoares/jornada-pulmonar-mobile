@@ -7,6 +7,11 @@ import { Button } from 'react-native-paper';
 
 import { styledAlternative, styledCard } from './styles';
 
+import { useAuth } from '~/Shared/Auth';
+import { answer, payloadProps } from '~/Shared/api/services/response';
+import { useData } from '~/Shared/hooks/audio.context';
+import { useQuestion } from '~/Shared/hooks/question.context';
+import { Toastfy } from '~/Shared/notification/internal';
 import { RootStackParamList } from '~/navigation/Routes';
 import { Alternative } from '~/screens/Question/components/alternative-question';
 
@@ -21,11 +26,13 @@ export function AlternativaCard(props: alternativaProps) {
   const [correctAlternative, setCorrectAlternative] = useState<string>('');
   const [isRunning, setIsRunning] = useState(false);
   const [timer, setTimer] = useState(0);
+  const { question } = useQuestion();
+  const { user } = useAuth();
+  const { setData } = useData();
 
   const handleSelectCorrectAlternative = (value: string) => {
     setCorrectAlternative(value);
   };
-
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
     if (isRunning) {
@@ -50,9 +57,26 @@ export function AlternativaCard(props: alternativaProps) {
     setIsRunning(false);
   };
 
-  const handleSubmit = () => {
-    navigation.navigate('ScreenResponse');
-    handleReset();
+  const handleSubmit = async () => {
+    const body: payloadProps = {
+      optionId: correctAlternative,
+      questionId: question.id,
+      userId: user?.id ?? '',
+      time: timer,
+    };
+    try {
+      const response = await answer(body);
+      if (response.data.message === 'questão já respondida') {
+        Toastfy('error', response.data.message);
+        return;
+      }
+      navigation.navigate('ScreenResponse');
+      handleReset();
+      setData({ isAnswer: true });
+    } catch (error: any) {
+      console.log(error);
+      Toastfy('error', JSON.stringify(error.message));
+    }
   };
 
   const formatTime = (timeInSeconds: number): string => {
@@ -64,13 +88,13 @@ export function AlternativaCard(props: alternativaProps) {
 
   return (
     <View style={styledAlternative.container}>
-      <Text style={styledAlternative.title}>Qual opção correta ?</Text>
+      <Text style={styledAlternative.title}>Qual opção correta?</Text>
       {props.options.map((alt, idx) => (
         <View key={idx}>
           <Text
-            onPress={() => handleSelectCorrectAlternative(alt.description)}
+            onPress={() => handleSelectCorrectAlternative(alt.value)}
             style={
-              correctAlternative !== alt.description
+              correctAlternative !== alt.value
                 ? styledAlternative.alternative
                 : styledAlternative.alternativeCorrect
             }>

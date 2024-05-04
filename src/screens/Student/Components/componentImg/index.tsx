@@ -28,13 +28,11 @@ export function CarouselComponent(props: ImgProps) {
   const [audio, setAudio] = useState<any>();
   const { question } = useQuestion();
   const soundObject = useRef(new Audio.Sound()).current;
+  const arrayListAudios = JSON.parse(question.audioUrl);
 
   useEffect(() => {
-    handleListQuestion();
-  }, []);
-  const handleListQuestion = () => {
-    if (question) setAudio(question.audioUrl);
-  };
+    handleStartAudio();
+  }, [audio]);
 
   const handlePosition = () => {
     Toast.hide();
@@ -44,9 +42,8 @@ export function CarouselComponent(props: ImgProps) {
   const handleClick = () => {
     Toastfy('error', 'Lugar errado! Por favor, tente novamente. 😢');
   };
-  const handleAudioIconPress = async () => {
-    setActive(!isActive);
-    handlePosition();
+
+  const handleStartAudio = async () => {
     if (audio) {
       if (soundObject) {
         try {
@@ -57,6 +54,15 @@ export function CarouselComponent(props: ImgProps) {
           console.error('Erro ao carregar/reproduzir áudio:', error);
         }
       }
+    }
+  };
+  const handleAudioIconPress = async () => {
+    setActive(!isActive);
+    handlePosition();
+    if (arrayListAudios.length > 3) {
+      setAudio(arrayListAudios[props.idImg - 1].audioUrl);
+    } else {
+      setAudio(arrayListAudios[0].audioUrl);
     }
   };
   const handleStopAudio = async () => {

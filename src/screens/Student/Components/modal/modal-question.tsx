@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -13,16 +12,15 @@ import { AlternativaCard } from '../cards/alternative-card';
 import { CardDescription } from '../cards/card-description';
 import { CarouselComponent } from '../componentImg';
 
+import { useQuestion } from '~/Shared/hooks/question.context';
 import { BackgroundScreen } from '~/components/screens/background-image';
 import { styles } from '~/screens/Login/styles';
 
 export function ModalQuestion() {
-  const options = [
-    { value: 'a', description: 'test' },
-    { value: 'b', description: 'test2' },
-    { value: 'c', description: 'test3' },
-    { value: 'd', description: 'test4' },
-  ];
+  const { question } = useQuestion();
+  const options = question.alternatives.map((item: any) => {
+    return { value: item.id, description: item.content };
+  });
   const handlePress = (event: { nativeEvent: { locationX: any; locationY: any } }) => {
     const { locationX, locationY } = event.nativeEvent;
     /*  setLocationX(locationX - 170);
