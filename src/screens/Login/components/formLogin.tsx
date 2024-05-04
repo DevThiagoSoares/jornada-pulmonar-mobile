@@ -33,8 +33,7 @@ export function FormLogin() {
   const onSubmit = async (data: FormProps) => {
     try {
       const response = await ValidateLogin(data);
-      const userData = await validateEmail(data.email);
-      console.log({ userData });
+      const userData = await validateEmail(data.email.toLowerCase());
       const { access_token, email, role, id } = response.data;
       const { name, imgUrl, score } = userData.data[0];
       validateUserAccess({ access_token, email, role, id, imgUrl, name, score });
