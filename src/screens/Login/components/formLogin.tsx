@@ -34,6 +34,7 @@ export function FormLogin() {
     try {
       const response = await ValidateLogin(data);
       const userData = await validateEmail(data.email);
+      console.log({ userData });
       const { access_token, email, role, id } = response.data;
       const { name, imgUrl, score } = userData.data[0];
       validateUserAccess({ access_token, email, role, id, imgUrl, name, score });
@@ -43,12 +44,12 @@ export function FormLogin() {
           console.error('Erro ao armazenar os dados do usuário:', error);
         });
     } catch (error: any) {
+      console.log({ error });
       if (error?.response?.data?.statusCode === 401) {
         Toastfy('error', error.response.data.message);
       } else {
         Toastfy('error', 'Ops.. Algo deu errado!');
         Toastfy('error', JSON.stringify(error));
-        console.log(error);
       }
     }
   };

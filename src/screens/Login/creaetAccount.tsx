@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
+import { TextTerm } from './TextTerm';
 import AvatarPicker from './components/avatar';
 import { RadioGroup } from './components/radioGroup';
 import { styledRadio, styledUser } from './components/styles';
+import { styles } from './styles';
 
 import { UserProps } from '~/Shared/Auth';
 import { TypeUser } from '~/Shared/Enums/typeUser';
 import { createUsers } from '~/Shared/api/services/users';
 import { EnviarNotificacao } from '~/Shared/notification/external';
 import { Toastfy } from '~/Shared/notification/internal';
+import ModalContainer from '~/components/modalContainer';
 
 interface FormData {
   name: string;
@@ -46,10 +49,19 @@ export const SignUpForm = (props: signProps) => {
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [term, setTerm] = useState<string>('');
   const [avatar, setAvatar] = useState<any>();
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleImg = (img: FileDTO | any) => {
     setAvatar(img);
   };
+
+  const handleSignUpPress = () => {
+    setIsOpenModal(!isOpenModal);
+  };
+
+  useEffect(() => {
+    if (term !== '') handleSignUpPress();
+  }, [term]);
 
   const optionsCheckBox = [
     { value: TypeUser.Student, label: 'Sou aluno' },
@@ -210,7 +222,14 @@ export const SignUpForm = (props: signProps) => {
           />
         </View>
       </View>
-
+      <ModalContainer onClose={handleSignUpPress} visible={isOpenModal}>
+        <View style={{ height: 630, width: 320 }}>
+          <TextTerm />
+          <TouchableOpacity style={styles.button} onPress={handleSignUpPress}>
+            <Text style={styles.buttonText}>Confirmar</Text>
+          </TouchableOpacity>
+        </View>
+      </ModalContainer>
       <TouchableOpacity style={styledUser.button} onPress={handleCreateUser}>
         <Text style={styledUser.buttonText}>Finalizar</Text>
       </TouchableOpacity>

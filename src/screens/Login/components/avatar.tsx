@@ -25,8 +25,8 @@ const AvatarPicker = (props: AvatarProps) => {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
+        aspect: [4, 3],
+        quality: 0.5,
         base64: true, // Não precisamos mais do base64
       });
 

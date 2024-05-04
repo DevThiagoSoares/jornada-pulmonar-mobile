@@ -64,7 +64,7 @@ export function AlternativaCard(props: alternativaProps) {
 
   return (
     <View style={styledAlternative.container}>
-      <Text style={styledAlternative.title}>Qual diagnóstico ?</Text>
+      <Text style={styledAlternative.title}>Qual opção correta ?</Text>
       {props.options.map((alt, idx) => (
         <View key={idx}>
           <Text

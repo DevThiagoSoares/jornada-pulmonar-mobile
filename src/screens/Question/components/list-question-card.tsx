@@ -45,22 +45,6 @@ export function ListQuestionsCard(props: PropsQuestion) {
 
       <Controller
         control={props.control}
-        render={({ field: { onBlur, onChange, value } }) => (
-          <InputNormal
-            inputMode="numeric"
-            errors={props.errors.Weight !== undefined}
-            value={value}
-            label={props.errors?.Weight?.message || 'Peso da Questão'}
-            onChange={onChange}
-          />
-        )}
-        name="Weight"
-        rules={{ required: 'Peso da questão é obrigatório' }}
-        defaultValue=""
-      />
-
-      <Controller
-        control={props.control}
         render={({ field: { onChange, value } }) => (
           <InputNormal
             errors={props.errors.question !== undefined}

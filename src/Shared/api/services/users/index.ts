@@ -5,8 +5,9 @@ import { UserProps } from '~/Shared/Auth';
 export async function createUsers(fileInfo: any, body: UserProps) {
   const data = {
     ...body,
-    imageUrl: fileInfo,
+    imageBase64: fileInfo,
   };
+  console.log(data);
   return await api.post('/api/v1/users/', data).catch((err) => console.log({ err }));
 }
 
