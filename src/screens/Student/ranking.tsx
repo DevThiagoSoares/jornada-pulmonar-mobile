@@ -14,10 +14,10 @@ import { ListInfo } from '../Teacher/Components/List-Info/List-item-info';
 import { Ranking } from '~/Shared/api/services/users';
 import { BackgroundScreen } from '~/components/screens/background-image';
 
-interface rankingDto {
+export interface rankingDto {
   name: string;
   score: number;
-  imgNameUrl: string;
+  imageBase64: string;
   role: string;
 }
 
@@ -30,7 +30,7 @@ export default function TabRanking() {
   const handleListRanking = async () => {
     const response = await Ranking();
     const sortedRanking = response.data
-      .filter((item: rankingDto) => item.score > 0) // Filtra os itens com score maior que zero
+      .filter((item: rankingDto) => item.score > 0 && item.role !== 'teacher') // Filtra os itens com score maior que zero
       .sort((a: rankingDto, b: rankingDto) => b.score - a.score); // Ordena pelo score decrescente
 
     const winners = sortedRanking.slice(0, 3); // Pega os três primeiros vencedores
@@ -40,7 +40,7 @@ export default function TabRanking() {
       if (item.role !== 'teacher') {
         return {
           name: item.name,
-          imgNameUrl: item.imgNameUrl,
+          imageBase64: item.imageBase64,
           score: item.score,
         };
       }
@@ -72,7 +72,7 @@ export default function TabRanking() {
                 <AvatarGroup
                   key={index}
                   name={winner.name}
-                  photo={winner.imgNameUrl}
+                  photo={winner.imageBase64}
                   points={winner.score}
                   sizePhoto={54}
                   crown={getCrownImage(index)}

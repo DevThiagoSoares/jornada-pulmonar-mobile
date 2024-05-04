@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, Image, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
@@ -9,11 +9,18 @@ import { styledAvatar } from './styles';
 
 interface AvatarProps {
   setImg: (value: any) => void;
-  userImg?: string;
+  userImg?: string | null;
 }
 
 const AvatarPicker = (props: AvatarProps) => {
   const [profilePic, setProfilePic] = useState<string | null>(null);
+  console.log(props?.userImg);
+
+  useEffect(() => {
+    if (props.userImg) {
+      setProfilePic(props.userImg);
+    }
+  }, [props.userImg]);
 
   const selectProfilePic = async () => {
     try {
@@ -49,7 +56,7 @@ const AvatarPicker = (props: AvatarProps) => {
   return (
     <TouchableOpacity style={styledAvatar.avatarContainer} onPress={selectProfilePic}>
       {profilePic ? (
-        <Image source={{ uri: props.userImg ?? profilePic }} style={styledAvatar.avatarImage} />
+        <Image source={{ uri: profilePic }} style={styledAvatar.avatarImage} />
       ) : (
         <View style={styledAvatar.avatarIcon}>
           <MaterialCommunityIcons name="image-plus" size={40} color="#FFF" />

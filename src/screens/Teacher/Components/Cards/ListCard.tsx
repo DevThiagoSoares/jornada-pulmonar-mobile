@@ -16,10 +16,13 @@ import { NotFoundData } from '../notFoundData';
 import { TypeUser } from '~/Shared/Enums/typeUser';
 import { getModules } from '~/Shared/api/services/modules/modules';
 import { Ranking } from '~/Shared/api/services/users';
+import { rankingDto } from '~/screens/Student/ranking';
 
 export function ListCard() {
   const [listRanking, setListRanking] = useState([]);
   const [module, setModule] = useState([]);
+  const [listWinner, setListWinner] = useState<rankingDto[]>([]);
+
   const getUser = async () => {
     const response = await Ranking();
     const newList = response.data.map((item: any) => {
@@ -27,6 +30,13 @@ export function ListCard() {
         return item;
       }
     });
+    const sortedRanking = response.data
+      .filter((item: rankingDto) => item.score > 0 && item.role !== 'teacher') // Filtra os itens com score maior que zero
+      .sort((a: rankingDto, b: rankingDto) => b.score - a.score); // Ordena pelo score decrescente
+
+    const winners = sortedRanking.slice(0, 3);
+    setListWinner(winners);
+
     setListRanking(newList.filter(Boolean));
   };
   const getModule = async () => {
@@ -37,6 +47,19 @@ export function ListCard() {
     getUser();
     getModule();
   }, []);
+
+  const getCrownImage = (index: number) => {
+    switch (index) {
+      case 0:
+        return goldCrown;
+      case 1:
+        return silverCrown;
+      case 2:
+        return bronzeCrown;
+      default:
+        return null;
+    }
+  };
 
   return (
     <List.AccordionGroup>
@@ -73,29 +96,18 @@ export function ListCard() {
         style={styledCard.listOptions}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
         <View style={styledCard.listContainer}>
-          {listRanking.length > 0 && (
+          {listWinner.length > 0 && (
             <>
-              <AvatarGroup
-                name="teste1"
-                photo="https://picsum.photos/500"
-                points={10}
-                sizePhoto={54}
-                crown={silverCrown}
-              />
-              <AvatarGroup
-                crown={goldCrown}
-                name="Fernanda"
-                photo="https://picsum.photos/700"
-                points={50}
-                sizePhoto={84}
-              />
-              <AvatarGroup
-                name="teste2"
-                photo="https://picsum.photos/200"
-                points={20}
-                sizePhoto={54}
-                crown={bronzeCrown}
-              />
+              {listWinner.map((winner, index) => (
+                <AvatarGroup
+                  key={index}
+                  name={winner.name}
+                  photo={winner.imageBase64}
+                  points={winner.score}
+                  sizePhoto={54}
+                  crown={getCrownImage(index)}
+                />
+              ))}
             </>
           )}
         </View>
