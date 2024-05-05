@@ -1,6 +1,5 @@
 import Ionicons from '@expo/vector-icons/build/Ionicons';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useEffect } from 'react';
 import { TouchableOpacity, ImageBackground, Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import iconImage from 'src/assets/image/União.png';

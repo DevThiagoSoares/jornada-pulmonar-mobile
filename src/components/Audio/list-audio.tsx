@@ -18,29 +18,33 @@ export function ListAudio(props: audioProps) {
   const [audio, setAudio] = useState<any>();
   const [option, setOption] = useState('');
   const [isActiveSong, setIsActiveSong] = useState(false);
-  const totalAudios = 20;
+  const totalAudios = 21;
   const soundObject = useRef(new Audio.Sound()).current;
 
   const getAudioUri = (index: number) => {
-    const audioFilename = Asset.fromModule(AudioFiles[`Caso_${index}`] ?? '');
+    const audioKey = `Caso_${index}`;
+    const audioFilename = AudioFiles[audioKey]; // Supondo que AudioFiles é um objeto contendo as referências aos arquivos de áudio
     if (!audioFilename) {
       console.error(`Arquivo de áudio não encontrado para o índice ${index + 1}`);
-      return ''; // Ou retorne um valor padrão caso não encontre o arquivo
+      return 'error'; // Ou retorne um valor padrão caso não encontre o arquivo
     }
-
-    const fileUri = audioFilename.uri;
+    const audioAsset = Asset.fromModule(audioFilename);
+    const fileUri = audioAsset.uri;
 
     return fileUri;
   };
 
   const audioFiles = Array.from({ length: totalAudios }, (_, index) => ({
     id: index + 1,
-    title: `Caso - ${index + 1}`,
+    title: `caso - ${index + 1}`,
     uri: getAudioUri(index + 1),
   }));
 
   useEffect(() => {
-    Audio.requestPermissionsAsync().then(({ granted }) => {
+    const requestPermissions = async () => {
+      const { granted } = await Audio.requestPermissionsAsync();
+      console.log(audioFiles[20].uri);
+      Toastfy('error', audioFiles[20].uri);
       if (granted) {
         Audio.setAudioModeAsync({
           allowsRecordingIOS: true,
@@ -51,18 +55,20 @@ export function ListAudio(props: audioProps) {
           playThroughEarpieceAndroid: true,
         });
       }
-    });
+    };
+    requestPermissions();
   }, []);
 
   const handleAudioIconPress = async (item: any) => {
-    console.log({ item });
+    Toastfy('error', `audio ${getAudioUri(1)}`);
     setIsActiveSong(!isActiveSong);
     const { uri } = item;
     setAudio(uri);
     if (soundObject && uri) {
       try {
         await soundObject.unloadAsync();
-        await soundObject.loadAsync({ uri }); // Aqui você deve passar a URI do arquivo local
+        await soundObject.loadAsync({ uri }, { shouldPlay: true }); // Aqui você deve passar a URI do arquivo local
+        await soundObject.setPositionAsync(0);
         await soundObject.playAsync();
       } catch (error) {
         console.error('Erro ao carregar/reproduzir áudio:', error);
