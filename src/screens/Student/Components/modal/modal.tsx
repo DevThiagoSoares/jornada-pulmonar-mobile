@@ -9,8 +9,6 @@ import { styles } from '../../../Login/styles';
 import { Divider } from '../unitCard/divider';
 import { UnitCard } from '../unitCard/unit-card';
 
-import { useAuth } from '~/Shared/Auth';
-import { ListQuestionApi } from '~/Shared/api/services/questions';
 import { useQuestion } from '~/Shared/hooks/question.context';
 import { BackgroundScreen } from '~/components/screens/background-image';
 
@@ -18,6 +16,7 @@ export interface questionEntity {
   id: string;
   title: string;
   audioUrl: any;
+  answered: boolean;
   imageBase64: string;
   moduleId: string;
   createdAt: string;
@@ -28,7 +27,6 @@ export interface questionEntity {
 
 export default function Modal() {
   const { question } = useQuestion();
-  const { user } = useAuth();
   const [listQuestion, setListQuestion] = useState<questionEntity[]>([]);
 
   useEffect(() => {
@@ -36,9 +34,8 @@ export default function Modal() {
   }, []);
 
   const handleListQuestion = async () => {
-    if (user && user?.id) {
-      const resp = await ListQuestionApi(user.id);
-      if (resp) setListQuestion(question);
+    if (question) {
+      setListQuestion(question);
     }
   };
   return (
@@ -50,7 +47,7 @@ export default function Modal() {
             <View key={idx} style={{ display: 'flex', flexDirection: 'column', marginLeft: 30 }}>
               <UnitCard
                 question={item.title}
-                finishe={item.responsesId ? 'Finalizada' : 'Não iniciada'}
+                finishe={item.answered ? 'Finalizada' : 'Não iniciada'}
                 level={String(idx + 1)}
                 imgLevel={imgLevel}
                 data={item}

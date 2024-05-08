@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ScrollView } from 'react-native';
 import { View } from 'react-native-animatable';
 import { List } from 'react-native-paper';
@@ -13,41 +13,15 @@ import { AvatarGroup } from '../Avatar/avatarGroup';
 import { ListInfo } from '../List-Info/List-item-info';
 import { NotFoundData } from '../notFoundData';
 
-import { TypeUser } from '~/Shared/Enums/typeUser';
-import { getModules } from '~/Shared/api/services/modules/modules';
-import { Ranking } from '~/Shared/api/services/users';
-import { rankingDto } from '~/screens/Student/ranking';
+import { modulesDto } from '~/screens/Student/Home';
 
-export function ListCard() {
-  const [listRanking, setListRanking] = useState([]);
-  const [module, setModule] = useState([]);
-  const [listWinner, setListWinner] = useState<rankingDto[]>([]);
+interface listProps {
+  module: modulesDto[];
+  listWinner: any[];
+  listRanking: any[];
+}
 
-  const getUser = async () => {
-    const response = await Ranking();
-    const newList = response.data.map((item: any) => {
-      if (item.role !== TypeUser.Teacher && item.score > 0) {
-        return item;
-      }
-    });
-    const sortedRanking = response.data
-      .filter((item: rankingDto) => item.score > 0 && item.role !== 'teacher') // Filtra os itens com score maior que zero
-      .sort((a: rankingDto, b: rankingDto) => b.score - a.score); // Ordena pelo score decrescente
-
-    const winners = sortedRanking.slice(0, 3);
-    setListWinner(winners);
-
-    setListRanking(newList.filter(Boolean));
-  };
-  const getModule = async () => {
-    const response = await getModules();
-    setModule(response.data);
-  };
-  useEffect(() => {
-    getUser();
-    getModule();
-  }, []);
-
+export function ListCard(props: listProps) {
   const getCrownImage = (index: number) => {
     switch (index) {
       case 0:
@@ -72,8 +46,8 @@ export function ListCard() {
         <View>
           <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 209 }}>
             <View style={styledCard.cardContainer}>
-              {module.length > 0 ? (
-                module.map((item: any, idx: number) => (
+              {props.module.length > 0 ? (
+                props.module.map((item: any, idx: number) => (
                   <OptionsCard
                     key={idx}
                     quantity={item.questionsCount}
@@ -96,9 +70,9 @@ export function ListCard() {
         style={styledCard.listOptions}
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
         <View style={styledCard.listContainer}>
-          {listWinner.length > 0 && (
+          {props.listWinner.length > 0 && (
             <>
-              {listWinner.map((winner, index) => (
+              {props.listWinner.map((winner, index) => (
                 <AvatarGroup
                   key={index}
                   name={winner.name}
@@ -112,8 +86,8 @@ export function ListCard() {
           )}
         </View>
         <View style={{ marginBottom: 10 }}>
-          {listRanking.length > 0 ? (
-            listRanking.map((item: any, idx) => (
+          {props.listRanking.length > 0 ? (
+            props.listRanking.map((item: any, idx) => (
               <ListInfo key={idx} name={item?.name} points={item.score} position={idx} />
             ))
           ) : (
