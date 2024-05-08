@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import Caso_21 from 'android/app/src/main/res/raw/sonsnotificatio.mp3';
 import { Asset } from 'expo-asset';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import React, { useEffect, useRef, useState } from 'react';
@@ -23,10 +24,10 @@ export function ListAudio(props: audioProps) {
 
   const getAudioUri = (index: number) => {
     const audioKey = `Caso_${index}`;
-    const audioFilename = AudioFiles[audioKey]; // Supondo que AudioFiles é um objeto contendo as referências aos arquivos de áudio
+    const audioFilename = AudioFiles[audioKey];
     if (!audioFilename) {
       console.error(`Arquivo de áudio não encontrado para o índice ${index + 1}`);
-      return 'error'; // Ou retorne um valor padrão caso não encontre o arquivo
+      return 'error';
     }
     const audioAsset = Asset.fromModule(audioFilename);
     const fileUri = audioAsset.uri;
@@ -43,8 +44,8 @@ export function ListAudio(props: audioProps) {
   useEffect(() => {
     const requestPermissions = async () => {
       const { granted } = await Audio.requestPermissionsAsync();
-      console.log(audioFiles[20].uri);
-      Toastfy('error', audioFiles[20].uri);
+      const audioAsset = Asset.fromModule(Caso_21);
+      Toastfy('error', audioAsset.uri);
       if (granted) {
         Audio.setAudioModeAsync({
           allowsRecordingIOS: true,
@@ -60,7 +61,6 @@ export function ListAudio(props: audioProps) {
   }, []);
 
   const handleAudioIconPress = async (item: any) => {
-    Toastfy('error', `audio ${getAudioUri(1)}`);
     setIsActiveSong(!isActiveSong);
     const { uri } = item;
     setAudio(uri);

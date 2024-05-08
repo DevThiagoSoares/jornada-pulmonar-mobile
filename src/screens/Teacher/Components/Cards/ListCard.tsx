@@ -111,7 +111,7 @@ export function ListCard() {
             </>
           )}
         </View>
-        <View>
+        <View style={{ marginBottom: 10 }}>
           {listRanking.length > 0 ? (
             listRanking.map((item: any, idx) => (
               <ListInfo key={idx} name={item?.name} points={item.score} position={idx} />

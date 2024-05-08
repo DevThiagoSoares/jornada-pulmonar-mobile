@@ -8,6 +8,7 @@ import { styledCard } from './styles';
 import { modulesDto } from '../../Home';
 
 import { ListQuestionApi } from '~/Shared/api/services/questions';
+import { useQuestion } from '~/Shared/hooks/question.context';
 import { Toastfy } from '~/Shared/notification/internal';
 import { RootStackParamList } from '~/navigation/Routes';
 
@@ -32,19 +33,21 @@ export interface questionsDto {
 }
 export function CardTemplate(props: cardProps) {
   const navigation = useNavigation<Props['navigation']>();
+  const { setQuestion } = useQuestion();
   const handleListQuestions = async (data: modulesDto[]) => {
     const resp = await ListQuestionApi();
+
     if (resp && resp.data) {
-      const moduledId = data.map((item: modulesDto) => item.id);
-      if (moduledId.length > 0) {
-        const foundQuestions = resp.data.filter((item: questionsDto) =>
-          moduledId.includes(item.moduleId)
-        );
-        if (foundQuestions.length > 0) {
-          navigation.navigate('Modal');
-        } else {
-          Toastfy('error', 'Não há Questões cadastradas para esta unidade');
+      const foundQuestions = resp?.data.map((item: questionsDto) => {
+        if (item.moduleId === data[0].id) {
+          return item;
         }
+      });
+      if (foundQuestions.length > 0) {
+        setQuestion(foundQuestions.filter(Boolean));
+        navigation.navigate('Modal');
+      } else {
+        Toastfy('error', 'Não há Questões cadastradas para esta unidade');
       }
     }
   };
