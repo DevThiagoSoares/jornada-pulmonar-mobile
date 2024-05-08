@@ -17,13 +17,21 @@
           ]
         }
       ],
-      [ "expo-build-properties", { "android": { "usesCleartextTraffic": true } } ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
       [
         "expo-av",
         {
           "microphonePermission": "Allow Jornada Pulmonar to access your microphone."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "tsconfigPaths": true

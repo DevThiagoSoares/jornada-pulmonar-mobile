@@ -6,5 +6,6 @@ import { useData } from '~/Shared/hooks/audio.context';
 export function ScreenResponse() {
   const { data } = useData();
   const isAnswer = data?.isAnswer;
+  console.log({ data });
   return isAnswer ? <CorrectResponse /> : <ErrorResponse />;
 }

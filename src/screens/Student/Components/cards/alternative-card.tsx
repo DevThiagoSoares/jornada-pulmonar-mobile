@@ -57,6 +57,12 @@ export function AlternativaCard(props: alternativaProps) {
     setIsRunning(false);
   };
 
+  const formatTime = (timeInSeconds: number): string => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = timeInSeconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
   const handleSubmit = async () => {
     const body: payloadProps = {
       optionId: correctAlternative,
@@ -65,7 +71,7 @@ export function AlternativaCard(props: alternativaProps) {
       time: timer,
     };
     try {
-      const response = await answer(body);
+      const response: any = await answer(body);
       if (response.data.message === 'questão já respondida') {
         Toastfy('error', response.data.message);
         return;
@@ -75,8 +81,12 @@ export function AlternativaCard(props: alternativaProps) {
         return;
       }
       navigation.navigate('ScreenResponse');
+      setData({
+        isAnswer: true,
+        time: formatTime(Number(response.data.time)),
+        points: Number(response.data.pontuacao),
+      });
       handleReset();
-      setData({ isAnswer: true });
     } catch (error: any) {
       if (correctAlternative.length === 0) {
         Toastfy('error', 'Selecione uma alternativa antes de enviar!');
@@ -84,13 +94,6 @@ export function AlternativaCard(props: alternativaProps) {
       }
       Toastfy('error', JSON.stringify(error.message));
     }
-  };
-
-  const formatTime = (timeInSeconds: number): string => {
-    const hours = Math.floor(timeInSeconds / 3600);
-    const minutes = Math.floor((timeInSeconds % 3600) / 60);
-    const seconds = timeInSeconds % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
   return (

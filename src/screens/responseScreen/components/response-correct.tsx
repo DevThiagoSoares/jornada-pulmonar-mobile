@@ -12,6 +12,7 @@ import seta from 'src/assets/image/seta2.png';
 import { AvatarImg } from './avatar';
 import { styledResponse } from '../style';
 
+import { useData } from '~/Shared/hooks/audio.context';
 import { BackgroundScreen } from '~/components/screens/background-image';
 import { RootStackParamList } from '~/navigation/Routes';
 
@@ -19,6 +20,8 @@ type Props = StackScreenProps<RootStackParamList, 'ImageStepForm'>;
 
 export function CorrectResponse() {
   const navigation = useNavigation<Props['navigation']>();
+  const { data } = useData();
+  console.log(data);
 
   return (
     <BackgroundScreen style={styledResponse.backgroundScreen} source={image} resizeMode="cover">
@@ -26,12 +29,14 @@ export function CorrectResponse() {
         <View style={styledResponse.conatiner}>
           <Image source={respostaCerta} style={styledResponse.img} />
           <View style={styledResponse.points}>
-            <Text style={styledResponse.pointText}>+ 10 pontos</Text>
+            <Text style={styledResponse.pointText}>+ {`${data.points ?? 0}`} pontos</Text>
           </View>
           <Text style={styledResponse.title}>Resposta Certa ! </Text>
           <View style={styledResponse.time}>
             <View style={styledResponse.divider} />
-            <Text style={styledResponse.timeText}>2m 12s - 10 pts</Text>
+            <Text style={styledResponse.timeText}>
+              {`${data.time ?? 0}`} - {`${data.points ?? 0}`} pts
+            </Text>
           </View>
           <View
             style={{
@@ -43,7 +48,7 @@ export function CorrectResponse() {
               alignItems: 'center',
             }}>
             <View style={styledResponse.containerPts}>
-              <Text style={styledResponse.textPts}>110 pontos</Text>
+              <Text style={styledResponse.textPts}>{`${data.points ?? 0}`} pontos</Text>
               <AvatarImg photo="https://picsum.photos/500" sizePhoto={54} crown={goldCrown} />
             </View>
             <Image source={seta} style={{ width: 24, height: 64 }} />

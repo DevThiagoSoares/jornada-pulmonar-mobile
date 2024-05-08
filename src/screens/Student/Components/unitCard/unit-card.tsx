@@ -7,7 +7,6 @@ import { ComponentLevel } from './component-level';
 import { styledUnit } from './styles';
 import { questionEntity } from '../modal/modal';
 
-import { findQuestionById } from '~/Shared/api/services/questions';
 import { useQuestion } from '~/Shared/hooks/question.context';
 import { RootStackParamList } from '~/navigation/Routes';
 
@@ -26,8 +25,7 @@ export function UnitCard(props: cardProps) {
   const { setQuestion } = useQuestion();
 
   const handleListQuestion = async (data: questionEntity) => {
-    const resp = await findQuestionById(data.id);
-    if (resp) setQuestion({ ...resp?.data[0], level: props.level });
+    if (data) setQuestion({ ...data, level: props.level });
     navigation.navigate('ModalQuestion');
   };
 
