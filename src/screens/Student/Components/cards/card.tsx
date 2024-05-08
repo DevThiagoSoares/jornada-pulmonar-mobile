@@ -7,6 +7,7 @@ import { Button, Card, ProgressBar, Text } from 'react-native-paper';
 import { styledCard } from './styles';
 import { modulesDto } from '../../Home';
 
+import { useAuth } from '~/Shared/Auth';
 import { ListQuestionApi } from '~/Shared/api/services/questions';
 import { useQuestion } from '~/Shared/hooks/question.context';
 import { Toastfy } from '~/Shared/notification/internal';
@@ -34,20 +35,23 @@ export interface questionsDto {
 export function CardTemplate(props: cardProps) {
   const navigation = useNavigation<Props['navigation']>();
   const { setQuestion } = useQuestion();
+  const { user } = useAuth();
   const handleListQuestions = async (data: modulesDto[]) => {
-    const resp = await ListQuestionApi();
+    if (user && user?.id) {
+      const resp = await ListQuestionApi(user.id);
 
-    if (resp && resp.data) {
-      const foundQuestions = resp?.data.map((item: questionsDto) => {
-        if (item.moduleId === data[0].id) {
-          return item;
+      if (resp && resp.data) {
+        const foundQuestions = resp?.data.map((item: questionsDto) => {
+          if (item.moduleId === data[0].id) {
+            return item;
+          }
+        });
+        if (foundQuestions.length > 0) {
+          setQuestion(foundQuestions.filter(Boolean));
+          navigation.navigate('Modal');
+        } else {
+          Toastfy('error', 'Não há Questões cadastradas para esta unidade');
         }
-      });
-      if (foundQuestions.length > 0) {
-        setQuestion(foundQuestions.filter(Boolean));
-        navigation.navigate('Modal');
-      } else {
-        Toastfy('error', 'Não há Questões cadastradas para esta unidade');
       }
     }
   };

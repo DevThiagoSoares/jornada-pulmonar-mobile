@@ -9,6 +9,7 @@ import { styles } from '../../../Login/styles';
 import { Divider } from '../unitCard/divider';
 import { UnitCard } from '../unitCard/unit-card';
 
+import { useAuth } from '~/Shared/Auth';
 import { ListQuestionApi } from '~/Shared/api/services/questions';
 import { useQuestion } from '~/Shared/hooks/question.context';
 import { BackgroundScreen } from '~/components/screens/background-image';
@@ -27,6 +28,7 @@ export interface questionEntity {
 
 export default function Modal() {
   const { question } = useQuestion();
+  const { user } = useAuth();
   const [listQuestion, setListQuestion] = useState<questionEntity[]>([]);
 
   useEffect(() => {
@@ -34,8 +36,10 @@ export default function Modal() {
   }, []);
 
   const handleListQuestion = async () => {
-    const resp = await ListQuestionApi();
-    if (resp) setListQuestion(question);
+    if (user && user?.id) {
+      const resp = await ListQuestionApi(user.id);
+      if (resp) setListQuestion(question);
+    }
   };
   return (
     <BackgroundScreen source={img} style={styles.backgroundImage} resizeMode="cover">

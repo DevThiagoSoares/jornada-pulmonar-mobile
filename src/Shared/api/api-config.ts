@@ -6,12 +6,11 @@ const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
-  const getToken = AsyncStorage.getItem('access_token');
+api.interceptors.request.use(async (config) => {
+  const getToken = await AsyncStorage.getItem('access_token');
   if (getToken && config.headers) {
     config.headers.Authorization = `Bearer ${getToken}`;
   }
-
   return config;
 });
 

@@ -78,7 +78,10 @@ export function AlternativaCard(props: alternativaProps) {
       handleReset();
       setData({ isAnswer: true });
     } catch (error: any) {
-      console.log(error);
+      if (correctAlternative.length === 0) {
+        Toastfy('error', 'Selecione uma alternativa antes de enviar!');
+        return;
+      }
       Toastfy('error', JSON.stringify(error.message));
     }
   };
