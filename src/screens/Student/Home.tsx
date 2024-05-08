@@ -44,7 +44,6 @@ const HomeStudent = () => {
       return imgEnfer1;
     }
   };
-  console.log({ listModules });
   return (
     <BackgroundScreen
       resizeMode="cover"
