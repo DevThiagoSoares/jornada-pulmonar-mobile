@@ -31,7 +31,6 @@ export function ListAudio(props: audioProps) {
     }
     const audioAsset = Asset.fromModule(audioFilename);
     const fileUri = audioAsset.uri;
-
     return fileUri;
   };
 
@@ -45,6 +44,7 @@ export function ListAudio(props: audioProps) {
     const requestPermissions = async () => {
       const { granted } = await Audio.requestPermissionsAsync();
       const audioAsset = Asset.fromModule(Caso_21);
+      await audioAsset.downloadAsync();
       Toastfy('error', audioAsset.uri);
       if (granted) {
         Audio.setAudioModeAsync({
@@ -61,6 +61,7 @@ export function ListAudio(props: audioProps) {
   }, []);
 
   const handleAudioIconPress = async (item: any) => {
+    console.log({ item });
     setIsActiveSong(!isActiveSong);
     const { uri } = item;
     setAudio(uri);
@@ -90,6 +91,7 @@ export function ListAudio(props: audioProps) {
     setOption(option);
     props.getAudio(uri);
   };
+
   const renderItem = (item: any) => (
     <RadioButton.Group
       onValueChange={(newValue) => SelectOption(newValue, item.uri)}

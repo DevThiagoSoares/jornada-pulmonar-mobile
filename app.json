@@ -31,7 +31,12 @@
           "microphonePermission": "Allow Jornada Pulmonar to access your microphone."
         }
       ],
-      "expo-font"
+      [
+        "expo-asset",
+        {
+          "assets": ["assets/audio", "assets/fonts"]
+        }
+      ]
     ],
     "experiments": {
       "tsconfigPaths": true
