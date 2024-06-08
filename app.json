@@ -34,9 +34,13 @@
       [
         "expo-asset",
         {
-          "assets": ["assets/audio", "assets/fonts"]
+          "assets": [
+            "assets/audio",
+            "assets/fonts"
+          ]
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "tsconfigPaths": true

@@ -43,7 +43,6 @@ export function ModalQuestion() {
         <View>
           <AlternativaCard options={options} />
         </View>
-        {/* <SelectPosition newLocationX={locationX} newLocationY={locationY} /> */}
       </ScrollView>
     </BackgroundScreen>
   );

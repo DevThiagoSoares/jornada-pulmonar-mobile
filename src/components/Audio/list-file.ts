@@ -1,4 +1,3 @@
-import Caso_21 from 'android/app/src/main/res/raw/sonsnotificatio.mp3';
 import Caso_1 from 'assets/audio/sons_pulmonares/caso_1.mp3';
 import Caso_10 from 'assets/audio/sons_pulmonares/caso_10.mp3';
 import Caso_11 from 'assets/audio/sons_pulmonares/caso_11.mp3';
@@ -45,5 +44,4 @@ export const AudioFiles: AudioFilesType = {
   Caso_18,
   Caso_19,
   Caso_20,
-  Caso_21,
 };

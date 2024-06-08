@@ -1,8 +1,10 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { View } from 'react-native-animatable';
 import { Button, TextInput } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { styledForm } from './styles';
 
@@ -93,12 +95,9 @@ export function FormPerfil() {
               mode="outlined"
               outlineColor="transparent"
               right={
-                <TextInput.Icon
-                  icon={showPassword ? 'eye' : 'eye-off'}
-                  size={20}
-                  color="#CD4C3E"
-                  onPress={() => setShowPassword(!showPassword)}
-                />
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                  <Icon name={showPassword ? 'eye' : 'eye-slash'} size={20} color="#CD4C3E" />
+                </TouchableOpacity>
               }
             />
           )}
@@ -120,12 +119,9 @@ export function FormPerfil() {
               mode="outlined"
               outlineColor="transparent"
               right={
-                <TextInput.Icon
-                  icon={showPassword ? 'eye' : 'eye-off'}
-                  size={20}
-                  color="#CD4C3E"
-                  onPress={() => setShowPassword(!showPassword)}
-                />
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                  <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={25} color="#CD4C3E" />
+                </TouchableOpacity>
               }
             />
           )}

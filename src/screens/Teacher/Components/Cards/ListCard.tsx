@@ -34,7 +34,6 @@ export function ListCard(props: listProps) {
         return null;
     }
   };
-
   return (
     <List.AccordionGroup>
       <List.Accordion
@@ -53,6 +52,7 @@ export function ListCard(props: listProps) {
                     quantity={item.questionsCount}
                     subTitle={item.title}
                     title={`Unidade ${idx + 1}`}
+                    data={item}
                   />
                 ))
               ) : (

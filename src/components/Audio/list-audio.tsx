@@ -1,12 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
-import Caso_21 from 'android/app/src/main/res/raw/sonsnotificatio.mp3';
-import { Asset } from 'expo-asset';
+import axios from 'axios';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
+import * as FileSystem from 'expo-file-system';
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { RadioButton } from 'react-native-paper';
+import { ActivityIndicator, MD2Colors, RadioButton } from 'react-native-paper';
 
-import { AudioFiles } from './list-file';
 import { styledAudio } from './styles';
 
 import { Toastfy } from '~/Shared/notification/internal';
@@ -19,33 +18,55 @@ export function ListAudio(props: audioProps) {
   const [audio, setAudio] = useState<any>();
   const [option, setOption] = useState('');
   const [isActiveSong, setIsActiveSong] = useState(false);
-  const totalAudios = 21;
+  const totalAudios = 20;
   const soundObject = useRef(new Audio.Sound()).current;
+  const [loadedAudioFiles, setLoadedAudioFiles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const getAudioUri = (index: number) => {
-    const audioKey = `Caso_${index}`;
-    const audioFilename = AudioFiles[audioKey];
-    if (!audioFilename) {
-      console.error(`Arquivo de áudio não encontrado para o índice ${index + 1}`);
+  const getAudioUri = async (audioFilename: string) => {
+    try {
+      const githubUrl = `https://raw.githubusercontent.com/nandamsouza/audioFiles/main/${audioFilename}.mp3`;
+      const response = await axios.get(githubUrl, { responseType: 'arraybuffer' });
+
+      // Convertendo o ArrayBuffer para Base64
+      const base64Data = btoa(
+        new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
+      );
+
+      // Salvando o áudio localmente
+      const localUri = `${FileSystem.documentDirectory}${audioFilename}`;
+      await FileSystem.writeAsStringAsync(localUri, base64Data, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+      return localUri;
+    } catch (error) {
+      console.error('Erro ao buscar o áudio no GitHub:', error);
       return 'error';
     }
-    const audioAsset = Asset.fromModule(audioFilename);
-    const fileUri = audioAsset.uri;
-    return fileUri;
+  };
+  const createAudioFiles = async () => {
+    const files = [];
+
+    for (let index = 0; index < totalAudios; index++) {
+      const uri = await getAudioUri(`caso_${index + 1}`);
+      files.push({
+        id: index + 1,
+        title: `caso - ${index + 1}`,
+        uri,
+      });
+    }
+    return files;
   };
 
-  const audioFiles = Array.from({ length: totalAudios }, (_, index) => ({
-    id: index + 1,
-    title: `caso - ${index + 1}`,
-    uri: getAudioUri(index + 1),
-  }));
-
   useEffect(() => {
+    const loadAudioFiles = async () => {
+      const files = await createAudioFiles();
+      setLoadedAudioFiles(files);
+      setLoading(false);
+    };
+    loadAudioFiles();
     const requestPermissions = async () => {
       const { granted } = await Audio.requestPermissionsAsync();
-      const audioAsset = Asset.fromModule(Caso_21);
-      await audioAsset.downloadAsync();
-      Toastfy('error', audioAsset.uri);
       if (granted) {
         Audio.setAudioModeAsync({
           allowsRecordingIOS: true,
@@ -61,20 +82,25 @@ export function ListAudio(props: audioProps) {
   }, []);
 
   const handleAudioIconPress = async (item: any) => {
-    console.log({ item });
     setIsActiveSong(!isActiveSong);
-    const { uri } = item;
-    setAudio(uri);
-    if (soundObject && uri) {
-      try {
-        await soundObject.unloadAsync();
-        await soundObject.loadAsync({ uri }, { shouldPlay: true }); // Aqui você deve passar a URI do arquivo local
-        await soundObject.setPositionAsync(0);
-        await soundObject.playAsync();
-      } catch (error) {
-        console.error('Erro ao carregar/reproduzir áudio:', error);
-        Toastfy('error', JSON.stringify(error));
+
+    const uri = item.uri;
+    if (uri !== 'error') {
+      setAudio(uri);
+      if (soundObject && uri) {
+        try {
+          await soundObject.unloadAsync();
+          await soundObject.loadAsync({ uri }, { shouldPlay: true });
+          await soundObject.setPositionAsync(0);
+          await soundObject.playAsync();
+        } catch (error) {
+          console.error('Erro ao carregar/reproduzir áudio:', error);
+          Toastfy('error', JSON.stringify(error));
+        }
       }
+    } else {
+      console.error('Erro ao obter URI do áudio.');
+      Toastfy('error', 'Erro ao obter URI do áudio.');
     }
   };
   const handleStopAudio = async () => {
@@ -115,5 +141,15 @@ export function ListAudio(props: audioProps) {
     </RadioButton.Group>
   );
 
-  return <>{audioFiles.map((item, idx) => renderItem(item))}</>;
+  return (
+    <>
+      {loading ? (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator animating color={MD2Colors.red800} size="large" />
+        </View>
+      ) : (
+        loadedAudioFiles.map((item, idx) => renderItem(item))
+      )}
+    </>
+  );
 }

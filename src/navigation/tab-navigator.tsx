@@ -28,7 +28,7 @@ export default function TabLayout({ navigation }: Props) {
             tabBarLabel: `${item.route}`,
             tabBarLabelPosition: 'beside-icon',
             tabBarIconStyle: {
-              width: 30,
+              width: 28,
             },
             tabBarIcon: ({ color }) => item.icon(color),
           }}

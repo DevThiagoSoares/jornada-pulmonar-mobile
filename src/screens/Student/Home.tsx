@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    resizeMode: 'cover',
   },
   container: {
     display: 'flex',
     flexDirection: 'row', // Altera a direção para horizontal
     justifyContent: 'center',
     alignItems: 'center',
-    top: 40,
   },
 });
 
