@@ -31,6 +31,9 @@ export interface questionsDto {
   moduleId: string;
   level?: number;
   title: string;
+  alternatives?: any;
+  answered?: any;
+  titleUnit?: string;
 }
 export function CardTemplate(props: cardProps) {
   const navigation = useNavigation<Props['navigation']>();

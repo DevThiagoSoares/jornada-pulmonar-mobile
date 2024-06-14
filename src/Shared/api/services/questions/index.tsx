@@ -14,6 +14,14 @@ export async function ListQuestionApi(userId: string) {
     Toastfy('error', 'Ops!... Algo deu errado');
   }
 }
+export async function findByQuestionApi(moduleId: string) {
+  try {
+    return await api.get(`/api/v1/questions?userId=${moduleId}`);
+  } catch (error) {
+    console.log(error);
+    Toastfy('error', 'Ops!... Algo deu errado');
+  }
+}
 
 export async function findQuestionById(id: string) {
   try {

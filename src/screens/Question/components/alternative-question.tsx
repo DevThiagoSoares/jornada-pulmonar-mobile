@@ -16,6 +16,7 @@ interface OptionsProps {
   onChange: any;
   errors?: string | undefined;
   inputError?: boolean;
+  getAlternatives?: { value: string; description: string }[] | null;
 }
 
 export function Alternative(props: OptionsProps) {
@@ -38,6 +39,12 @@ export function Alternative(props: OptionsProps) {
       props.onChange(newlist);
     }
   }, [alternatives, correctAlternative]);
+
+  useEffect(() => {
+    if (props.getAlternatives) {
+      setAlternatives(props.getAlternatives);
+    }
+  }, [props.getAlternatives]);
 
   const handleInputChange = (text: string) => {
     setAlternative(text);

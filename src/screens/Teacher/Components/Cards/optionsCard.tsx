@@ -19,7 +19,7 @@ interface cardProps {
   title: string;
   subTitle: string;
   quantity: number;
-  data: modulesDto[];
+  data: modulesDto;
 }
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 
@@ -28,18 +28,18 @@ export function OptionsCard(props: cardProps) {
   const { setQuestion } = useQuestion();
   const navigation = useNavigation<Props['navigation']>();
 
-  const handleFindQuestion = async (data: modulesDto[]) => {
-    navigation.navigate('EditScreenQuestion');
+  const handleFindQuestion = async (data: modulesDto) => {
     if (user && user?.id) {
       const resp = await ListQuestionApi(user.id);
       if (resp && resp.data) {
         const foundQuestions = resp?.data.map((item: questionsDto) => {
-          if (item.moduleId === data[0].id) {
-            return item;
+          if (item.moduleId === data.id) {
+            return { ...item, titleUnit: props.title };
           }
         });
         if (foundQuestions.length > 0) {
           setQuestion(foundQuestions.filter(Boolean));
+          navigation.navigate('EditScreenQuestion');
         } else {
           Toastfy('error', 'Não há Questões cadastradas para esta unidade');
         }

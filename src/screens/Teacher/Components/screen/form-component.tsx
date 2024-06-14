@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -7,6 +8,7 @@ import { styledEditQuestion } from './styles';
 import { Alternative } from '~/screens/Question/components/alternative-question';
 import { InputNormal } from '~/screens/Question/components/ui';
 import { styledAlternative } from '~/screens/Question/styles';
+import { questionsDto } from '~/screens/Student/Components/cards/card';
 
 interface optionsAlt {
   label: string;
@@ -21,16 +23,37 @@ interface FormData {
   alternatives: optionsAlt[];
 }
 
-export function FormComponent() {
+interface formProps {
+  data: questionsDto;
+}
+
+export function FormComponent(props: formProps) {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>();
+
+  const [alternatives, setAlternatives] = useState<
+    | {
+        value: string;
+        description: string;
+      }[]
+    | null
+  >(null);
 
   const onSubmit = async (value: FormData) => {
     console.log(value);
   };
+  useEffect(() => {
+    setValue('question', props.data.title);
+    setValue('titleUnit', props.data.titleUnit ?? '');
+    const newListAlt = props.data.alternatives.map((item: any) => {
+      return { value: item.id, description: item.content };
+    });
+    setAlternatives(newListAlt.filter(Boolean));
+  }, [props.data]);
 
   return (
     <View style={styledEditQuestion.formContainer}>
@@ -69,6 +92,7 @@ export function FormComponent() {
             inputError={errors.alternatives !== undefined}
             onChange={onChange}
             errors={errors.alternatives?.message}
+            getAlternatives={alternatives}
           />
         )}
         name="alternatives"
