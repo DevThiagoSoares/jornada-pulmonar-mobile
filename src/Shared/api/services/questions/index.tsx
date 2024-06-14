@@ -31,3 +31,12 @@ export async function findQuestionById(id: string) {
     console.log(error);
   }
 }
+
+export async function editQuestion(questionId: string, title: string, audioUrl: string) {
+  try {
+    return await api.patch(`api/v1/questions/:${questionId}`, { title, audioUrl });
+  } catch (error: any) {
+    console.log(error);
+    error.message && Toastfy('error', error.message);
+  }
+}

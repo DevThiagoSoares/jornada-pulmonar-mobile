@@ -5,6 +5,9 @@ import { Button } from 'react-native-paper';
 
 import { styledEditQuestion } from './styles';
 
+import { editModule, editOption } from '~/Shared/api/services/modules/modules';
+import { editQuestion } from '~/Shared/api/services/questions';
+import { Toastfy } from '~/Shared/notification/internal';
 import { Alternative } from '~/screens/Question/components/alternative-question';
 import { InputNormal } from '~/screens/Question/components/ui';
 import { styledAlternative } from '~/screens/Question/styles';
@@ -44,8 +47,40 @@ export function FormComponent(props: formProps) {
   >(null);
 
   const onSubmit = async (value: FormData) => {
-    console.log(value);
+    editTitle(props.data.id, value.question);
+    //EditModule(props.data.moduleId, value.titleUnit);
   };
+
+  const editTitle = async (questionId: string, data: string) => {
+    try {
+      await editQuestion(questionId, data, '');
+    } catch (error: any) {
+      error.message && Toastfy(error.message, 'error');
+      error.response.data.message && Toastfy(error.response.data.message, 'error');
+      console.log(error);
+    }
+  };
+
+  const EditModule = async (moduleId: string, title: string) => {
+    try {
+      await editModule(moduleId, title);
+    } catch (error: any) {
+      error.message && Toastfy(error.message, 'error');
+      error.response.data.message && Toastfy(error.response.data.message, 'error');
+      console.log(error);
+    }
+  };
+
+  /* const EditOption = async (optionId: string, content: string) => {
+    try {
+      await editOption(optionId, content);
+    } catch (error: any) {
+      error.message && Toastfy(error.message, 'error');
+      error.response.data.message && Toastfy(error.response.data.message, 'error');
+      console.log(error);
+    }
+  }; */
+
   useEffect(() => {
     setValue('question', props.data.title);
     setValue('titleUnit', props.data.titleUnit ?? '');
