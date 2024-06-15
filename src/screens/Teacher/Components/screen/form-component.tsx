@@ -5,7 +5,8 @@ import { Button } from 'react-native-paper';
 
 import { styledEditQuestion } from './styles';
 
-import { deleteQuestion } from '~/Shared/api/services/questions';
+import { deleteQuestion, editQuestion } from '~/Shared/api/services/questions';
+import { Toastfy } from '~/Shared/notification/internal';
 import { Alternative } from '~/screens/Question/components/alternative-question';
 import { InputNormal } from '~/screens/Question/components/ui';
 import { styledAlternative } from '~/screens/Question/styles';
@@ -43,13 +44,31 @@ export function FormComponent(props: formProps) {
       }[]
     | null
   >(null);
+  const [correctAlternative, setCorrectAlternative] = useState<{
+    description: string;
+    correctAlternative: boolean;
+  } | null>(null);
 
   const onSubmit = async (value: FormData) => {
-    console.log(value);
+    handleCreateQuestion(value);
+  };
+  const handleCreateQuestion = async (value: FormData) => {
+    try {
+      await editQuestion(props.data.id, value);
+      Toastfy('success', 'Questão editada com sucesso');
+    } catch (error: any) {
+      error.message && Toastfy('error', error.message);
+      error.response.data.message && Toastfy('error', error.response.data.message);
+    }
   };
 
   const handleDelete = async (idQuestion: string) => {
-    await deleteQuestion(idQuestion);
+    try {
+      await deleteQuestion(idQuestion);
+      Toastfy('success', 'Questão removida com sucesso');
+    } catch (error: any) {
+      error.message && Toastfy('error', error.message);
+    }
   };
 
   useEffect(() => {
@@ -58,6 +77,14 @@ export function FormComponent(props: formProps) {
     const newListAlt = props.data.alternatives.map((item: any) => {
       return { value: item.id, description: item.content };
     });
+    const findCorrectAlternative = props.data.alternatives.find(
+      (item: any) => item.correctAlternative === true
+    );
+    findCorrectAlternative &&
+      setCorrectAlternative({
+        description: findCorrectAlternative.id,
+        correctAlternative: findCorrectAlternative.correctAlternative,
+      });
     setAlternatives(newListAlt.filter(Boolean));
   }, [props.data]);
   return (
@@ -98,6 +125,7 @@ export function FormComponent(props: formProps) {
             onChange={onChange}
             errors={errors.alternatives?.message}
             getAlternatives={alternatives}
+            getCorrectAlternative={correctAlternative}
           />
         )}
         name="alternatives"

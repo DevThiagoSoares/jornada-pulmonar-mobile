@@ -27,6 +27,7 @@ export interface questionsDto {
   audioUrl: string;
   createdAt: string;
   id: string;
+  questionId?: string;
   imgNameUrl: string;
   moduleId: string;
   level?: number;

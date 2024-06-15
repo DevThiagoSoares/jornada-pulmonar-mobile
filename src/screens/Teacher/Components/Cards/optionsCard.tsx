@@ -34,7 +34,6 @@ export function OptionsCard(props: cardProps) {
       if (resp && resp.data) {
         const foundQuestions = resp?.data.map((item: questionsDto) => {
           if (item.moduleId === data.id) {
-            console.log('id', item.id);
             return { ...item, titleUnit: props.title };
           }
         });

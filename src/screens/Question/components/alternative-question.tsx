@@ -17,6 +17,7 @@ interface OptionsProps {
   errors?: string | undefined;
   inputError?: boolean;
   getAlternatives?: { value: string; description: string }[] | null;
+  getCorrectAlternative?: { description: string; correctAlternative: boolean } | null;
 }
 
 export function Alternative(props: OptionsProps) {
@@ -44,7 +45,11 @@ export function Alternative(props: OptionsProps) {
     if (props.getAlternatives) {
       setAlternatives(props.getAlternatives);
     }
-  }, [props.getAlternatives]);
+    if (props.getCorrectAlternative) {
+      setCorrectAlternative(props.getCorrectAlternative.description);
+      props.onChange(props.getCorrectAlternative);
+    }
+  }, [props.getAlternatives, props.getCorrectAlternative]);
 
   const handleInputChange = (text: string) => {
     setAlternative(text);
