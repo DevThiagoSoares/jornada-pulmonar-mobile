@@ -32,9 +32,18 @@ export async function findQuestionById(id: string) {
   }
 }
 
-export async function editQuestion(questionId: string, title: string, audioUrl: string) {
+export async function editQuestion(questionId: string, data: any) {
   try {
-    return await api.patch(`api/v1/questions/:${questionId}`, { title, audioUrl });
+    return await api.patch(`api/v1/questions/:${questionId}`, data);
+  } catch (error: any) {
+    console.log(error);
+    error.message && Toastfy('error', error.message);
+  }
+}
+
+export async function deleteQuestion(questionId: string) {
+  try {
+    return await api.delete(`api/v1/questions/:${questionId}`);
   } catch (error: any) {
     console.log(error);
     error.message && Toastfy('error', error.message);

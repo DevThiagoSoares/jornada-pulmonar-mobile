@@ -5,9 +5,7 @@ import { Button } from 'react-native-paper';
 
 import { styledEditQuestion } from './styles';
 
-import { editModule, editOption } from '~/Shared/api/services/modules/modules';
-import { editQuestion } from '~/Shared/api/services/questions';
-import { Toastfy } from '~/Shared/notification/internal';
+import { deleteQuestion } from '~/Shared/api/services/questions';
 import { Alternative } from '~/screens/Question/components/alternative-question';
 import { InputNormal } from '~/screens/Question/components/ui';
 import { styledAlternative } from '~/screens/Question/styles';
@@ -47,39 +45,12 @@ export function FormComponent(props: formProps) {
   >(null);
 
   const onSubmit = async (value: FormData) => {
-    editTitle(props.data.id, value.question);
-    //EditModule(props.data.moduleId, value.titleUnit);
+    console.log(value);
   };
 
-  const editTitle = async (questionId: string, data: string) => {
-    try {
-      await editQuestion(questionId, data, '');
-    } catch (error: any) {
-      error.message && Toastfy(error.message, 'error');
-      error.response.data.message && Toastfy(error.response.data.message, 'error');
-      console.log(error);
-    }
+  const handleDelete = async (idQuestion: string) => {
+    await deleteQuestion(idQuestion);
   };
-
-  const EditModule = async (moduleId: string, title: string) => {
-    try {
-      await editModule(moduleId, title);
-    } catch (error: any) {
-      error.message && Toastfy(error.message, 'error');
-      error.response.data.message && Toastfy(error.response.data.message, 'error');
-      console.log(error);
-    }
-  };
-
-  /* const EditOption = async (optionId: string, content: string) => {
-    try {
-      await editOption(optionId, content);
-    } catch (error: any) {
-      error.message && Toastfy(error.message, 'error');
-      error.response.data.message && Toastfy(error.response.data.message, 'error');
-      console.log(error);
-    }
-  }; */
 
   useEffect(() => {
     setValue('question', props.data.title);
@@ -89,7 +60,6 @@ export function FormComponent(props: formProps) {
     });
     setAlternatives(newListAlt.filter(Boolean));
   }, [props.data]);
-
   return (
     <View style={styledEditQuestion.formContainer}>
       <Controller
@@ -134,7 +104,10 @@ export function FormComponent(props: formProps) {
         rules={{ required: 'Adicione no mínimo duas alternativas' }}
       />
       <View style={styledEditQuestion.buttonContainer}>
-        <Button onPress={() => console.log('oi')} mode="contained" style={styledAlternative.button}>
+        <Button
+          mode="contained"
+          style={styledAlternative.button}
+          onPress={() => handleDelete(props.data.id)}>
           Remover Questão
         </Button>
         <Button onPress={handleSubmit(onSubmit)} mode="contained" style={styledAlternative.button}>
