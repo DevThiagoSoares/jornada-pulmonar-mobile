@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import img from 'src/assets/image/Grupo-6845.png';
 import imgEnfer2 from 'src/assets/image/Grupo7222.png';
@@ -21,9 +22,12 @@ export interface modulesDto {
 const HomeStudent = () => {
   const [listModules, setListModules] = useState([]);
 
-  useEffect(() => {
-    handleListModules();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      handleListModules();
+      return () => {};
+    }, [])
+  );
   const handleListModules = async () => {
     const res = await getModules();
     const newList = res.data.map((item: modulesDto) => {

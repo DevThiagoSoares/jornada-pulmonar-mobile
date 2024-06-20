@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
@@ -39,10 +40,13 @@ const PageTeacher = () => {
     const response = await getModules();
     setModule(response.data);
   };
-  useEffect(() => {
-    getUser();
-    getModule();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getUser();
+      getModule();
+      return () => {};
+    }, [])
+  );
 
   return (
     <BackgroundScreen

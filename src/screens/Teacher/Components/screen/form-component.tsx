@@ -1,3 +1,5 @@
+import { useNavigation } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
@@ -5,8 +7,10 @@ import { Button } from 'react-native-paper';
 
 import { styledEditQuestion } from './styles';
 
+import { useAuth } from '~/Shared/Auth';
 import { deleteQuestion, editQuestion } from '~/Shared/api/services/questions';
 import { Toastfy } from '~/Shared/notification/internal';
+import { RootStackParamList } from '~/navigation/Routes';
 import { Alternative } from '~/screens/Question/components/alternative-question';
 import { InputNormal } from '~/screens/Question/components/ui';
 import { styledAlternative } from '~/screens/Question/styles';
@@ -29,6 +33,8 @@ interface formProps {
   data: questionsDto;
 }
 
+type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
+
 export function FormComponent(props: formProps) {
   const {
     control,
@@ -36,7 +42,9 @@ export function FormComponent(props: formProps) {
     setValue,
     formState: { errors },
   } = useForm<FormData>();
+  const { user } = useAuth();
 
+  const navigation = useNavigation<Props['navigation']>();
   const [alternatives, setAlternatives] = useState<
     | {
         value: string;
@@ -54,9 +62,12 @@ export function FormComponent(props: formProps) {
   };
   const handleCreateQuestion = async (value: FormData) => {
     try {
-      await editQuestion(props.data.id, value);
+      console.log({ ...value, userId: user?.id, imageBase64: '' });
+      await editQuestion(props.data.id, { ...value, userId: user?.id });
       Toastfy('success', 'Questão editada com sucesso');
+      navigation.navigate('DrawerNavigator');
     } catch (error: any) {
+      console.log(error);
       error.message && Toastfy('error', error.message);
       error.response.data.message && Toastfy('error', error.response.data.message);
     }
@@ -66,6 +77,7 @@ export function FormComponent(props: formProps) {
     try {
       await deleteQuestion(idQuestion);
       Toastfy('success', 'Questão removida com sucesso');
+      navigation.navigate('DrawerNavigator');
     } catch (error: any) {
       error.message && Toastfy('error', error.message);
     }

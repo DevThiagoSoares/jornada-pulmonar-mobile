@@ -32,8 +32,10 @@ export function OptionsCard(props: cardProps) {
     if (user && user?.id) {
       const resp = await ListQuestionApi(user.id);
       if (resp && resp.data) {
+        console.log('data', Object.keys(props.data));
         const foundQuestions = resp?.data.map((item: questionsDto) => {
           if (item.moduleId === data.id) {
+            console.log('item.id', item.id);
             return { ...item, titleUnit: props.title };
           }
         });

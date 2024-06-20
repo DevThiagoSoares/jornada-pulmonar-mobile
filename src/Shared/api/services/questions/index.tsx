@@ -33,9 +33,9 @@ export async function findQuestionById(id: string) {
 }
 
 export async function editQuestion(questionId: string, data: any) {
-  return await api.patch(`api/v1/questions/:${questionId}`, data);
+  return await api.patch(`api/v1/questions/${questionId}`, data);
 }
 
 export async function deleteQuestion(questionId: string) {
-  return await api.delete(`api/v1/questions/:${questionId}`);
+  return await api.delete(`api/v1/questions/${questionId}`);
 }
