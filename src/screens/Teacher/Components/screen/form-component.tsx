@@ -62,8 +62,7 @@ export function FormComponent(props: formProps) {
   };
   const handleCreateQuestion = async (value: FormData) => {
     try {
-      console.log({ ...value, userId: user?.id, imageBase64: '' });
-      await editQuestion(props.data.id, { ...value, userId: user?.id });
+      await editQuestion(props.data.id, { ...value, userId: user?.id, imageBase64: '' });
       Toastfy('success', 'Questão editada com sucesso');
       navigation.navigate('DrawerNavigator');
     } catch (error: any) {
