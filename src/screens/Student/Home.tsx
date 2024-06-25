@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import img from 'src/assets/image/Grupo-6845.png';
 import imgEnfer2 from 'src/assets/image/Grupo7222.png';
@@ -30,13 +30,15 @@ const HomeStudent = () => {
   );
   const handleListModules = async () => {
     const res = await getModules();
-    const newList = res.data.map((item: modulesDto) => {
-      return {
-        id: item.id,
-        questionsCount: item.questionsCount,
-        userId: item.userId,
-        title: item.title,
-      };
+    const newList = res.data.filter((item: modulesDto) => {
+      if (item.questionsCount !== 0) {
+        return {
+          id: item.id,
+          questionsCount: item.questionsCount,
+          userId: item.userId,
+          title: item.title,
+        };
+      }
     });
     setListModules(newList);
   };

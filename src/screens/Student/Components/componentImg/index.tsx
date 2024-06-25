@@ -27,9 +27,9 @@ export function CarouselComponent(props: ImgProps) {
   const [activeIcon, setActiveIcon] = useState(false);
   const [audio, setAudio] = useState<any>();
   const { question } = useQuestion();
+  const [getIndex, setIndex] = useState<number | null>(null);
   const soundObject = useRef(new Audio.Sound()).current;
-  const arrayListAudios = JSON.parse(question.audioUrl);
-
+  const arrayListAudios = question.audioUrl.lenght > 0 ? JSON.parse(question.audioUrl) : [];
   useEffect(() => {
     handleStartAudio();
   }, [audio]);
@@ -37,6 +37,10 @@ export function CarouselComponent(props: ImgProps) {
   const handlePosition = () => {
     Toast.hide();
     setActiveIcon(true);
+  };
+
+  const handlefindPosition = (index: number) => {
+    setIndex(index);
   };
 
   const handleClick = () => {
@@ -81,7 +85,9 @@ export function CarouselComponent(props: ImgProps) {
       {defaultPosition[`img${props.idImg}`].map((coord: Coordinate, idx: number) => (
         <TouchableOpacity
           key={idx}
-          onPress={handlePosition}
+          onPress={() => {
+            handlePosition(), handlefindPosition(idx);
+          }}
           style={[
             activeIcon ? ActionIcon.active : ActionIcon.noActive,
             { left: coord.latX, top: coord.lgnY },
