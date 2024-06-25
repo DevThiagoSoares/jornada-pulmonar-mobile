@@ -9,6 +9,7 @@ interface InputProps {
   inputMode?: InputModeOptions;
   onChange?: (text: string) => void;
   errors?: boolean;
+  disabled?: boolean;
 }
 
 export const InputNormal: React.FC<InputProps> = ({
@@ -18,10 +19,12 @@ export const InputNormal: React.FC<InputProps> = ({
   inputMode = 'text',
   onChange,
   errors,
+  disabled,
 }) => {
   return (
     <TextInput
       error={errors}
+      disabled={disabled ? disabled : false}
       mode="outlined"
       outlineStyle={{ borderRadius: 12 }}
       outlineColor="#FFFFFF"

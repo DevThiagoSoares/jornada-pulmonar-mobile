@@ -8,6 +8,7 @@ import { ListCard } from './Components/Cards/ListCard';
 import { DescriptionCard } from './Components/Cards/descriptionCard';
 import { styledHometeacher } from './styles';
 import { styles } from '../Login/styles';
+import { modulesDto } from '../Student/Home';
 import { rankingDto } from '../Student/ranking';
 
 import { TypeUser } from '~/Shared/Enums/typeUser';
@@ -38,7 +39,8 @@ const PageTeacher = () => {
   };
   const getModule = async () => {
     const response = await getModules();
-    setModule(response.data);
+    const newList = response.data.filter((item: modulesDto) => item.questionsCount !== 0);
+    setModule(newList);
   };
   useFocusEffect(
     useCallback(() => {

@@ -50,8 +50,7 @@ export function ListCard(props: listProps) {
                   <OptionsCard
                     key={idx}
                     quantity={item.questionsCount}
-                    subTitle={item.title}
-                    title={`Unidade ${idx + 1}`}
+                    title={item.title}
                     data={item}
                   />
                 ))

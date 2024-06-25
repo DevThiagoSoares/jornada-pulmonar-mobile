@@ -17,7 +17,6 @@ import { modulesDto } from '~/screens/Student/Home';
 
 interface cardProps {
   title: string;
-  subTitle: string;
   quantity: number;
   data: modulesDto;
 }
@@ -32,10 +31,8 @@ export function OptionsCard(props: cardProps) {
     if (user && user?.id) {
       const resp = await ListQuestionApi(user.id);
       if (resp && resp.data) {
-        console.log('data', Object.keys(props.data));
         const foundQuestions = resp?.data.map((item: questionsDto) => {
           if (item.moduleId === data.id) {
-            console.log('item.id', item.id);
             return { ...item, titleUnit: props.title };
           }
         });
@@ -58,7 +55,6 @@ export function OptionsCard(props: cardProps) {
             <View style={styledOptions.containerTitle}>
               <Text style={styledCard.title}>{props.title}</Text>
             </View>
-            <Text style={styledCard.description}>{props.subTitle}</Text>
             <Text style={styledCard.description}>{props.quantity} Questões</Text>
           </Card.Content>
         </TouchableNativeFeedback>

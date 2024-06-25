@@ -9,6 +9,8 @@ export const styledOptions = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     gap: 10,
+    justifyContent: 'space-between',
+    height: 95,
     backgroundColor: 'rgba(205, 76, 62, 0.7)',
   },
   containerTitle: {

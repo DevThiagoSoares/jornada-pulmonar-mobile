@@ -43,7 +43,6 @@ export function FormComponent(props: formProps) {
     formState: { errors },
   } = useForm<FormData>();
   const { user } = useAuth();
-
   const navigation = useNavigation<Props['navigation']>();
   const [alternatives, setAlternatives] = useState<
     | {
@@ -62,7 +61,13 @@ export function FormComponent(props: formProps) {
   };
   const handleCreateQuestion = async (value: FormData) => {
     try {
-      await editQuestion(props.data.id, { ...value, userId: user?.id, imageBase64: '' });
+      const payload = {
+        ...value,
+        userId: user?.id,
+        imageBase64: '',
+        audioUrl: '',
+      };
+      await editQuestion(props.data.id, payload);
       Toastfy('success', 'Questão editada com sucesso');
       navigation.navigate('DrawerNavigator');
     } catch (error: any) {
@@ -104,6 +109,7 @@ export function FormComponent(props: formProps) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <InputNormal
+            disabled
             value={value}
             errors={errors?.titleUnit !== undefined}
             label={errors?.titleUnit?.message || 'Titulo da Unidade'}
