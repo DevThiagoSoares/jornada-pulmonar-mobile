@@ -1,12 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import axios from 'axios';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
-import * as FileSystem from 'expo-file-system';
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { ActivityIndicator, MD2Colors, RadioButton } from 'react-native-paper';
 import { getUrlFile } from 'utils/downloadFile';
-import { urlGithub } from 'utils/downloadUrlfromGithub';
 
 import { styledAudio } from './styles';
 
