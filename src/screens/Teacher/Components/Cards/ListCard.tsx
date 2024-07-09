@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ActivityIndicator, ScrollView } from 'react-native';
 import { View } from 'react-native-animatable';
 import { List } from 'react-native-paper';
 import goldCrown from 'src/assets/image/Grupo-7091.png';

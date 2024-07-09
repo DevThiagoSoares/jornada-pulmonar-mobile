@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { TouchableNativeFeedback } from 'react-native';
+import { useState } from 'react';
+import { ActivityIndicator, TouchableNativeFeedback } from 'react-native';
 import { View, Text } from 'react-native-animatable';
 import { Card } from 'react-native-paper';
 
@@ -26,11 +27,14 @@ export function OptionsCard(props: cardProps) {
   const { user } = useAuth();
   const { setQuestion } = useQuestion();
   const navigation = useNavigation<Props['navigation']>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFindQuestion = async (data: modulesDto) => {
+    setIsLoading(true);
     if (user && user?.id) {
       const resp = await ListQuestionApi(user.id);
       if (resp && resp.data) {
+        setIsLoading(false);
         const foundQuestions = resp?.data.map((item: questionsDto) => {
           if (item.moduleId === data.id) {
             return { ...item, titleUnit: props.title };
@@ -41,6 +45,7 @@ export function OptionsCard(props: cardProps) {
           navigation.navigate('EditScreenQuestion');
         } else {
           Toastfy('error', 'Não há Questões cadastradas para esta unidade');
+          setIsLoading(false);
         }
       }
     }
@@ -55,6 +60,8 @@ export function OptionsCard(props: cardProps) {
             <View style={styledOptions.containerTitle}>
               <Text style={styledCard.title}>{props.title}</Text>
             </View>
+            {isLoading && <ActivityIndicator animating color="white" />}
+
             <Text style={styledCard.description}>{props.quantity} Questões</Text>
           </Card.Content>
         </TouchableNativeFeedback>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View, Image, Text, TouchableOpacity, TextInput } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { SignUpForm } from '../creaetAccount';
@@ -28,9 +29,11 @@ export function FormLogin() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { validateUserAccess } = useAuth();
 
   const onSubmit = async (data: FormProps) => {
+    setIsLoading(true);
     try {
       const response = await ValidateLogin(data);
       const userData = await validateEmail(data.email.toLowerCase());
@@ -42,8 +45,9 @@ export function FormLogin() {
         .catch((error: any) => {
           console.error('Erro ao armazenar os dados do usuário:', error);
         });
+      setIsLoading(false);
     } catch (error: any) {
-      console.log({ error });
+      setIsLoading(false);
       if (error?.response?.data?.statusCode === 401) {
         Toastfy('error', error.response.data.message);
       } else {
@@ -121,9 +125,12 @@ export function FormLogin() {
           <Text style={styles.linkText}>Não tenho conta</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      {/* <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <Button mode="contained" style={styles.button} loading={isLoading} onPress={handleLogin}>
+        Entrar
+      </Button>
       <ModalContainer onClose={handleSignUpPress} visible={isOpenModal}>
         <View style={{ height: 630, width: 320 }}>
           <SignUpForm handleIsActiveModal={handleSignUpPress} />
