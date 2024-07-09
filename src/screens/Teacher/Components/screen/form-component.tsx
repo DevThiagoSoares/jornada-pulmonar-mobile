@@ -51,6 +51,8 @@ export function FormComponent(props: formProps) {
       }[]
     | null
   >(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [correctAlternative, setCorrectAlternative] = useState<{
     description: string;
     correctAlternative: boolean;
@@ -60,6 +62,7 @@ export function FormComponent(props: formProps) {
     handleCreateQuestion(value);
   };
   const handleCreateQuestion = async (value: FormData) => {
+    setIsSaved(true);
     try {
       const payload = {
         ...value,
@@ -70,7 +73,9 @@ export function FormComponent(props: formProps) {
       await editQuestion(props.data.id, payload);
       Toastfy('success', 'Questão editada com sucesso');
       navigation.navigate('DrawerNavigator');
+      setIsSaved(false);
     } catch (error: any) {
+      setIsSaved(false);
       console.log(error);
       error.message && Toastfy('error', error.message);
       error.response.data.message && Toastfy('error', error.response.data.message);
@@ -78,11 +83,14 @@ export function FormComponent(props: formProps) {
   };
 
   const handleDelete = async (idQuestion: string) => {
+    setIsLoading(true);
     try {
       await deleteQuestion(idQuestion);
       Toastfy('success', 'Questão removida com sucesso');
       navigation.navigate('DrawerNavigator');
+      setIsLoading(false);
     } catch (error: any) {
+      setIsLoading(false);
       error.message && Toastfy('error', error.message);
     }
   };
@@ -152,10 +160,15 @@ export function FormComponent(props: formProps) {
         <Button
           mode="contained"
           style={styledAlternative.button}
+          loading={isLoading}
           onPress={() => handleDelete(props.data.id)}>
           Remover Questão
         </Button>
-        <Button onPress={handleSubmit(onSubmit)} mode="contained" style={styledAlternative.button}>
+        <Button
+          onPress={handleSubmit(onSubmit)}
+          mode="contained"
+          loading={isSaved}
+          style={styledAlternative.button}>
           Salvar
         </Button>
       </View>
