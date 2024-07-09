@@ -67,7 +67,7 @@ export const styledImg = StyleSheet.create({
     margin: 15,
   },
   Image: {
-    width: '100%',
+    width: 330,
     height: '100%',
     borderRadius: 10,
   },

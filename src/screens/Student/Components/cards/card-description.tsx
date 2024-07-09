@@ -23,12 +23,14 @@ export function CardDescription() {
 
   return (
     <Card>
-      <Card.Title title={ListQuestion?.title} />
-      <Card.Cover
-        source={{
-          uri: image,
-        }}
-      />
+      {image.length === 0 && <Card.Title title="" />}
+      {image.length > 0 && (
+        <Card.Cover
+          source={{
+            uri: image,
+          }}
+        />
+      )}
       <Card.Content
         style={{
           display: 'flex',
