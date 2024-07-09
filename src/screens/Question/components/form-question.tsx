@@ -37,8 +37,10 @@ export const FormComponent: React.FC = () => {
   const [savedQuestions, setSavedQuestions] = useState<string[]>([]);
   const { data, setAudioCoordinates, setData } = useData();
   const { user } = useAuth();
+  const [loading, setIsLoading] = useState(false);
 
   const onSubmit = async (value: FormData) => {
+    setIsLoading(true);
     const payload = {
       userId: user?.id,
       titleUnit: value.titleUnit,
@@ -52,8 +54,10 @@ export const FormComponent: React.FC = () => {
       setData(null);
       setAudioCoordinates(null);
       Toastfy('success', 'Questão cadastrada com sucesso!');
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
     const { question } = value;
     setSavedQuestions([...savedQuestions, question]);
@@ -96,6 +100,7 @@ export const FormComponent: React.FC = () => {
           key={index}
           submitForm={handleSubmit(onSubmit)}
           reset={() => reset()}
+          isLoadingButton={loading}
         />
       ))}
       <ButtonDefault label="Nova Questão" onClick={handleAddQuestion} />

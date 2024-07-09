@@ -56,6 +56,7 @@ export function AlternativaCard(props: alternativaProps) {
     setTimer(0);
     setIsRunning(false);
   };
+  const [isLoading, setIsLoading] = useState(false);
 
   const formatTime = (timeInSeconds: number): string => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -64,6 +65,7 @@ export function AlternativaCard(props: alternativaProps) {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
   const handleSubmit = async () => {
+    setIsLoading(true);
     const body: payloadProps = {
       optionId: correctAlternative,
       questionId: question.id,
@@ -80,6 +82,7 @@ export function AlternativaCard(props: alternativaProps) {
         Toastfy('error', response.data.message);
         return;
       }
+      setIsLoading(false);
       navigation.navigate('ScreenResponse');
       setData({
         isAnswer: true,
@@ -89,6 +92,7 @@ export function AlternativaCard(props: alternativaProps) {
       handleReset();
     } catch (error: any) {
       if (correctAlternative.length === 0) {
+        setIsLoading(false);
         Toastfy('error', 'Selecione uma alternativa antes de enviar!');
         return;
       }
@@ -117,6 +121,7 @@ export function AlternativaCard(props: alternativaProps) {
           style={styledCard.button}
           textColor="#FFFF"
           labelStyle={{ fontSize: 15 }}
+          loading={isLoading}
           onPress={handleSubmit}>
           SALVAR
         </Button>

@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
+import { useState } from 'react';
 import { Image, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button, Card, ProgressBar, Text } from 'react-native-paper';
@@ -39,8 +40,10 @@ export interface questionsDto {
 export function CardTemplate(props: cardProps) {
   const navigation = useNavigation<Props['navigation']>();
   const { setQuestion } = useQuestion();
+  const [loading, setIsLoading] = useState(false);
   const { user } = useAuth();
   const handleListQuestions = async (data: modulesDto[]) => {
+    setIsLoading(true);
     if (user && user?.id) {
       const resp = await ListQuestionApi(user.id);
 
@@ -51,9 +54,11 @@ export function CardTemplate(props: cardProps) {
           }
         });
         if (foundQuestions.length > 0) {
+          setIsLoading(false);
           setQuestion(foundQuestions.filter(Boolean));
           navigation.navigate('Modal');
         } else {
+          setIsLoading(false);
           Toastfy('error', 'Não há Questões cadastradas para esta unidade');
         }
       }
@@ -84,6 +89,7 @@ export function CardTemplate(props: cardProps) {
               contentStyle={{ flexDirection: 'row-reverse' }}
               style={{ backgroundColor: '#FFE815' }}
               labelStyle={styledCard.buttonLabel}
+              loading={loading}
               onPress={() => handleListQuestions(props.data)}
               color="#9F8500">
               Começar

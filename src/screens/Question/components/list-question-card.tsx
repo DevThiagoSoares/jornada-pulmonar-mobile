@@ -2,10 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Controller } from 'react-hook-form';
 import { View, Text } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 
 import { Alternative } from './alternative-question';
-import { ButtonDefault, InputNormal } from './ui';
+import { InputNormal } from './ui';
 import { styledForm, styles } from '../styles';
 
 import { RootStackParamList } from '~/navigation/Routes';
@@ -16,6 +16,7 @@ interface PropsQuestion {
   errors: any;
   submitForm: any;
   reset?: () => void;
+  isLoadingButton?: boolean;
 }
 export function ListQuestionsCard(props: PropsQuestion) {
   const navigation = useNavigation<Props['navigation']>();
@@ -31,14 +32,6 @@ export function ListQuestionsCard(props: PropsQuestion) {
             iconColor="#FFF"
             style={{ backgroundColor: '#CD4C3E', borderRadius: 10 }}
             onPress={() => navigation.navigate('ImageStepForm')}
-          />
-          <IconButton
-            icon="delete"
-            mode="contained"
-            size={30}
-            iconColor="#FFF"
-            style={{ backgroundColor: '#CD4C3E', borderRadius: 10 }}
-            onPress={props.reset}
           />
         </View>
       </View>
@@ -71,7 +64,13 @@ export function ListQuestionsCard(props: PropsQuestion) {
       />
       <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
         <View style={styles.surface}>
-          <ButtonDefault label="SALVAR" onClick={props.submitForm} />
+          <Button
+            onPress={props.submitForm}
+            style={styles.button}
+            textColor="white"
+            loading={props.isLoadingButton}>
+            Salvar
+          </Button>
         </View>
       </View>
     </View>
