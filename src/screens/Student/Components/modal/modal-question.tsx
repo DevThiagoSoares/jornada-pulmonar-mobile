@@ -30,16 +30,25 @@ export function ModalQuestion() {
     <BackgroundScreen source={imgHome} style={styles.backgroundImage} resizeMode="cover">
       <ScrollView showsVerticalScrollIndicator={false}>
         <CardDescription />
-        <View style={styledModal.containerText}>
-          <Text style={styledSelect.title}>Clique no paciente para fazer a ausculta pulmonar</Text>
-        </View>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} onTouchStart={handlePress}>
-          <View style={styledModal.carouselContainer}>
-            <CarouselComponent titleImg="Tórax Anterior" img={img} idImg={1} />
-            <CarouselComponent titleImg="Tórax Posterior" img={costa} idImg={2} />
-            <CarouselComponent titleImg="Tórax Lateral" img={lateral} idImg={3} />
-          </View>
-        </ScrollView>
+        {question.audioUrl.length > 0 && (
+          <>
+            <View style={styledModal.containerText}>
+              <Text style={styledSelect.title}>
+                Clique no paciente para fazer a ausculta pulmonar
+              </Text>
+            </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              onTouchStart={handlePress}>
+              <View style={styledModal.carouselContainer}>
+                <CarouselComponent titleImg="Tórax Anterior" img={img} idImg={1} />
+                <CarouselComponent titleImg="Tórax Posterior" img={costa} idImg={2} />
+                <CarouselComponent titleImg="Tórax Lateral" img={lateral} idImg={3} />
+              </View>
+            </ScrollView>
+          </>
+        )}
         <View>
           <AlternativaCard options={options} />
         </View>

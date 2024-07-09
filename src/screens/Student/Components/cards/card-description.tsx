@@ -10,6 +10,7 @@ import { useQuestion } from '~/Shared/hooks/question.context';
 
 export function CardDescription() {
   const { question } = useQuestion();
+  const defaultUrl = '';
   const [ListQuestion, setListQuestion] = useState<questionEntity | null>(null);
   useEffect(() => {
     handleListQuestion();
@@ -17,10 +18,17 @@ export function CardDescription() {
   const handleListQuestion = () => {
     setListQuestion(question);
   };
+  const image =
+    ListQuestion && ListQuestion.imageBase64.length > 0 ? ListQuestion.imageBase64 : defaultUrl;
+
   return (
     <Card>
       <Card.Title title={ListQuestion?.title} />
-      <Card.Cover source={{ uri: ListQuestion?.imageBase64 }} />
+      <Card.Cover
+        source={{
+          uri: image,
+        }}
+      />
       <Card.Content
         style={{
           display: 'flex',

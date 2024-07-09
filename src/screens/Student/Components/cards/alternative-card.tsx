@@ -75,11 +75,13 @@ export function AlternativaCard(props: alternativaProps) {
     try {
       const response: any = await answer(body);
       if (response.data.message === 'questão já respondida') {
+        setIsLoading(false);
         Toastfy('error', response.data.message);
         return;
       }
       if (response.data.message === 'respota incorreta') {
         Toastfy('error', response.data.message);
+        setIsLoading(false);
         return;
       }
       setIsLoading(false);
@@ -91,6 +93,7 @@ export function AlternativaCard(props: alternativaProps) {
       });
       handleReset();
     } catch (error: any) {
+      setIsLoading(false);
       if (correctAlternative.length === 0) {
         setIsLoading(false);
         Toastfy('error', 'Selecione uma alternativa antes de enviar!');

@@ -24,19 +24,19 @@ interface Coordinate {
 
 export function CarouselComponent(props: ImgProps) {
   const [isActive, setActive] = useState(false);
-  const [activeIcon, setActiveIcon] = useState(false);
   const [audio, setAudio] = useState<any>();
   const { question } = useQuestion();
   const [getIndex, setIndex] = useState<number | null>(null);
   const soundObject = useRef(new Audio.Sound()).current;
-  const arrayListAudios = question.audioUrl.lenght > 0 ? JSON.parse(question.audioUrl) : [];
+  const arrayListAudios = question.audioUrl.length > 0 ? JSON.parse(question.audioUrl) : [];
+
   useEffect(() => {
     handleStartAudio();
   }, [audio]);
 
   const handlePosition = () => {
     Toast.hide();
-    setActiveIcon(true);
+    setActive(true);
   };
 
   const handlefindPosition = (index: number) => {
@@ -60,19 +60,21 @@ export function CarouselComponent(props: ImgProps) {
       }
     }
   };
-  const handleAudioIconPress = async () => {
-    setActive(!isActive);
+
+  const handleAudioIconPress = async (index: number) => {
+    setActive(true);
     handlePosition();
+    handlefindPosition(index);
     if (arrayListAudios.length > 3) {
       setAudio(arrayListAudios[props.idImg - 1].audioUrl);
     } else {
       setAudio(arrayListAudios[0].audioUrl);
     }
   };
+
   const handleStopAudio = async () => {
     try {
-      setActive(!isActive);
-      handlePosition();
+      setActive(false);
       await soundObject.stopAsync();
       setAudio(null);
     } catch (error) {
@@ -85,26 +87,24 @@ export function CarouselComponent(props: ImgProps) {
       {defaultPosition[`img${props.idImg}`].map((coord: Coordinate, idx: number) => (
         <TouchableOpacity
           key={idx}
-          onPress={() => {
-            handlePosition(), handlefindPosition(idx);
-          }}
+          onPress={() => handleAudioIconPress(idx)}
           style={[
-            activeIcon ? ActionIcon.active : ActionIcon.noActive,
+            getIndex === idx ? ActionIcon.active : ActionIcon.noActive,
             { left: coord.latX, top: coord.lgnY },
           ]}>
-          {isActive ? (
+          {getIndex === idx && isActive ? (
             <Ionicons
               name="volume-high-outline"
               onPress={() => handleStopAudio()}
               size={15}
-              color={activeIcon ? '#CD4C3E' : '#00000000'}
+              color="#CD4C3E"
             />
           ) : (
             <Ionicons
               name="volume-mute-outline"
               size={15}
-              onPress={() => handleAudioIconPress()}
-              color={activeIcon ? '#CD4C3E' : '#00000000'}
+              onPress={() => handleAudioIconPress(idx)}
+              color={getIndex === idx ? '#CD4C3E' : '#00000000'}
             />
           )}
         </TouchableOpacity>
