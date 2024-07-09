@@ -5,6 +5,8 @@ import * as FileSystem from 'expo-file-system';
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { ActivityIndicator, MD2Colors, RadioButton } from 'react-native-paper';
+import { getUrlFile } from 'utils/downloadFile';
+import { urlGithub } from 'utils/downloadUrlfromGithub';
 
 import { styledAudio } from './styles';
 
@@ -25,20 +27,9 @@ export function ListAudio(props: audioProps) {
 
   const getAudioUri = async (audioFilename: string) => {
     try {
-      const githubUrl = `https://raw.githubusercontent.com/nandamsouza/audioFiles/main/${audioFilename}.mp3`;
-      const response = await axios.get(githubUrl, { responseType: 'arraybuffer' });
-
-      // Convertendo o ArrayBuffer para Base64
-      const base64Data = btoa(
-        new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
-      );
-
       // Salvando o áudio localmente
-      const localUri = `${FileSystem.documentDirectory}${audioFilename}`;
-      await FileSystem.writeAsStringAsync(localUri, base64Data, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-      return localUri;
+      const localUri = getUrlFile(audioFilename);
+      return localUri ?? localUri;
     } catch (error) {
       console.error('Erro ao buscar o áudio no GitHub:', error);
       return 'error';
