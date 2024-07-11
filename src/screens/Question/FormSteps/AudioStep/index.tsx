@@ -45,7 +45,7 @@ export function AudioImg(props: imgProps) {
   useEffect(() => {
     if (props.audioUrl) {
       setAudioFile(props.audioUrl);
-      setAudioIconPosition({ x: 0, y: 0 });
+      setAudioIconPosition({ x: 100, y: 100 });
     }
   }, [props.audioUrl]);
 
