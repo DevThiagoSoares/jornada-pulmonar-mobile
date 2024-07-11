@@ -30,6 +30,7 @@ export interface questionsDto {
   id: string;
   questionId?: string;
   imgNameUrl: string;
+  imageBase64?: string;
   moduleId: string;
   level?: number;
   title: string;

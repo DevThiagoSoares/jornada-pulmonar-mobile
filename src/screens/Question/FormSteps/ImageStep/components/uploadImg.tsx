@@ -16,9 +16,12 @@ const UploadImg = () => {
     if (data?.imgUrl) {
       setProfilePic(data.imgUrl);
     }
+    if (data?.imageBase64) {
+      setProfilePic(data.imageBase64);
+    }
   }, [data]);
 
-  const selectProfilePic = async () => {
+  const selectProfilePic = async (imageBase64: any) => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,

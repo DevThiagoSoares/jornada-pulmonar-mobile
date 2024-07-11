@@ -25,4 +25,11 @@ export const styledEditQuestion = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  contextEditImage: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 10,
+  },
 });

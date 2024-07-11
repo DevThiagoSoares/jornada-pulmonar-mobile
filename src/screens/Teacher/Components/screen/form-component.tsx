@@ -1,14 +1,16 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { TouchableOpacity, View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 
 import { styledEditQuestion } from './styles';
 
 import { useAuth } from '~/Shared/Auth';
 import { deleteQuestion, editQuestion } from '~/Shared/api/services/questions';
+import { useData } from '~/Shared/hooks/audio.context';
 import { Toastfy } from '~/Shared/notification/internal';
 import { RootStackParamList } from '~/navigation/Routes';
 import { Alternative } from '~/screens/Question/components/alternative-question';
@@ -43,6 +45,7 @@ export function FormComponent(props: formProps) {
     formState: { errors },
   } = useForm<FormData>();
   const { user } = useAuth();
+  const { setData } = useData();
   const navigation = useNavigation<Props['navigation']>();
   const [alternatives, setAlternatives] = useState<
     | {
@@ -111,8 +114,18 @@ export function FormComponent(props: formProps) {
       });
     setAlternatives(newListAlt.filter(Boolean));
   }, [props.data]);
+
+  const handleNavigate = () => {
+    setData({ imageBase64: props.data.imageBase64, audioUrl: props.data.audioUrl });
+    navigation.navigate('ImageStepForm');
+  };
+
   return (
     <View style={styledEditQuestion.formContainer}>
+      <TouchableOpacity onPress={handleNavigate} style={styledEditQuestion.contextEditImage}>
+        <Text style={{ color: '#CD4C3E' }}> Editar imagens</Text>
+        <Ionicons name="image" size={35} color="#CD4C3E" />
+      </TouchableOpacity>
       <Controller
         control={control}
         render={({ field: { onChange, value } }) => (
