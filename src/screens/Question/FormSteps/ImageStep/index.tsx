@@ -15,11 +15,21 @@ import { styles } from '~/screens/Login/styles';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '~/navigation/Routes';
 import { useNavigation } from '@react-navigation/native';
+import { useData } from '~/Shared/hooks/audio.context';
+import { useEffect, useState } from 'react';
 
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 
 export const ImageStep: React.FC = () => {
   const navigation = useNavigation<Props['navigation']>();
+  const [listAudios, setListAudios] = useState<any>([]);
+  const { data } = useData();
+
+  useEffect(() => {
+    if (data && data?.audioUrl && typeof data.audioUrl === 'string') {
+      setListAudios(JSON.parse(data.audioUrl));
+    }
+  }, [data]);
 
   return (
     <ImageBackground source={img} style={styles.backgroundImage} resizeMode="cover">
@@ -35,9 +45,21 @@ export const ImageStep: React.FC = () => {
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={styledImageStep.carrousel}>
-              <AudioImg titleImg="Tórax Anterior" img={ImgTórax1} />
-              <AudioImg titleImg="Tórax Posterior" img={imgCosta} />
-              <AudioImg titleImg="Tórax Lateral" img={imgLateral} />
+              <AudioImg
+                titleImg="Tórax Anterior"
+                img={ImgTórax1}
+                audioUrl={listAudios[0]?.audioUrl}
+              />
+              <AudioImg
+                titleImg="Tórax Posterior"
+                img={imgCosta}
+                audioUrl={listAudios[1]?.audioUrl}
+              />
+              <AudioImg
+                titleImg="Tórax Lateral"
+                img={imgLateral}
+                audioUrl={listAudios[2]?.audioUrl}
+              />
             </View>
           </ScrollView>
           <View style={styledImageStep.buttonContainer}>

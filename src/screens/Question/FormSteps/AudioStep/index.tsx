@@ -14,6 +14,7 @@ import { Toastfy } from '~/Shared/notification/internal';
 interface imgProps {
   titleImg: string;
   img: any;
+  audioUrl: string;
 }
 interface AudioData {
   audioUrl: string;
@@ -40,6 +41,13 @@ export function AudioImg(props: imgProps) {
       setAudioIconPosition(audioCoordinates);
     }
   }, []);
+
+  useEffect(() => {
+    if (props.audioUrl) {
+      setAudioFile(props.audioUrl);
+      setAudioIconPosition({ x: 0, y: 0 });
+    }
+  }, [props.audioUrl]);
 
   const handlePress = (event: any) => {
     const { locationX, locationY } = event.nativeEvent;
