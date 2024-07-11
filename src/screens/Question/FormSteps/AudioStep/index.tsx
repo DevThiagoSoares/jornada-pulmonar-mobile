@@ -83,6 +83,8 @@ export function AudioImg(props: imgProps) {
     setData({ ...data, audioUrl: audios });
   };
 
+  console.log(data.audioUrl);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{props.titleImg}</Text>

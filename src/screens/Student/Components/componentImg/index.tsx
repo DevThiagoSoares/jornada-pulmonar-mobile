@@ -3,19 +3,18 @@ import { Audio } from 'expo-av';
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { getUrlFile } from 'utils/downloadFile';
 
 import { defaultPosition } from './positions';
 import { styles } from './styles';
 import { ActionIcon } from '../modal/style';
 
-import { useQuestion } from '~/Shared/hooks/question.context';
 import { Toastfy } from '~/Shared/notification/internal';
 
 interface ImgProps {
   titleImg: string;
   img: any;
   idImg: number;
+  audioFile: any;
 }
 
 interface Coordinate {
@@ -26,15 +25,8 @@ interface Coordinate {
 export function CarouselComponent(props: ImgProps) {
   const [isActive, setActive] = useState(false);
   const [audio, setAudio] = useState<any>();
-  const [updateListAudios, setUpdateListAudios] = useState<any>([]);
-  const { question } = useQuestion();
   const [getIndex, setIndex] = useState<number | null>(null);
   const soundObject = useRef(new Audio.Sound()).current;
-  const arrayListAudios = question.audioUrl.length > 0 ? JSON.parse(question.audioUrl) : [];
-
-  useEffect(() => {
-    handleListAudios();
-  }, []);
 
   useEffect(() => {
     handleStartAudio();
@@ -43,19 +35,6 @@ export function CarouselComponent(props: ImgProps) {
   const handlePosition = () => {
     Toast.hide();
     setActive(true);
-  };
-
-  const handleListAudios = async () => {
-    if (arrayListAudios.length > 0) {
-      const updatedArrayListAudios = await Promise.all(
-        arrayListAudios.map(async (item: any) => {
-          const refFile = item.audioUrl.split('/').pop();
-          const newAudioUrl = await getUrlFile(refFile);
-          return { audioUrl: newAudioUrl };
-        })
-      );
-      setUpdateListAudios(updatedArrayListAudios);
-    }
   };
 
   const handlefindPosition = (index: number) => {
@@ -87,15 +66,11 @@ export function CarouselComponent(props: ImgProps) {
       }
     }
   };
-  const handleAudioIconPress = async (index: number) => {
+  const handleAudioIconPress = async (index: number, audioFile: any) => {
     setActive(true);
     handlePosition();
     handlefindPosition(index);
-    if (updateListAudios.length > 3) {
-      setAudio(updateListAudios[props.idImg - 1].audioUrl);
-    } else {
-      setAudio(updateListAudios[0].audioUrl);
-    }
+    setAudio(audioFile);
   };
 
   const handleStopAudio = async () => {
@@ -113,7 +88,7 @@ export function CarouselComponent(props: ImgProps) {
       {defaultPosition[`img${props.idImg}`].map((coord: Coordinate, idx: number) => (
         <TouchableOpacity
           key={idx}
-          onPress={() => handleAudioIconPress(idx)}
+          onPress={() => handleAudioIconPress(idx, props.audioFile)}
           style={[
             getIndex === idx ? ActionIcon.active : ActionIcon.noActive,
             { left: coord.latX, top: coord.lgnY },
@@ -129,7 +104,7 @@ export function CarouselComponent(props: ImgProps) {
             <Ionicons
               name="volume-mute-outline"
               size={15}
-              onPress={() => handleAudioIconPress(idx)}
+              onPress={() => handleAudioIconPress(idx, props.audioFile)}
               color={getIndex === idx ? '#CD4C3E' : '#00000000'}
             />
           )}

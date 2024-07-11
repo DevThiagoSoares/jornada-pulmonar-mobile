@@ -103,7 +103,7 @@ export function Alternative(props: OptionsProps) {
             value={correctAlternative}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <RadioButton value={alt.value} color="green" />
-              <Text style={{ width: 260, display: 'flex', textAlign: 'justify' }}>
+              <Text style={{ width: 250, display: 'flex', textAlign: 'justify' }}>
                 {String.fromCharCode(65 + idx)}) {alt.description}
               </Text>
             </View>
