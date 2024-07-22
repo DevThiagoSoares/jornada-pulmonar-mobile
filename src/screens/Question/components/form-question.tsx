@@ -49,6 +49,7 @@ export const FormComponent: React.FC = () => {
       audioUrl: JSON.stringify(data?.audioUrl) ?? '',
       imageBase64: data?.imgUrl ?? '',
     };
+    console.log('cad', payload);
     try {
       await CreateQuestion(payload);
       setData(null);

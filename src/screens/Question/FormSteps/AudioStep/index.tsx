@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -40,6 +40,20 @@ export function AudioImg(props: imgProps) {
     if (audioCoordinates) {
       setAudioIconPosition(audioCoordinates);
     }
+    const requestPermissions = async () => {
+      const { granted } = await Audio.requestPermissionsAsync();
+      if (granted) {
+        Audio.setAudioModeAsync({
+          allowsRecordingIOS: true,
+          interruptionModeIOS: InterruptionModeIOS.DoNotMix,
+          playsInSilentModeIOS: true,
+          shouldDuckAndroid: true,
+          interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+          playThroughEarpieceAndroid: true,
+        });
+      }
+    };
+    requestPermissions();
   }, []);
 
   useEffect(() => {
@@ -76,8 +90,8 @@ export function AudioImg(props: imgProps) {
 
   const handleGetAudio = (uri: string) => {
     setAudioFile(uri);
-    setAudios([...audios, { audioUrl: uri }]);
   };
+
   const handleStopAudio = async () => {
     try {
       await soundObject.stopAsync();
@@ -85,10 +99,11 @@ export function AudioImg(props: imgProps) {
       console.error('Erro ao parar o áudio:', error);
     }
   };
-
   const CloseModal = () => {
+    const listAudios = audioFile ? [...audios, { audioUrl: audioFile }] : [];
     setModalVisible(!modalVisible);
-    setData({ ...data, audioUrl: audios });
+    console.log({ listAudios });
+    setData({ ...data, audioUrl: audioFile });
   };
 
   return (

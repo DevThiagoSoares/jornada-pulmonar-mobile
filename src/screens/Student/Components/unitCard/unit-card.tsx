@@ -35,7 +35,7 @@ export function UnitCard(props: cardProps) {
       rippleColor="rgba(205, 76, 62, 0.7)">
       <View style={styledUnit.container}>
         <ComponentLevel level={props.level} img={props.imgLevel} width={65} height={70} />
-        <View style={{ gap: 5, width: 300 }}>
+        <View style={{ gap: 5, width: 280 }}>
           <Text style={styledUnit.title}>{props.question}</Text>
           <Text style={styledUnit.text}>{props.finishe}</Text>
         </View>

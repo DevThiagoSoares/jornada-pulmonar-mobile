@@ -43,7 +43,7 @@ export function ListCard(props: listProps) {
         rippleColor="#CD4C3E"
         titleStyle={{ color: '#CD4C3E', fontWeight: '700' }}>
         <View>
-          <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 209 }}>
+          <ScrollView showsVerticalScrollIndicator style={{ maxHeight: 209 }}>
             <View style={styledCard.cardContainer}>
               {props.module.length > 0 ? (
                 props.module.map((item: any, idx: number) => (

@@ -26,10 +26,11 @@ export const ImageStep: React.FC = () => {
   const { data } = useData();
 
   useEffect(() => {
-    if (data && data?.audioUrl && typeof data.audioUrl === 'string') {
+    if (data?.audioUrl && typeof data?.audioUrl === 'string' && data?.audioUrl.length > 0) {
+      console.log(data);
       setListAudios(JSON.parse(data.audioUrl));
     }
-  }, [data]);
+  }, []);
 
   return (
     <ImageBackground source={img} style={styles.backgroundImage} resizeMode="cover">
@@ -62,11 +63,11 @@ export const ImageStep: React.FC = () => {
               />
             </View>
           </ScrollView>
-          <View style={styledImageStep.buttonContainer}>
+          {/* <View style={styledImageStep.buttonContainer}>
             <View style={styledImageStep.buttonFormat}>
               <ButtonDefault label="SALVAR" onClick={() => navigation.navigate('TabNavigator')} />
             </View>
-          </View>
+          </View> */}
         </View>
       </View>
     </ImageBackground>

@@ -66,7 +66,7 @@ export function CardTemplate(props: cardProps) {
     }
   };
   return (
-    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', width: 350 }}>
       <Card style={styledCard.cardContainer}>
         <Card.Content style={styledCard.content}>
           <View style={styledCard.avatar}>

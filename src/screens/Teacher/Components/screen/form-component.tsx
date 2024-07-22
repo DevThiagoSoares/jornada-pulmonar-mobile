@@ -27,7 +27,6 @@ interface optionsAlt {
 interface FormData {
   titleUnit: string;
   question: string;
-  Weight: string;
   alternatives: optionsAlt[];
 }
 
@@ -45,7 +44,7 @@ export function FormComponent(props: formProps) {
     formState: { errors },
   } = useForm<FormData>();
   const { user } = useAuth();
-  const { setData } = useData();
+  const { setData, data } = useData();
   const navigation = useNavigation<Props['navigation']>();
   const [alternatives, setAlternatives] = useState<
     | {
@@ -61,18 +60,24 @@ export function FormComponent(props: formProps) {
     correctAlternative: boolean;
   } | null>(null);
 
+  console.log(typeof data?.audioUrl, data?.audioUrl);
+
   const onSubmit = async (value: FormData) => {
     handleCreateQuestion(value);
   };
   const handleCreateQuestion = async (value: FormData) => {
     setIsSaved(true);
+    console.log({ value });
     try {
       const payload = {
-        ...value,
         userId: user?.id,
-        imageBase64: '',
-        audioUrl: '',
+        titleUnit: value.titleUnit,
+        alternatives: value.alternatives,
+        question: value.question,
+        audioUrl: JSON.stringify(data?.audioUrl) ?? '',
+        imageBase64: data?.imgUrl || data.imageBase64 || '',
       };
+      console.log('edit', { payload });
       await editQuestion(props.data.id, payload);
       Toastfy('success', 'Questão editada com sucesso');
       navigation.navigate('DrawerNavigator');
