@@ -2,9 +2,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { ActivityIndicator, MD2Colors, RadioButton } from 'react-native-paper';
+import { ActivityIndicator, MD2Colors, ProgressBar, RadioButton } from 'react-native-paper';
 import { getUrlFile } from 'utils/downloadFile';
 
+import { listAudios } from './list-file';
 import { styledAudio } from './styles';
 
 import { Toastfy } from '~/Shared/notification/internal';
@@ -17,12 +18,13 @@ export function ListAudio(props: audioProps) {
   const [audio, setAudio] = useState<any>();
   const [option, setOption] = useState('');
   const [isActiveSong, setIsActiveSong] = useState(false);
-  const totalAudios = 20;
   const soundObject = useRef(new Audio.Sound()).current;
   const [loadedAudioFiles, setLoadedAudioFiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState<number>(0);
+  const [downloadedFiles, setDownloadedFiles] = useState<number>(0);
 
-  const getAudioUri = async (audioFilename: string) => {
+  const getAudioUri = async (audioFilename: any) => {
     try {
       // Salvando o áudio localmente
       const localUri = getUrlFile(audioFilename);
@@ -32,17 +34,22 @@ export function ListAudio(props: audioProps) {
       return 'error';
     }
   };
+
   const createAudioFiles = async () => {
     const files = [];
 
-    for (let index = 0; index < totalAudios; index++) {
-      const uri = await getAudioUri(`caso_${index + 1}`);
+    for (let index = 0; index < listAudios.length; index++) {
+      const filename = listAudios[index];
+      const title = filename.replace(/\.[^/.]+$/, ''); // Remove a extensão do arquivo
+      const uri = await getAudioUri(filename);
+      setDownloadedFiles((prev) => prev + 1);
       files.push({
         id: index + 1,
-        title: `caso - ${index + 1}`,
+        title,
         uri,
       });
     }
+
     return files;
   };
 
@@ -68,6 +75,12 @@ export function ListAudio(props: audioProps) {
     };
     requestPermissions();
   }, []);
+
+  useEffect(() => {
+    if (listAudios.length > 0) {
+      setProgress(downloadedFiles / listAudios.length);
+    }
+  }, [downloadedFiles, listAudios.length]);
 
   const handleAudioIconPress = async (item: any) => {
     setIsActiveSong(!isActiveSong);
@@ -114,7 +127,7 @@ export function ListAudio(props: audioProps) {
       <View key={item.id} style={styledAudio.container}>
         <View style={styledAudio.containerRadius}>
           <RadioButton value={item.title} color="#CD4C3E" key={item.id} />
-          <Text style={{ color: '#ffff' }}>{item.title}</Text>
+          <Text style={{ color: '#ffff', width: 220 }}>{item.title}</Text>
         </View>
         {audio === item.uri ? (
           <TouchableOpacity key={item.id} onPress={() => handleStopAudio()}>
@@ -132,8 +145,16 @@ export function ListAudio(props: audioProps) {
   return (
     <>
       {loading ? (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator animating color={MD2Colors.red800} size="large" />
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: 13 }}>
+          {/* <ActivityIndicator animating color={MD2Colors.red800} size="large" /> */}
+          <Text style={{ color: 'white', fontWeight: 'bold' }}>
+            Carregando: {Math.round(progress * 100)}%
+          </Text>
+          <ProgressBar
+            progress={progress}
+            color={MD2Colors.red800}
+            style={{ width: 200, height: 10, borderRadius: 20 }}
+          />
         </View>
       ) : (
         loadedAudioFiles.map((item, idx) => renderItem(item))
