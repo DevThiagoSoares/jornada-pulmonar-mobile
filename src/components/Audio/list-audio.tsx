@@ -127,7 +127,7 @@ export function ListAudio(props: audioProps) {
       <View key={item.id} style={styledAudio.container}>
         <View style={styledAudio.containerRadius}>
           <RadioButton value={item.title} color="#CD4C3E" key={item.id} />
-          <Text style={{ color: '#ffff', width: 220 }}>{item.title}</Text>
+          <Text style={{ color: '#ffff', width: 220, marginTop: 4 }}>{item.title}</Text>
         </View>
         {audio === item.uri ? (
           <TouchableOpacity key={item.id} onPress={() => handleStopAudio()}>
