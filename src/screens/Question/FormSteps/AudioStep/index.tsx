@@ -15,9 +15,7 @@ interface imgProps {
   titleImg: string;
   img: any;
   audioUrl: string;
-}
-interface AudioData {
-  audioUrl: string;
+  handleAudioSelected: (audioFile: string) => void;
 }
 
 export function AudioImg(props: imgProps) {
@@ -26,8 +24,7 @@ export function AudioImg(props: imgProps) {
   const [audioIconPosition, setAudioIconPosition] = useState<{ x: number; y: number } | null>(null);
   const soundObject = useRef(new Audio.Sound()).current;
   const [songActive, setSongActive] = useState(false);
-  const [audios, setAudios] = useState<AudioData[]>([]);
-  const { setData, data, setAudioCoordinates, audioCoordinates } = useData();
+  const { setAudioCoordinates, audioCoordinates } = useData();
   useEffect(() => {
     if (songActive) {
       handleAudioIconPress();
@@ -100,10 +97,8 @@ export function AudioImg(props: imgProps) {
     }
   };
   const CloseModal = () => {
-    const listAudios = audioFile ? [...audios, { audioUrl: audioFile }] : [];
     setModalVisible(!modalVisible);
-    console.log({ listAudios });
-    setData({ ...data, audioUrl: audioFile });
+    props.handleAudioSelected(audioFile);
   };
 
   return (

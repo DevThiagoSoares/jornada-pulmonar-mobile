@@ -52,7 +52,7 @@ export function ModalQuestion() {
       setLoading(false);
     }
   };
-  console.log({ updateListAudios });
+  console.log({ arrayListAudios });
 
   return (
     <BackgroundScreen source={imgHome} style={styles.backgroundImage} resizeMode="cover">

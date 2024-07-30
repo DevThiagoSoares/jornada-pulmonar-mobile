@@ -9,28 +9,33 @@ import img from 'src/assets/image/style3.png';
 
 import UploadImg from './components/uploadImg';
 import { styledImageStep } from './style';
-import { ButtonDefault } from '../../components/ui';
 import { AudioImg } from '../AudioStep';
 import { styles } from '~/screens/Login/styles';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '~/navigation/Routes';
-import { useNavigation } from '@react-navigation/native';
+
 import { useData } from '~/Shared/hooks/audio.context';
 import { useEffect, useState } from 'react';
 
-type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
-
 export const ImageStep: React.FC = () => {
-  const navigation = useNavigation<Props['navigation']>();
   const [listAudios, setListAudios] = useState<any>([]);
-  const { data } = useData();
+  const { data, setData } = useData();
 
   useEffect(() => {
     if (data?.audioUrl && typeof data?.audioUrl === 'string' && data?.audioUrl.length > 0) {
-      console.log(data);
       setListAudios(JSON.parse(data.audioUrl));
     }
   }, []);
+
+  const handleAudioSelected = (audioFile: string) => {
+    if (!listAudios.some((audio: { audioUrl: string }) => audio.audioUrl === audioFile)) {
+      setListAudios((prevListAudios: any) => [...prevListAudios, { audioUrl: audioFile }]);
+    }
+    listAudios.lenght === 0 && setListAudios({ ...listAudios, audioUrl: audioFile });
+  };
+  useEffect(() => {
+    setData(listAudios);
+  }, [listAudios]);
+
+  console.log({ listAudios });
 
   return (
     <ImageBackground source={img} style={styles.backgroundImage} resizeMode="cover">
@@ -50,24 +55,22 @@ export const ImageStep: React.FC = () => {
                 titleImg="Tórax Anterior"
                 img={ImgTórax1}
                 audioUrl={listAudios[0]?.audioUrl}
+                handleAudioSelected={handleAudioSelected}
               />
               <AudioImg
                 titleImg="Tórax Posterior"
                 img={imgCosta}
                 audioUrl={listAudios[1]?.audioUrl}
+                handleAudioSelected={handleAudioSelected}
               />
               <AudioImg
                 titleImg="Tórax Lateral"
                 img={imgLateral}
                 audioUrl={listAudios[2]?.audioUrl}
+                handleAudioSelected={handleAudioSelected}
               />
             </View>
           </ScrollView>
-          {/* <View style={styledImageStep.buttonContainer}>
-            <View style={styledImageStep.buttonFormat}>
-              <ButtonDefault label="SALVAR" onClick={() => navigation.navigate('TabNavigator')} />
-            </View>
-          </View> */}
         </View>
       </View>
     </ImageBackground>

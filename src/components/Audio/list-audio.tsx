@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { ActivityIndicator, MD2Colors, ProgressBar, RadioButton } from 'react-native-paper';
+import { MD2Colors, ProgressBar, RadioButton } from 'react-native-paper';
 import { getUrlFile } from 'utils/downloadFile';
 
 import { listAudios } from './list-file';
