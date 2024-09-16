@@ -35,6 +35,7 @@ export function FormLogin() {
   const onSubmit = async (data: FormProps) => {
     setIsLoading(true);
     try {
+      console.log(data)
       const response = await ValidateLogin(data);
       const userData = await validateEmail(data.email.toLowerCase());
       const { access_token, email, role } = response.data;
@@ -48,6 +49,7 @@ export function FormLogin() {
       setIsLoading(false);
     } catch (error: any) {
       setIsLoading(false);
+      console.log(`login`,error)
       if (error?.response?.data?.statusCode === 401) {
         Toastfy('error', error.response.data.message);
       } else {
