@@ -60,22 +60,20 @@ export function FormComponent(props: formProps) {
     correctAlternative: boolean;
   } | null>(null);
 
-  console.log(typeof data?.audioUrl, data?.audioUrl);
 
   const onSubmit = async (value: FormData) => {
     handleCreateQuestion(value);
   };
   const handleCreateQuestion = async (value: FormData) => {
     setIsSaved(true);
-    console.log({ value });
     try {
       const payload = {
         userId: user?.id,
         titleUnit: value.titleUnit,
         alternatives: value.alternatives,
         question: value.question,
-        audioUrl: JSON.stringify(data?.audioUrl) ?? '',
-        imageBase64: data?.imgUrl || data.imageBase64 || '',
+        audioUrl: JSON.stringify(data?.audioUrl),
+        imageBase64: data?.imgUrl || data?.imageBase64 || '',
       };
       console.log('edit', { payload });
       await editQuestion(props.data.id, payload);
@@ -89,6 +87,8 @@ export function FormComponent(props: formProps) {
       error.response.data.message && Toastfy('error', error.response.data.message);
     }
   };
+
+  console.log(`data`,data)
 
   const handleDelete = async (idQuestion: string) => {
     setIsLoading(true);

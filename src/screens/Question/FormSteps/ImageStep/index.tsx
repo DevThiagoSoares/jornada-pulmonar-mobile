@@ -32,10 +32,9 @@ export const ImageStep: React.FC = () => {
     listAudios.lenght === 0 && setListAudios({ ...listAudios, audioUrl: audioFile });
   };
   useEffect(() => {
-    setData(listAudios);
+    setData({...data,audioUrl:listAudios});
   }, [listAudios]);
 
-  console.log({ listAudios });
 
   return (
     <ImageBackground source={img} style={styles.backgroundImage} resizeMode="cover">
