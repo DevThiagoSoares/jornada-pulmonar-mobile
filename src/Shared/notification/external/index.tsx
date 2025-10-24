@@ -1,11 +1,12 @@
 import * as Notifications from 'expo-notifications';
+import { Alert } from 'react-native';
 
 export const EnviarNotificacao = async () => {
   // Obter permissão para notificações
   const { status } = await Notifications.requestPermissionsAsync();
   console.log(status);
   if (status !== 'granted') {
-    alert('Permissão de notificação não concedida!');
+    Alert.alert('Permissão não concedida', 'Permissão de notificação não concedida!');
     return;
   }
 
@@ -14,6 +15,8 @@ export const EnviarNotificacao = async () => {
       shouldShowAlert: true,
       shouldPlaySound: false,
       shouldSetBadge: false,
+      shouldShowBanner: true,
+      shouldShowList: true,
     }),
   });
 

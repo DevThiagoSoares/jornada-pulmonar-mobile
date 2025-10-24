@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { View, Image, Text, TouchableOpacity, TextInput } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -37,7 +37,9 @@ export function FormLogin() {
     try {
       console.log(data)
       const response = await ValidateLogin(data);
+      console.log({ response })
       const userData = await validateEmail(data.email.toLowerCase());
+      console.log({ userData })
       const { access_token, email, role } = response.data;
       const { name, imageBase64, score, id } = userData.data[0];
       validateUserAccess({ access_token, email, role, id, imageBase64, name, score });
@@ -46,8 +48,8 @@ export function FormLogin() {
         .catch((error: any) => {
           console.error('Erro ao armazenar os dados do usuário:', error);
         });
-      setIsLoading(false);
-    } catch (error: any) {
+        setIsLoading(false);
+      } catch (error: any) {
       setIsLoading(false);
       console.log(`login`,error)
       if (error?.response?.data?.statusCode === 401) {

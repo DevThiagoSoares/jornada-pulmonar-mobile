@@ -1,6 +1,14 @@
 /* eslint-disable prettier/prettier */
 // @ts-ignore
 /// <reference types="nativewind/types" />
+
+// Environment variables
+declare namespace NodeJS {
+  interface ProcessEnv {
+    EXPO_PUBLIC_API_URL: string;
+  }
+}
+
 declare module '*.svg' {
   import { SvgProps } from 'react-native-svg';
   const content: React.FC<SvgProps>;

@@ -1,8 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, Image, View } from 'react-native';
+import { Alert, Image, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { styledAvatar } from './styles';
@@ -24,8 +23,13 @@ const AvatarPicker = (props: AvatarProps) => {
   const selectProfilePic = async () => {
     try {
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      
       if (!permissionResult.granted) {
-        throw new Error('Permissão de acesso à biblioteca de mídia não concedida.');
+        Alert.alert(
+          'Permissão negada',
+          'É necessário permitir acesso à galeria para selecionar uma foto de perfil.'
+        );
+        return;
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -36,19 +40,31 @@ const AvatarPicker = (props: AvatarProps) => {
         base64: true,
       });
 
-      if (!result.canceled) {
+      if (!result.canceled && result.assets && result.assets.length > 0) {
         const pic = result.assets[0];
-
-        const fileInfo = await FileSystem.getInfoAsync(pic.uri);
+        console.log('Imagem selecionada:', { uri: pic.uri, hasBase64: !!pic.base64 });
+        
         setProfilePic(pic.uri);
 
-        if (fileInfo.exists) {
+        if (pic.base64) {
           const urlImg = `data:image/png;base64,${pic.base64}`;
           props.setImg(urlImg);
+        
+          Toast.show({
+            type: 'success',
+            text1: 'Foto selecionada!',
+            text2: 'Sua foto de perfil foi selecionada com sucesso',
+          });
+        } else {
+          console.error('Base64 não disponível');
+          Alert.alert('Erro', 'Não foi possível processar a imagem');
         }
+      } else {
+        console.log('Seleção de imagem cancelada');
       }
     } catch (error) {
       console.error('Erro ao selecionar a imagem:', error);
+      Alert.alert('Erro', 'Não foi possível selecionar a imagem. Tente novamente.');
     }
   };
 

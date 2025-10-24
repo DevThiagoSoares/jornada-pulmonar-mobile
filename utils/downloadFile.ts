@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as FileSystem from 'expo-file-system';
+import { File, Paths } from 'expo-file-system';
 
 import { urlGithub } from './downloadUrlfromGithub';
 
@@ -14,12 +14,10 @@ export async function getUrlFile(audioFilename: string) {
       new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
     );
 
-    // Salvando o áudio localmente
-    const localUri = `${FileSystem.documentDirectory}${audioFilename}`;
-    await FileSystem.writeAsStringAsync(localUri, base64Data, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-    return localUri;
+    // Salvando o áudio localmente usando a nova API
+    const file = new File(Paths.document, audioFilename);
+    await file.write(base64Data);
+    return file.uri;
   } catch (error) {
     console.log(error);
     return null;

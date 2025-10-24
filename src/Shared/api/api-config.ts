@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://api-pulmao.labtecs.com.br',
+  baseURL: process.env.EXPO_PUBLIC_API_URL || 'http://api-pulmao.labtecs.com.br',
   withCredentials: true,
 });
 

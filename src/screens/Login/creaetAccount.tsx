@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 import { TextTerm } from './TextTerm';
@@ -69,32 +69,50 @@ export const SignUpForm = (props: signProps) => {
   ];
   const options = [{ value: 'confirmed', label: 'Eu aceito os termos de uso' }];
   const onSubmit = async (data: FormData) => {
-    if (selectedOption !== '' && term !== '') {
-      const result: UserProps = {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        role: selectedOption,
-      };
-
-      try {
-        if (avatar) {
-          await createUsers(avatar, result);
-          EnviarNotificacao();
-          props.handleIsActiveModal();
-          Toastfy('success', 'Cadastrado com sucesso!');
-        }
-      } catch (error) {
-        console.log(error);
-        Toastfy('error', 'Ops.. Algo deu errado!');
-      }
-    } else {
+   
+    // Validar se selecionou tipo de usuário
+    if (selectedOption === '') {
       setIsValidInput(true);
+      Toastfy('error', 'Por favor, selecione se você é aluno ou professor');
+      return;
+    }
+    
+    // Validar se aceitou os termos
+    if (term === '') {
+      setIsValidInput(true);
+      Toastfy('error', 'Por favor, aceite os termos de uso');
+      return;
+    }
+    
+    // Validar se selecionou um avatar
+    if (!avatar) {
+      Toastfy('error', 'Por favor, selecione uma foto de perfil');
+      return;
+    }
+
+    const result: UserProps = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      role: selectedOption,
+    };
+
+    try {
+      await createUsers(avatar, result);
+      EnviarNotificacao();
+      props.handleIsActiveModal();
+      Toastfy('success', 'Cadastrado com sucesso!');
+    } catch (error: any) {
+      console.log('Erro ao criar usuário:', error);
+      const errorMessage = error?.response?.data?.message || 'Ops.. Algo deu errado!';
+      Toastfy('error', errorMessage);
     }
   };
+  
   const handleCreateUser = () => {
+    console.log('handleCreateUser clicked');
+    console.log('Form errors:', errors);
     handleSubmit(onSubmit)();
-    console.log('errors', errors);
   };
 
   return (
