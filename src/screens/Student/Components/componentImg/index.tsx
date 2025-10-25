@@ -1,13 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
+import { ActionIcon } from '../modal/style';
 import { defaultPosition } from './positions';
 import { styles } from './styles';
-import { ActionIcon } from '../modal/style';
 
+import { useAudioPlayer } from 'expo-audio';
 import { Toastfy } from '~/Shared/notification/internal';
 
 interface ImgProps {
@@ -26,7 +26,7 @@ export function CarouselComponent(props: ImgProps) {
   const [isActive, setActive] = useState(false);
   const [audio, setAudio] = useState<any>();
   const [getIndex, setIndex] = useState<number | null>(null);
-  const soundObject = useRef(new Audio.Sound()).current;
+  const audioPlayer = useAudioPlayer();
 
   useEffect(() => {
     handleStartAudio();
@@ -48,19 +48,9 @@ export function CarouselComponent(props: ImgProps) {
   const handleStartAudio = async () => {
     if (audio) {
       try {
-        if (soundObject) {
-          // Verifique se o áudio está carregado antes de tentar parar e descarregar
-          const status = await soundObject.getStatusAsync();
-          if (status.isLoaded) {
-            await soundObject.stopAsync();
-            await soundObject.unloadAsync();
-          }
-        }
-
         // Carregue e inicie o novo áudio
-        await soundObject.loadAsync({ uri: audio }, { shouldPlay: true });
-        await soundObject.setPositionAsync(0);
-        await soundObject.playAsync();
+        audioPlayer.replace({ uri: audio });
+        audioPlayer.play();
       } catch (error) {
         console.error('Erro ao carregar/reproduzir áudio:', error);
       }
@@ -76,7 +66,7 @@ export function CarouselComponent(props: ImgProps) {
   const handleStopAudio = async () => {
     try {
       setActive(false);
-      await soundObject.stopAsync();
+      audioPlayer.pause();
       setAudio(null);
     } catch (error) {
       console.error('Erro ao parar o áudio:', error);

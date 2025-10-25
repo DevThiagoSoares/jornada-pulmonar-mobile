@@ -26,7 +26,7 @@
         }
       ],
       [
-        "expo-av",
+        "expo-audio",
         {
           "microphonePermission": "Allow Jornada Pulmonar to access your microphone."
         }

@@ -1,15 +1,15 @@
 /* eslint-disable import/order */
 import { Ionicons } from '@expo/vector-icons';
-import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, Modal } from 'react-native';
+import { useAudioPlayer } from 'expo-audio';
+import React, { useEffect, useState } from 'react';
+import { Image, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
-import { styles } from './styles';
-import { useData } from '~/Shared/hooks/audio.context';
-import { ListAudio } from '~/components/Audio/list-audio';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useData } from '~/Shared/hooks/audio.context';
 import { Toastfy } from '~/Shared/notification/internal';
+import { ListAudio } from '~/components/Audio/list-audio';
+import { styles } from './styles';
 
 interface imgProps {
   titleImg: string;
@@ -22,7 +22,7 @@ export function AudioImg(props: imgProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [audioFile, setAudioFile] = useState<any>(null);
   const [audioIconPosition, setAudioIconPosition] = useState<{ x: number; y: number } | null>(null);
-  const soundObject = useRef(new Audio.Sound()).current;
+  const audioPlayer = useAudioPlayer();
   const [songActive, setSongActive] = useState(false);
   const { setAudioCoordinates, audioCoordinates } = useData();
   useEffect(() => {
@@ -37,21 +37,7 @@ export function AudioImg(props: imgProps) {
     if (audioCoordinates) {
       setAudioIconPosition(audioCoordinates);
     }
-    const requestPermissions = async () => {
-      const { granted } = await Audio.requestPermissionsAsync();
-      if (granted) {
-        Audio.setAudioModeAsync({
-          allowsRecordingIOS: true,
-          interruptionModeIOS: InterruptionModeIOS.DoNotMix,
-          playsInSilentModeIOS: true,
-          shouldDuckAndroid: true,
-          interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
-          playThroughEarpieceAndroid: true,
-        });
-      }
-    };
-    requestPermissions();
-  }, []);
+  }, [audioCoordinates]);
 
   useEffect(() => {
     if (props.audioUrl) {
@@ -75,9 +61,8 @@ export function AudioImg(props: imgProps) {
     if (audioFile) {
       const uri = audioFile;
       try {
-        await soundObject.unloadAsync();
-        await soundObject.loadAsync({ uri });
-        await soundObject.playAsync();
+        audioPlayer.replace({ uri });
+        audioPlayer.play();
       } catch (error) {
         console.error('Erro ao carregar/reproduzir áudio:', error);
         Toastfy('error', JSON.stringify(error));
@@ -91,7 +76,7 @@ export function AudioImg(props: imgProps) {
 
   const handleStopAudio = async () => {
     try {
-      await soundObject.stopAsync();
+      audioPlayer.pause();
     } catch (error) {
       console.error('Erro ao parar o áudio:', error);
     }

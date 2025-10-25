@@ -1,13 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
-import React, { useEffect, useRef, useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { MD2Colors, ProgressBar, RadioButton } from 'react-native-paper';
 import { getUrlFile } from 'utils/downloadFile';
 
 import { listAudios } from './list-file';
 import { styledAudio } from './styles';
 
+import { useAudioPlayer } from 'expo-audio';
 import { Toastfy } from '~/Shared/notification/internal';
 
 interface audioProps {
@@ -18,7 +18,7 @@ export function ListAudio(props: audioProps) {
   const [audio, setAudio] = useState<any>();
   const [option, setOption] = useState('');
   const [isActiveSong, setIsActiveSong] = useState(false);
-  const soundObject = useRef(new Audio.Sound()).current;
+  const audioPlayer = useAudioPlayer();
   const [loadedAudioFiles, setLoadedAudioFiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState<number>(0);
@@ -60,20 +60,6 @@ export function ListAudio(props: audioProps) {
       setLoading(false);
     };
     loadAudioFiles();
-    const requestPermissions = async () => {
-      const { granted } = await Audio.requestPermissionsAsync();
-      if (granted) {
-        Audio.setAudioModeAsync({
-          allowsRecordingIOS: true,
-          interruptionModeIOS: InterruptionModeIOS.DoNotMix,
-          playsInSilentModeIOS: true,
-          shouldDuckAndroid: true,
-          interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
-          playThroughEarpieceAndroid: true,
-        });
-      }
-    };
-    requestPermissions();
   }, []);
 
   useEffect(() => {
@@ -88,12 +74,10 @@ export function ListAudio(props: audioProps) {
     const uri = item.uri;
     if (uri !== 'error') {
       setAudio(uri);
-      if (soundObject && uri) {
+      if (uri) {
         try {
-          await soundObject.unloadAsync();
-          await soundObject.loadAsync({ uri }, { shouldPlay: true });
-          await soundObject.setPositionAsync(0);
-          await soundObject.playAsync();
+          audioPlayer.replace({ uri });
+          audioPlayer.play();
         } catch (error) {
           console.error('Erro ao carregar/reproduzir áudio:', error);
           Toastfy('error', JSON.stringify(error));
@@ -108,7 +92,7 @@ export function ListAudio(props: audioProps) {
     try {
       setIsActiveSong(!isActiveSong);
       setAudio(null);
-      await soundObject.stopAsync();
+      audioPlayer.pause();
     } catch (error) {
       console.error('Erro ao parar o áudio:', error);
     }
