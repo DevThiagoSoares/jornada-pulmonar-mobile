@@ -4,12 +4,12 @@ import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
 
-import { ListCard } from './Components/Cards/ListCard';
-import { DescriptionCard } from './Components/Cards/descriptionCard';
-import { styledHometeacher } from './styles';
 import { styles } from '../Login/styles';
 import { modulesDto } from '../Student/Home';
 import { rankingDto } from '../Student/ranking';
+import { ListCard } from './Components/Cards/ListCard';
+import { DescriptionCard } from './Components/Cards/descriptionCard';
+import { styledHometeacher } from './styles';
 
 import { TypeUser } from '~/Shared/Enums/typeUser';
 import { getModules } from '~/Shared/api/services/modules/modules';
@@ -64,7 +64,7 @@ const PageTeacher = () => {
           <View style={styledHometeacher.Boxseparator}>
             <View style={styledHometeacher.separator} />
           </View>
-          <View style={{ display: 'flex', width: '100%' }}>
+          <View style={{ display: 'flex', width: '100%', backgroundColor: 'transparent' }}>
             <ListCard module={module} listWinner={listWinner} listRanking={listRanking} />
           </View>
         </View>

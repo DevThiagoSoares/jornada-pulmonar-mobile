@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Controller } from 'react-hook-form';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { Button, IconButton } from 'react-native-paper';
 
+import { styledForm, styles } from '../styles';
 import { Alternative } from './alternative-question';
 import { InputNormal } from './ui';
-import { styledForm, styles } from '../styles';
 
 import { RootStackParamList } from '~/navigation/Routes';
 
@@ -23,7 +23,12 @@ export function ListQuestionsCard(props: PropsQuestion) {
   return (
     <View style={styledForm.box}>
       <View style={styledForm.icons}>
-        <Text style={styledForm.title}>Questão</Text>
+        <View>
+          <Text style={styledForm.title}>Questão</Text>
+          <Text style={{ fontSize: 11, color: '#999', marginTop: 2 }}>
+            Imagem opcional - clique no ícone para adicionar
+          </Text>
+        </View>
         <View style={styledForm.icons}>
           <IconButton
             icon="image"

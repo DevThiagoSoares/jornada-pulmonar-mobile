@@ -1,10 +1,21 @@
 import { StyleSheet } from 'react-native';
 
+// Estilos dos cards de módulos - Atualizado para melhor scroll e imagem sem corte
 export const styledCard = StyleSheet.create({
+  cardWrapper: {
+    width: 350,
+    marginHorizontal: 10,
+    alignItems: 'center',
+  },
   cardContainer: {
     backgroundColor: '#CD4C3E',
     padding: 10,
-    margin: 10,
+    width: '100%',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   containerTimer: {
     position: 'absolute',
@@ -26,6 +37,13 @@ export const styledCard = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    paddingTop: 10,
+  },
+  textContainer: {
+    display: 'flex',
+    marginBottom: 30,
+    gap: 15,
+    flex: 1,
   },
   title: {
     color: '#FFFF',
@@ -46,11 +64,16 @@ export const styledCard = StyleSheet.create({
   },
   avatar: {
     position: 'absolute',
-    borderRadius: 60,
-    top: -170,
+    top: -190,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent',
+    width: 140,
+    height: 200,
+  },
+  avatarImage: {
+    width: '100%',
+    height: '100%',
   },
   baseAlternative: {
     display: 'flex',

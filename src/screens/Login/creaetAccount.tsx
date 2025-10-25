@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 import { TextTerm } from './TextTerm';
@@ -15,6 +15,7 @@ import { createUsers } from '~/Shared/api/services/users';
 import { EnviarNotificacao } from '~/Shared/notification/external';
 import { Toastfy } from '~/Shared/notification/internal';
 import ModalContainer from '~/components/modalContainer';
+import { getErrorMessage } from '~/utils/errorHandler';
 
 interface FormData {
   name: string;
@@ -50,6 +51,7 @@ export const SignUpForm = (props: signProps) => {
   const [term, setTerm] = useState<string>('');
   const [avatar, setAvatar] = useState<any>();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleImg = (img: FileDTO | any) => {
     setAvatar(img);
@@ -68,8 +70,8 @@ export const SignUpForm = (props: signProps) => {
     { value: TypeUser.Teacher, label: 'Sou professor' },
   ];
   const options = [{ value: 'confirmed', label: 'Eu aceito os termos de uso' }];
+  
   const onSubmit = async (data: FormData) => {
-   
     // Validar se selecionou tipo de usuário
     if (selectedOption === '') {
       setIsValidInput(true);
@@ -90,28 +92,41 @@ export const SignUpForm = (props: signProps) => {
       return;
     }
 
+    setIsLoading(true);
+    
     const result: UserProps = {
-      name: data.name,
-      email: data.email,
+      name: data.name.trim(),
+      email: data.email.toLowerCase().trim(),
       password: data.password,
       role: selectedOption,
     };
 
     try {
       await createUsers(avatar, result);
-      EnviarNotificacao();
-      props.handleIsActiveModal();
-      Toastfy('success', 'Cadastrado com sucesso!');
+      
+      // Solicitar permissão e enviar notificação
+      await EnviarNotificacao();
+      
+      Toastfy('success', 'Conta criada com sucesso! Faça login para continuar.');
+      
+      // Aguardar um pouco para o usuário ver a mensagem
+      setTimeout(() => {
+        props.handleIsActiveModal();
+      }, 1000);
     } catch (error: any) {
-      console.log('Erro ao criar usuário:', error);
-      const errorMessage = error?.response?.data?.message || 'Ops.. Algo deu errado!';
+      const errorMessage = getErrorMessage(error);
       Toastfy('error', errorMessage);
+      
+      if (__DEV__) {
+        console.error('Erro ao criar usuário:', error);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
   
   const handleCreateUser = () => {
-    console.log('handleCreateUser clicked');
-    console.log('Form errors:', errors);
+    if (isLoading) return; // Prevenir múltiplos cliques
     handleSubmit(onSubmit)();
   };
 
@@ -248,8 +263,16 @@ export const SignUpForm = (props: signProps) => {
           </TouchableOpacity>
         </View>
       </ModalContainer>
-      <TouchableOpacity style={styledUser.button} onPress={handleCreateUser}>
-        <Text style={styledUser.buttonText}>Finalizar</Text>
+      <TouchableOpacity 
+        style={[styledUser.button, isLoading && { opacity: 0.7 }]} 
+        onPress={handleCreateUser}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <ActivityIndicator color="#FFF" />
+        ) : (
+          <Text style={styledUser.buttonText}>Finalizar</Text>
+        )}
       </TouchableOpacity>
     </View>
   );

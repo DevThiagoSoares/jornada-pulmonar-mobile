@@ -2,11 +2,11 @@ import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useState } from 'react';
 import { ActivityIndicator, TouchableNativeFeedback } from 'react-native';
-import { View, Text } from 'react-native-animatable';
+import { Text, View } from 'react-native-animatable';
 import { Card } from 'react-native-paper';
 
-import { styledCard } from './styles';
 import { styledOptions } from '../styles';
+import { styledCard } from './styles';
 
 import { useAuth } from '~/Shared/Auth';
 import { ListQuestionApi } from '~/Shared/api/services/questions';
@@ -20,6 +20,7 @@ interface cardProps {
   title: string;
   quantity: number;
   data: modulesDto;
+  index: number;
 }
 type Props = StackScreenProps<RootStackParamList, 'DrawerNavigator'>;
 
@@ -50,19 +51,38 @@ export function OptionsCard(props: cardProps) {
       }
     }
   };
-  return (
-    <View style={styledCard.container}>
-      <Card elevation={2}>
-        <TouchableNativeFeedback
-          background={TouchableNativeFeedback.Ripple('#CD4C3E', true)}
-          onPress={() => handleFindQuestion(props.data)}>
-          <Card.Content style={styledOptions.containerCard}>
-            <View style={styledOptions.containerTitle}>
-              <Text style={styledCard.title}>{props.title}</Text>
-            </View>
-            {isLoading && <ActivityIndicator animating color="white" />}
+  const cardColors = [
+    'rgba(205, 76, 62, 0.85)',
+    'rgba(222, 139, 129, 0.85)',
+    'rgba(180, 60, 50, 0.85)',
+    'rgba(205, 100, 80, 0.85)',
+  ];
 
-            <Text style={styledCard.description}>{props.quantity} Questões</Text>
+  return (
+    <View style={styledCard.container} animation="fadeInUp" delay={props.index * 100} duration={500}>
+      <Card elevation={4} style={styledOptions.card}>
+        <TouchableNativeFeedback
+          background={TouchableNativeFeedback.Ripple('#CD4C3E', false)}
+          onPress={() => handleFindQuestion(props.data)}>
+          <Card.Content style={[styledOptions.containerCard, { backgroundColor: cardColors[props.index % 4] }]}>
+            <View style={styledOptions.headerContainer}>
+              <View style={styledOptions.containerTitle}>
+                <Text style={styledCard.title} numberOfLines={2}>{props.title}</Text>
+              </View>
+            </View>
+            
+            {isLoading ? (
+              <ActivityIndicator animating color="white" size="small" />
+            ) : (
+              <View style={styledOptions.footerContainer}>
+                <View style={styledOptions.questionsContainer}>
+                  <Text style={styledOptions.questionsNumber}>{props.quantity}</Text>
+                  <Text style={styledCard.description}>
+                    {props.quantity === 1 ? 'Questão' : 'Questões'}
+                  </Text>
+                </View>
+              </View>
+            )}
           </Card.Content>
         </TouchableNativeFeedback>
       </Card>

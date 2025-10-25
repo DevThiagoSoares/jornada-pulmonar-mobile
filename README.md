@@ -57,8 +57,6 @@ EXPO_PUBLIC_API_URL=http://192.168.1.100:3000
 EXPO_PUBLIC_API_URL=https://api-pulmao.labtecs.com.br
 ```
 
-**📖 Para instruções detalhadas sobre configuração, consulte o arquivo [ENV_SETUP.md](./ENV_SETUP.md)**
-
 **Importante:** Se você estiver testando em um dispositivo físico, substitua `localhost` pelo IP local do seu computador.
 
 ### 3. Backend

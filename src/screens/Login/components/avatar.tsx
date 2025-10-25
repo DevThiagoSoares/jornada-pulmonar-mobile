@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useEffect, useState } from 'react';
-import { Alert, Image, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { styledAvatar } from './styles';
@@ -13,6 +13,7 @@ interface AvatarProps {
 
 const AvatarPicker = (props: AvatarProps) => {
   const [profilePic, setProfilePic] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (props.userImg) {
@@ -21,13 +22,18 @@ const AvatarPicker = (props: AvatarProps) => {
   }, [props.userImg]);
 
   const selectProfilePic = async () => {
+    if (isLoading) return;
+    
     try {
+      setIsLoading(true);
+      
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
       
       if (!permissionResult.granted) {
         Alert.alert(
-          'Permissão negada',
-          'É necessário permitir acesso à galeria para selecionar uma foto de perfil.'
+          'Permissão necessária',
+          'Precisamos da sua permissão para acessar a galeria de fotos.',
+          [{ text: 'OK' }]
         );
         return;
       }
@@ -35,46 +41,61 @@ const AvatarPicker = (props: AvatarProps) => {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [4, 3],
-        quality: 0.5,
+        aspect: [1, 1],
+        quality: 0.7,
         base64: true,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
         const pic = result.assets[0];
-        console.log('Imagem selecionada:', { uri: pic.uri, hasBase64: !!pic.base64 });
+        
+        if (!pic.base64) {
+          Alert.alert('Erro', 'Não foi possível processar a imagem. Tente outra foto.');
+          return;
+        }
         
         setProfilePic(pic.uri);
-
-        if (pic.base64) {
-          const urlImg = `data:image/png;base64,${pic.base64}`;
-          props.setImg(urlImg);
         
-          Toast.show({
-            type: 'success',
-            text1: 'Foto selecionada!',
-            text2: 'Sua foto de perfil foi selecionada com sucesso',
-          });
-        } else {
-          console.error('Base64 não disponível');
-          Alert.alert('Erro', 'Não foi possível processar a imagem');
-        }
-      } else {
-        console.log('Seleção de imagem cancelada');
+        const urlImg = `data:image/png;base64,${pic.base64}`;
+        props.setImg(urlImg);
+      
+        Toast.show({
+          type: 'success',
+          text1: '✓ Foto selecionada',
+          text2: 'Avatar atualizado com sucesso',
+          visibilityTime: 2000,
+        });
       }
     } catch (error) {
-      console.error('Erro ao selecionar a imagem:', error);
-      Alert.alert('Erro', 'Não foi possível selecionar a imagem. Tente novamente.');
+      Alert.alert(
+        'Erro ao selecionar foto',
+        'Não foi possível selecionar a imagem. Tente novamente.',
+        [{ text: 'OK' }]
+      );
+      
+      if (__DEV__) {
+        console.error('Erro ao selecionar a imagem:', error);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <TouchableOpacity style={styledAvatar.avatarContainer} onPress={selectProfilePic}>
-      {profilePic ? (
+    <TouchableOpacity 
+      style={styledAvatar.avatarContainer} 
+      onPress={selectProfilePic}
+      disabled={isLoading}
+    >
+      {isLoading ? (
+        <View style={styledAvatar.avatarIcon}>
+          <ActivityIndicator size="large" color="#CD4C3E" />
+        </View>
+      ) : profilePic ? (
         <Image source={{ uri: profilePic }} style={styledAvatar.avatarImage} />
       ) : (
         <View style={styledAvatar.avatarIcon}>
-          <MaterialCommunityIcons name="image-plus" size={40} color="#FFF" />
+          <MaterialCommunityIcons name="camera-plus" size={40} color="#FFF" />
         </View>
       )}
       <Toast />

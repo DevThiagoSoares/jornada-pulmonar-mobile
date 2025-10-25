@@ -6,6 +6,7 @@
 declare namespace NodeJS {
   interface ProcessEnv {
     EXPO_PUBLIC_API_URL: string;
+    EXPO_PUBLIC_AUDIO_BASE_URL?: string;
   }
 }
 

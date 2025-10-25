@@ -35,28 +35,49 @@ export function FormLogin() {
   const onSubmit = async (data: FormProps) => {
     setIsLoading(true);
     try {
-      console.log(data)
+      // Validar login
       const response = await ValidateLogin(data);
-      console.log({ response })
+      
+      if (!response?.data) {
+        throw new Error('Resposta inválida do servidor');
+      }
+
+      // Buscar dados do usuário
       const userData = await validateEmail(data.email.toLowerCase());
-      console.log({ userData })
+      
+      if (!userData?.data || userData.data.length === 0) {
+        throw new Error('Usuário não encontrado');
+      }
+
       const { access_token, email, role } = response.data;
       const { name, imageBase64, score, id } = userData.data[0];
+      
+      // Salvar token
+      await AsyncStorage.setItem('access_token', access_token);
+      
+      // Atualizar contexto do usuário
       validateUserAccess({ access_token, email, role, id, imageBase64, name, score });
-      AsyncStorage.setItem('access_token', JSON.stringify(response.data.access_token))
-        .then(() => {})
-        .catch((error: any) => {
-          console.error('Erro ao armazenar os dados do usuário:', error);
-        });
-        setIsLoading(false);
-      } catch (error: any) {
+      
+      Toastfy('success', `Bem-vindo, ${name}!`);
       setIsLoading(false);
-      console.log(`login`,error)
-      if (error?.response?.data?.statusCode === 401) {
-        Toastfy('error', error.response.data.message);
+    } catch (error: any) {
+      setIsLoading(false);
+      
+      // Tratamento de erros específicos
+      if (error?.response?.status === 401) {
+        Toastfy('error', 'Email ou senha incorretos');
+      } else if (error?.response?.status === 404) {
+        Toastfy('error', 'Usuário não encontrado');
+      } else if (error?.message === 'Network Error') {
+        Toastfy('error', 'Erro de conexão. Verifique sua internet');
+      } else if (error?.message) {
+        Toastfy('error', error.message);
       } else {
-        Toastfy('error', 'Ops.. Algo deu errado!');
-        Toastfy('error', JSON.stringify(error));
+        Toastfy('error', 'Não foi possível fazer login. Tente novamente');
+      }
+      
+      if (__DEV__) {
+        console.error('Erro no login:', error);
       }
     }
   };
@@ -66,7 +87,6 @@ export function FormLogin() {
   };
   const handleLogin = () => {
     handleSubmit(onSubmit)();
-    console.log({ errors });
   };
   return (
     <View style={styles.form}>

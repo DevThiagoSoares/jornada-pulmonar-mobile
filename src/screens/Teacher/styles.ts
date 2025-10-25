@@ -40,8 +40,8 @@ export const styledHometeacher = StyleSheet.create({
   Boxseparator: {
     display: 'flex',
     width: '100%',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 15,
+    marginBottom: 15,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -50,5 +50,6 @@ export const styledHometeacher = StyleSheet.create({
     width: '80%',
     height: 2,
     backgroundColor: '#CD4C3E',
+    opacity: 0.4,
   },
 });

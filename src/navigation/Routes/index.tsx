@@ -1,15 +1,18 @@
 import Ionicons from '@expo/vector-icons/build/Ionicons';
+import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { TouchableOpacity, ImageBackground, Text } from 'react-native';
+import { useCallback } from 'react';
+import { ImageBackground, Text, TouchableOpacity } from 'react-native';
 import { View } from 'react-native-animatable';
 import iconImage from 'src/assets/image/União.png';
 import image from 'src/assets/image/style3.png';
 
-import { styledHeader } from './styles';
 import TabLayout from '../tab-navigator';
+import { styledHeader } from './styles';
 
 import { useAuth } from '~/Shared/Auth';
 import { TypeUser } from '~/Shared/Enums/typeUser';
+import { validateEmail } from '~/Shared/api/services/users';
 import { ComponentLevel } from '~/components/screens/component-level';
 import Login from '~/screens/Login/login';
 import { CreateQuestion } from '~/screens/Question';
@@ -33,7 +36,43 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 export function AppRoutes() {
-  const { user, signOut } = useAuth();
+  const { user, signOut, setUser } = useAuth();
+
+  // Atualizar pontuação do usuário sempre que a tela receber foco
+  useFocusEffect(
+    useCallback(() => {
+      const updateUserScore = async () => {
+        if (user?.email && user?.role === TypeUser.Student) {
+          try {
+            const userData = await validateEmail(user.email.toLowerCase());
+            
+            if (userData?.data && userData.data.length > 0) {
+              const updatedUser = userData.data[0];
+              
+              // Atualizar apenas se o score mudou
+              if (updatedUser.score !== user.score) {
+                setUser({
+                  ...user,
+                  score: updatedUser.score,
+                });
+                
+                if (__DEV__) {
+                  console.log('🔄 Pontuação atualizada:', updatedUser.score);
+                }
+              }
+            }
+          } catch (error) {
+            if (__DEV__) {
+              console.error('Erro ao atualizar pontuação:', error);
+            }
+          }
+        }
+      };
+
+      updateUserScore();
+      return () => {};
+    }, [user?.email, user?.score, user?.role])
+  );
 
   function headerBackground() {
     return <ImageBackground source={image} style={{ flex: 1 }} resizeMode="cover" />;
@@ -112,7 +151,7 @@ export function AppRoutes() {
                         width={40}
                         height={40}
                       />
-                      <Text style={styledHeader.text}>Nível</Text>
+                      <Text style={styledHeader.text}>Pontos</Text>
                     </View>
                     <View>
                       <Text style={styledHeader.text}>Olá {user.name}</Text>
